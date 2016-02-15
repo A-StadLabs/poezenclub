@@ -32,17 +32,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
+      p {
+        @apply(--theme-font-body2);
+        width: 100%;
+        text-align: center;
+      }
 
       .draaierke img {
-        width: 100%;
-        height: 100%;
-      }
-      .draaierke {
-
-        width: 180px;
-        height: 180px;
-
-          -webkit-animation-name: rotate; 
+        width: 80%;
+        height: 80%;
+           -webkit-animation-name: rotate; 
           -webkit-animation-duration: 1s; 
           -webkit-animation-iteration-count: infinite;
           -webkit-animation-timing-function: linear;
@@ -54,7 +53,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           animation-duration: 1s; 
           animation-iteration-count: infinite;
           animation-timing-function: linear;
+        padding: 10%;
       }
+
+      .draaierke {
+
+        width: 150px;
+        height: 150px;
+
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 50%;
+      }
+
+
+
       @-webkit-keyframes rotate {
           from {-webkit-transform: rotate(0deg);}
           to {-webkit-transform: rotate(360deg);}
@@ -75,8 +87,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <div class="loader">
-      <div class="draaierke"><img src="../../images/poezen/poes1.png"></div>
-      <h1>{{loadmsg}}</h1>
+      <div class="draaierke" on-tap="gaDan"><img src="../../images/poezen/poes1.png"></div>
+      <h1>Even geduld...</h1>
+      <p>{{loadmsg}}</p>
     </div>
   </template>
   <script>
@@ -92,6 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         }
       }
+
     });
   })();
   </script>

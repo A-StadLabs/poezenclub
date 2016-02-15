@@ -21,6 +21,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
+      .eighty {
+        width: 80%;
+      }
+
 
       .canvaspink {
         @apply(--canvas-pink);
@@ -35,10 +39,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       h2 {
         @apply(--theme-font-subhead);
+        text-align: center;
       }
 
       p {
         @apply(--theme-font-body1);
+      }
+
+
+      button {
+        min-width: 150px;
+      }
+
+      .whitespace {
+        height: 20px;
       }
 
       .main {
@@ -53,10 +67,88 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .medium:hover {
         @apply(--btns-hovercolors);
       }
+      .small {
+        min-width: 100px;
+        @apply(--small-btn);
+      }
+      .small:hover {
+        @apply(--btns-altcolors);
+      }
 
 
       poezenclub-loader {
-/*        width: 150px;*/
+/*        width: 150px;
+*/      }
+
+
+
+    /*  POEZENSELECTOR  */
+
+    #poezenselector .iron-selected {
+      background-color: rgba(255,255,255,0.25);
+      border: 2px solid white;
+    
+    }
+
+    .poesitem {
+      background-color: rgba(0,0,0,0.1);
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+      margin: 5px;
+      border: 2px solid transparent;
+
+    }
+
+    .poesitem img {
+      width: 100%;
+      height: 100%;
+    }
+
+    #poezenselector {
+      width: 80vw;
+      max-width: 800px;
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+      @apply(--layout-center-center);
+
+    }
+
+
+
+    /*  NAME PUSS */
+
+      paper-button {
+        text-transform: capitalize;
+        font-size: 20px;
+        background-color: black;
+        color: white;
+        --paper-button-ink-color: black;
+        --paper-button-flat-keyboard-focus: {
+          background-color: black;
+          color: white !important;
+        };
+        --paper-button-raised-keyboard-focus: {
+          background-color: black !important;
+          color: white !important;
+        };
+      }
+      paper-button:hover {
+        background-color: white;
+        color: black;
+      }
+
+      paper-input-container {
+        width: 250px;
+        background-color: white;
+        margin-bottom: 20px;
+        padding: 30px;
+      }
+
+      .paper-input-container-0 label, paper-input-char-counter, .paper-input-container-0 input {
+      font-family: 'Indie Flower', cursive;
+      text-transform: capitalize;
       }
 
 
@@ -68,52 +160,120 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <neon-animatable data-route="start">
         <div class="canvaspink">
-          <poezenclub-loader loadmsg="Je gebruikt de app voor de eerste keer. Even geduld..."></poezenclub-loader>
+          <poezenclub-loader loadmsg="Je gebruikt d'app voor de eerste keer."></poezenclub-loader>
         </div>
       </neon-animatable>
       
       <neon-animatable data-route="home">
         <div class="canvaspink">
           <h1>HOME</h1>
-          <button on-tap="toStart" class="main">naar start</button>
+          <button on-tap="toNamepussy" class="main">naar Namepussy</button>
         </div>
       </neon-animatable>
       
 
       <neon-animatable data-route="selectpussy">
         <div class="canvaspink">
-          <h1>Select Puss to CRUSH</h1>
-          <button on-tap="toStart">naar start</button>
+            <h2>Kies een kat!</h2>
+              <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="welkepoes" selected="{{poesinit}}">
+                <div class="poesitem" poes="1">
+                  <img src="../../images/poezen/poes1.png">
+                </div>
+                <div class="poesitem" poes="2">
+                  <img src="../../images/poezen/poes2.png">
+                </div>
+                <div class="poesitem" poes="3">
+                  <img src="../../images/poezen/poes3.png">
+                </div>
+                <div class="poesitem" poes="4">
+                  <img src="../../images/poezen/poes4.png">
+                </div>
+                <div class="poesitem" poes="5">
+                  <img src="../../images/poezen/poes5.png">
+                </div>
+                <div class="poesitem" poes="6">
+                  <img src="../../images/poezen/poes6.png">
+                </div>
+                <div class="poesitem" poes="7">
+                  <img src="../../images/poezen/poes7.png">
+                </div>
+                <div class="poesitem" poes="8">
+                  <img src="../../images/poezen/poes8.png">
+                </div>
+                <div class="poesitem" poes="9">
+                  <img src="../../images/poezen/poes9.png">
+                </div>
+                <div class="poesitem" poes="10">
+                  <img src="../../images/poezen/poes10.png">
+                </div>
+                <div class="poesitem" poes="11">
+                  <img src="../../images/poezen/poes11.png">
+                </div>
+                <div class="poesitem" poes="12">
+                  <img src="../../images/poezen/poes12.png">
+                </div>
+                <div class="poesitem" poes="13">
+                  <img src="../../images/poezen/poes13.png">
+                </div>
+                <div class="poesitem" poes="14">
+                  <img src="../../images/poezen/poes14.png">
+                </div>
+              </iron-selector>
+          <!-- <paper-button on-tap="receivedCat">OK</paper-button> -->
+          <button on-tap="" class="main">OK</button>
         </div>
       </neon-animatable>
 
 
       <neon-animatable data-route="namepussy">
         <div class="canvaspink">
-          <h1>Name Puss</h1>
-          <button on-tap="toStart">naar start</button>
+            <h1>Hoe heet jouw poes?</h1>
+            <div class="whitespace"></div>
+            <paper-input-container no-label-float>
+              <input autofocus class="centertexting"
+                is="iron-input"
+                prevent-invalid-input
+                bind-value="{{poezennaam}}">
+            </paper-input-container>
+            <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
+          <button on-tap="" class="main">OK</button>
         </div>
       </neon-animatable>
       
       <neon-animatable data-route="validate">
         <div class="canvaspink">
-          <h1>VALIDATE</h1>
-          <button on-tap="toStart">naar start</button>
+          <div class="eighty">
+            <h2>Vraag een pincode aan iemand met een gevalideerde poes</h2>
+          </div>
+          <paper-input-container no-label-float>
+            <label class="centertexting">pincode</label>
+            <input autofocus class="centertexting"
+            is="iron-input"
+            prevent-invalid-input
+            bind-value="{{enteredpin}}">
+          </paper-input-container>
+            <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
+          <button on-tap="" class="main">OK</button>
         </div>
       </neon-animatable>
 
       <neon-animatable data-route="pin">
         <div class="canvaspink">
           <h1>PIN</h1>
-          <button on-tap="toStart">naar start</button>
+          <button class="medium" on-tap="toHome">Terug</button>
         </div>
       </neon-animatable>
 
 
       <neon-animatable data-route="incoming">
         <div class="canvaspink">
-          <h1>Incumming</h1>
-          <button on-tap="toStart">naar start</button>
+          <div class="eighty">
+            <h2>Hier de msg van mqtt dan? En ook als die echt keilang is, mor echt echt SuuuuuuperLang wette wel</h2>
+          </div>
+          <div class="layout horizontal center">
+            <button class="medium" on-tap="toHome">Annuleren</button>
+            <button class="main">Valideren</button>
+          </div>
         </div>
       </neon-animatable>
 
@@ -151,9 +311,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.entryAnimation = 'slide-from-right-animation';
       },
 
+      toHome: function(){
+        this.rout = 'home';
+      },
       toStart: function(){
-
         this.rout = 'start';
+      },
+      toSelectpussy: function(){
+        this.rout = 'selectpussy';
+      },
+      toNamepussy: function(){
+        this.rout = 'namepussy';
       }
 
 
