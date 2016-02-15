@@ -1,0 +1,163 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="poezenclub-stage">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      neon-animated-pages {
+        height: 100%;
+      }
+
+
+      .canvaspink {
+        @apply(--canvas-pink);
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+      }
+
+
+      h1 {
+        @apply(--theme-font-title);
+      }
+
+      h2 {
+        @apply(--theme-font-subhead);
+      }
+
+      p {
+        @apply(--theme-font-body1);
+      }
+
+      .main {
+        @apply(--main-btn);
+      }
+      .main:hover {
+        @apply(--btns-hovercolors);
+      }
+      .medium {
+        @apply(--medium-btn);
+      }
+      .medium:hover {
+        @apply(--btns-hovercolors);
+      }
+
+
+      poezenclub-loader {
+/*        width: 150px;*/
+      }
+
+
+    </style>
+    <neon-animated-pages selected="{{rout}}" 
+            entry-animation="{{entryAnimation}}"
+            exit-animation="{{exitAnimation}}"
+            attr-for-selected="data-route">
+
+      <neon-animatable data-route="start">
+        <div class="canvaspink">
+          <poezenclub-loader loadmsg="Je gebruikt de app voor de eerste keer. Even geduld..."></poezenclub-loader>
+        </div>
+      </neon-animatable>
+      
+      <neon-animatable data-route="home">
+        <div class="canvaspink">
+          <h1>HOME</h1>
+          <button on-tap="toStart" class="main">naar start</button>
+        </div>
+      </neon-animatable>
+      
+
+      <neon-animatable data-route="selectpussy">
+        <div class="canvaspink">
+          <h1>Select Puss to CRUSH</h1>
+          <button on-tap="toStart">naar start</button>
+        </div>
+      </neon-animatable>
+
+
+      <neon-animatable data-route="namepussy">
+        <div class="canvaspink">
+          <h1>Name Puss</h1>
+          <button on-tap="toStart">naar start</button>
+        </div>
+      </neon-animatable>
+      
+      <neon-animatable data-route="validate">
+        <div class="canvaspink">
+          <h1>VALIDATE</h1>
+          <button on-tap="toStart">naar start</button>
+        </div>
+      </neon-animatable>
+
+      <neon-animatable data-route="pin">
+        <div class="canvaspink">
+          <h1>PIN</h1>
+          <button on-tap="toStart">naar start</button>
+        </div>
+      </neon-animatable>
+
+
+      <neon-animatable data-route="incoming">
+        <div class="canvaspink">
+          <h1>Incumming</h1>
+          <button on-tap="toStart">naar start</button>
+        </div>
+      </neon-animatable>
+
+    </neon-animated-pages>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'poezenclub-stage',
+
+      properties: {
+        rout: {
+          type: String,
+          notify: true,
+          observer: '_selected'
+        },
+
+        entryAnimation: {
+          type: String
+        },
+
+        exitAnimation: {
+          type: String
+        },
+      },
+
+      _selected: function(){
+        console.log('Hier de selected', this.rout);
+      },
+
+      ready: function(){
+        this.exitAnimation = 'slide-left-animation';
+        this.entryAnimation = 'slide-from-right-animation';
+      },
+
+      toStart: function(){
+
+        this.rout = 'start';
+      }
+
+
+    });
+  })();
+  </script>
+</dom-module>

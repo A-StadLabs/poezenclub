@@ -1,0 +1,276 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<style is="custom-style">
+
+  /*
+   Polymer includes a shim for CSS Custom Properties that we can use for application theming.
+   Below, you'll find the default palette for the Polymer Starter Kit layout. Feel free to play
+   with changing the colors used or generate your own palette of colours at MaterialPalette.com.
+
+   See https://www.polymer-project.org/1.0/docs/devguide/styling.html#xscope-styling-details
+   for further information on custom CSS properties.
+   */
+
+  /* Application theme */
+
+ :root {
+
+    /* COLORS */
+    --primary-theme-color: #B9E6AA;
+    --secondary-theme-color: #2192DE;
+    --third-theme-color: #D95D5D;
+    --fourth-theme-color: #D9BA5D;
+    --pink-theme-color: #EBAFA0;
+
+    --black-firsttint:rgba(0,0,0,0.7);
+    --black-secondtint:rgba(0,0,0,0.5);
+    --black-thirdtint:rgba(0,0,0,0.2);
+    --black-fourthtint:rgba(0,0,0,0.05);
+
+
+    /* COLOR BGS */
+    --primary-bgcolor: {
+      background-color: var(--primary-theme-color);
+    };
+    --secondary-bgcolor: {
+      background-color: var(--secondary-theme-color);
+    };
+    --third-bgcolor: {
+      background-color: var(--third-theme-color);
+    };
+    --fourth-bgcolor: {
+      background-color: var(--fourth-theme-color);
+    };
+    --pink-bgcolor: {
+      background-color: var(--pink-theme-color);
+    };   
+
+    /* BTN COLORS */
+    --btns-normalcolors: {
+      background-color: var(--black-firsttint);
+      color: white;
+    };    
+    --btns-hovercolors: {
+      background-color: rgba(0,0,0,1);
+    }; 
+
+    --btns-altcolors: {
+      background-color: var(--black-fourthtint);
+      color: black;
+    };    
+    --btns-hoveraltcolors: {
+      background-color: var(--black-thirdtint);
+    }; 
+
+    /* BTNS STUFF */
+    --clean-btn: {
+      border: none;
+      outline: 0; 
+      margin: 5px 5px 5px 0px;
+      box-sizing:border-box;
+      border-radius: 8px;
+      cursor: pointer;
+      @apply(--theme-font-button);
+    };
+
+    --main-btn: {
+      @apply(--clean-btn);
+      @apply(--btns-normalcolors);
+      padding: 20px;
+      font-size: 24px;
+    };
+
+    --medium-btn: {
+      @apply(--clean-btn);
+      @apply(--btns-normalcolors);
+      padding: 20px;
+      font-size: 16px;      
+    };
+
+    --small-btn: {
+      @apply(--clean-btn);
+      @apply(--btns-altcolors);
+      padding: 15px;
+      font-size: 12px;      
+    };
+
+
+
+    --canvas-primary: {
+      @apply(--total-canvas);
+      @apply(--primary-bgcolor);
+    };
+    --canvas-secondary: {
+      @apply(--total-canvas);
+      @apply(--secondary-bgcolor);
+    };
+    --canvas-third: {
+      @apply(--total-canvas);
+      @apply(--third-bgcolor);
+    };
+    --canvas-fourth: {
+      @apply(--total-canvas);
+      @apply(--fourth-bgcolor);
+    };
+    --canvas-pink: {
+      @apply(--total-canvas);
+      @apply(--pink-bgcolor);
+    };
+
+
+    /* TYPO */
+
+    /* when using fonts locally stored */
+    /* @font-face {
+          font-family: OpensansLight;
+          src: url(../fonts/OpenSans-Light.ttf);
+    }*/
+    --theme-font-general: {
+      font-family: 'Indie Flower', cursive;
+      -webkit-font-smoothing: antialiased;
+    };
+
+/*    --theme-font-nowrap: {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    };
+*/
+
+    --theme-font-title: {
+      @apply(--theme-font-general);
+      @apply(--theme-font-nowrap);
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 52px;
+      @apply(--no-edges);
+    };
+
+    --theme-font-subhead: {
+      @apply(--theme-font-general);
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 34px;
+    };
+
+    --theme-font-body1: {
+      @apply(--theme-font-general);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 22px;
+      margin: 0px;
+    };
+
+    --theme-font-body2: {
+      @apply(--theme-font-general);
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 30px;
+    };
+
+    --theme-font-menu: {
+      @apply(--theme-font-general);
+      @apply(--theme-font-nowrap);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 24px;
+    };
+
+    --theme-font-button: {
+      @apply(--theme-font-general);
+      @apply(--theme-font-nowrap);
+    };
+
+
+
+
+    /* GENERAL */
+    --total-canvas: {
+      width: 100vw;
+      min-height: 100vh;
+      overflow-y: scroll;
+    };
+
+    --no-edges: {
+      padding: 0px;
+      margin: 0px; 
+    };
+
+
+  }
+
+
+
+
+  /* General styles */
+
+  body {
+    @apply(--layout-fullbleed);
+    @apply(--layout-vertical);
+    height: 100%;
+  }
+
+  neon-animated-pages {
+    height: 100%;
+  }
+
+
+
+  /* Tablet+ */
+  @media (min-width: 601px) {
+  }
+
+  /* Material Design Adaptive Breakpoints */
+  /*
+    Below you'll find CSS media queries based on the breakpoint guidance
+    published by the Material Design team. You can choose to use, customise
+    or remove these breakpoints based on your needs.
+
+    http://www.google.com/design/spec/layout/adaptive-ui.html#adaptive-ui-breakpoints
+   */
+
+  /* mobile-small */
+  @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) { }
+  /* mobile-large */
+  @media all and (min-width: 361px) and (orientation: portrait) { }
+  /* mobile-small-landscape */
+  @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) { }
+  /* mobile-large-landscape */
+  @media all and (min-width: 481px) and (orientation: landscape) { }
+  /* tablet-small-landscape */
+  @media all and (min-width: 600px) and (max-width: 960px) and (orientation: landscape) { }
+  /* tablet-large-landscape */
+  @media all and (min-width: 961px) and (orientation: landscape) { }
+  /* tablet-small */
+  @media all and (min-width: 600px) and (orientation: portrait) { }
+  /* tablet-large */
+  @media all and (min-width: 601px) and (max-width: 840px) and (orientation : portrait) { }
+  /* desktop-x-small-landscape */
+  @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) { }
+  /* desktop-x-small */
+  @media all and (min-width: 0) and (max-width: 480px) and (max-aspect-ratio: 4/3) { }
+  /* desktop-small-landscape */
+  @media all and (min-width: 481px) and (max-width: 840px) and (orientation: landscape) { }
+  /* desktop-small */
+  @media all and (min-width: 481px) and (max-width: 840px) and (max-aspect-ratio: 4/3) { }
+  /* desktop-medium-landscape */
+  @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { }
+  /* desktop-medium */
+  @media all and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4/3) { }
+  /* desktop-large */
+  @media all and (min-width: 1281px) and (max-width: 1600px) { }
+  /* desktop-xlarge */
+  @media all and (min-width: 1601px) and (max-width: 1920px) { }
+</style>
+
