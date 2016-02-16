@@ -1,0 +1,100 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/mqtt-elements/mqtt-elements.html">
+
+<dom-module id="lo-mqtt">
+<template>
+
+ <mqtt-connection auto url="ws://opantwerpen.be:15674" on-mqtt-message="fireevent" connected="{{connected}}" id="mqtt">
+
+<!-- 
+HIER EEN TOPIC ARRAY VAN MAKEN / TEMPLATE REPEAT -->
+<template is="dom-if" if="{{subs}}">
+<!-- 
+  <template is="dom-repeat" items="{{children}}" as="t">
+    <mqtt-subscription topic="[[t.topic]]" qos="[[t.qos]]" on-mqtt-subscription-subscribed="_subscribed">
+    </mqtt-subscription>
+  </template> -->
+  <mqtt-subscription id="sub" topic="{{pincode}}" on-mqtt-subscription-subscribed="_subscribed">
+  </mqtt-subscription>
+
+  </template>
+
+  <mqtt-publish id="pub" on-mqtt-publication-published="_published">
+  </mqtt-publish>
+
+  </mqtt-connection>
+ 
+</template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'lo-mqtt',
+
+      properties: {
+        autoConnect: {
+          type: Boolean,
+          value: false
+        },
+        connected: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          observer: '_connected'
+        },
+        
+        subs: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      attached: function(){
+        var me = document.querySelector('#mqtt');
+      },
+
+      connect: function(){
+      },
+
+      _connected: function(){
+        if(this.connected){
+          //console.log("MQTT: Event _connected changed: ", this.connected);
+          this.fire('mqtt-connected');
+        }
+      },
+
+      _subscribed: function(e){
+        console.log("subscribed", e.detail);
+      },
+
+      subscribe: function(topic, qos){
+        console.log("Subscribing: ", topic, qos);
+          //console.log("BEFORE: ",this.children);
+          //var children = [];
+          //children.push({topic: topic, qos: qos});
+          //this.children = children;
+          //console.log("AFTER: ",this.children);
+      },
+
+      send: function(topic, data, qos){
+        this.$.pub.topic = topic; 
+        this.$.pub.payload=data;
+        this.$.pub.qos=qos;
+        this.$.pub.retained=false;
+        this.$.pub.publish();
+        console.log('sending msg to ', topic, 'data: ', data);
+      },
+
+      fireevent: function(e){
+        var topic = e.detail.topic;
+        var message = String.fromCharCode.apply(null, e.detail.message);
+        //console.log("MQTT: incoming: ", topic, message);
+        this.fire('message-received', {msg: message, topic: topic});
+      }
+
+
+    });
+  })();
+  </script>
+</dom-module>

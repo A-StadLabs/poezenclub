@@ -153,6 +153,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     </style>
+
+
+     <iron-localstorage name="poezenclub" value="{{poesinit}}"
+      on-iron-localstorage-load-empty="initpoes" on-iron-localstorage-load="localpoes"></iron-localstorage>
+
+      <iron-localstorage name="poezennaam" value="{{poezennaam}}"></iron-localstorage>
+
+      <iron-localstorage name="baasje" value="{{baasjenaam}}"></iron-localstorage>
+
+      <iron-localstorage name="mypoescontract" value="{{poescontract}}"></iron-localstorage>
+
+      <iron-localstorage name="memberstatus" on-iron-localstorage-load-empty="initmember" value="{{memberstatus}}"></iron-localstorage>
+
+      <lo-mqtt connected="{{mqttconnected}}" subs
+      on-message-received="msgreceived"
+      on-mqtt-connected="mqttconnectedfire"
+      pincode="{{pincode}}"
+      id="lomqtt"></lo-mqtt>
+
+      <poes-validatie id="poesvalidatie" web3="{{web3}}" account="{{account}}" contractaddress="{{contractaddress}}" validations="{{validations}}"></poes-validatie>
+
+      <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" on-contract-ready="_poescontractready">
+        </poes-membership>
+
+
+
+
+    <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node1.ma.cx:8545"></alabs-web3js>
+
+
+
     <neon-animated-pages selected="{{rout}}" 
             entry-animation="{{entryAnimation}}"
             exit-animation="{{exitAnimation}}"
@@ -311,19 +342,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.entryAnimation = 'slide-from-right-animation';
       },
 
-      toHome: function(){
-        this.rout = 'home';
-      },
-      toStart: function(){
-        this.rout = 'start';
-      },
-      toSelectpussy: function(){
-        this.rout = 'selectpussy';
-      },
-      toNamepussy: function(){
-        this.rout = 'namepussy';
+      // toHome: function(){
+      //   this.rout = 'home';
+      // },
+      // toStart: function(){
+      //   this.rout = 'start';
+      // },
+      // toSelectpussy: function(){
+      //   this.rout = 'selectpussy';
+      // },
+      // toNamepussy: function(){
+      //   this.rout = 'namepussy';
+      // }
+      mqttconnectedfire: function(){
+        console.log("MQTT connected");
+        // this.subscribetoPin();
       }
-
 
     });
   })();

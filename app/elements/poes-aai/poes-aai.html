@@ -1,0 +1,91 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="poes-aai">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 300px;
+        width: 300px;
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+
+
+/*      audio {
+        visibility: hidden;
+      }*/
+
+    </style>
+
+    <img src="{{picture}}">
+    <audio id="poezenaudio" src="{{miauw}}">  
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'poes-aai',
+
+      properties: {
+        catnumber: {
+          type: String,
+          notify: true,
+          observer: 'pictureTime'
+        }
+      },
+
+
+
+      listeners: {
+        track: 'mouseTrack'
+      },
+
+      ready:function(){
+        // this.pictureTime();
+      },
+
+      pictureTime:function(){
+        this.picture = '../../images/poezen/poes' + this.catnumber +'.png';
+        this.miauw = '../../mp3/poesmiauw' + this.catnumber + '.wav'
+        // console.log("Dit is de afbeelding dus", this.picture);
+      },
+
+
+        mouseTrack: function(e) {
+          switch(e.detail.state) {
+            case 'start':
+              this.startmouse = e.detail.x;
+              // console.log("Tracking started!" + this.startmouse);
+              break;
+            case 'end':
+              this.endmouse = e.detail.x;
+              // console.log("Tracking ended!" + this.endmouse);
+              this.swiper = this.startmouse - this.endmouse;
+                if(this.swiper>10){
+                  console.log("SWIPERTJE");
+                  this.$.poezenaudio.play();
+                };
+              break;
+          }
+        }
+
+
+    });
+  })();
+  </script>
+</dom-module>

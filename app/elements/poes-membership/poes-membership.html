@@ -1,0 +1,187 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="poes-membership">
+  <template>
+      <lo-mqtt connected="{{lomqttconnected}}"
+      id="lomqtt"></lo-mqtt>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'poes-membership',
+
+      properties: {
+        web3: {
+          type: Object,
+          observer: "_web3"
+        },
+        webready: {
+          observer: "_web3"
+        },
+        balance: {
+          type: Number,
+          notify: true,
+          observer: "_balance"
+        },
+        globalkeystore: {
+          type: Object,
+          observer: "_keystore"
+        },
+        account: {
+          type:String,
+          observer: "_account"
+        },
+        memberstatus: {
+          type: Number,
+          notify:true
+        },
+        contractaddress: {
+          type: String,
+          value: "0x83883514f7fcb0cf627829d067f0e8488201f6b9"
+        },
+
+        lomqttconnected: {
+          type: Boolean,
+          observer: "_web3"
+        }
+      },
+
+      ready: function() {
+        var self = this;
+        this.contracturl = this.resolveUrl('../../contracts/LocalsMembership.json');
+        this.importHref(this.contracturl, function(e) { 
+          console.log(e.target.import.body.innerText);
+          self.contractjson = JSON.parse(e.target.import.body.innerText);
+          // self._initcontract();
+          self._web3();
+        }, function(e) {
+          console.log('ERROR!');
+        });
+          console.log('LOMQTT is hiiieerr!', this.lomqtt);
+      },
+
+      _web3: function() {
+        var self = this;
+
+        if (this.contractjson && this.lomqttconnected){
+          // console.log("poes contract kent web3js ", this.web3);
+          console.log("contract adres van deze club=", this.contractaddress);
+          this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
+          // Start listening to contract state / event
+          
+          console.log("Ik ken web3 EN ik ken contactjson");
+          this.memberstatus = this.membershipStatus();
+          if (this.memberstatus != 0){
+          var MyContract = self.web3.eth.contract(self.contractjson.abi);
+          var myContractInstance = MyContract.at(self.contractaddress);
+          myContractInstance.MemberAdded(function(err,res){
+            console.log('dees vergelijking doen: ',res.args.invitee, " vs ", self.account);
+            if(res.args.invitee=="0x"+self.account){
+              self.memberstatus = 1;
+              }
+            });
+          } else {
+            console.log("Je ne suis pas un lid");
+            self.$.lomqtt.send("adam", "requestmembership"+"|"+self.account, 2);
+          }
+
+
+        }  
+      },
+
+      _balance: function() {
+        console.log("current balance for account ", this.account, ": ", this.balance);
+      },
+
+      handleResponse: function() {
+        this.contractjson = this.response;
+        this._web3();
+        //this.stichtNieuweClub();
+        this.memberstatus = this.membershipStatus();
+        console.log("IK BEN LID VAN DE CLUB=",this.memberstatus);
+        //this.runContract();
+      },
+
+      _keystore: function() {
+        console.log("KEYSTORE: ", this.globalkeystore);
+      },
+
+      membershipStatus: function(account){
+        var myContract = this.web3.eth.contract(this.contractjson.abi);
+        var contractinstance = myContract.at(this.contractaddress);
+        var r = contractinstance.membershipStatus('0x' + this.account);
+        console.log('result van MS voor',this.account,'=',r.toNumber(10));
+        return r.toNumber(10);
+      },
+
+      addMember: function(newMemberAddress,cb) {
+        var self = this;
+
+
+        this.web3.eth.getGasPrice(function(err, result) {
+
+          var gasPrice = result.toNumber(10);
+
+              // creation of contract object
+              var MyContract = self.web3.eth.contract(self.contractjson.abi);
+              var myContractInstance = MyContract.at(self.contractaddress);
+
+              var options = {
+                from: self.account,
+                value: 6 * 1e18,
+                gas: 3141590,
+                gasPrice: gasPrice,
+                nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
+              };
+
+              var newMember = '0x' + newMemberAddress;
+
+              console.log('adding member ',newMember);
+              console.log('contract options',options);
+
+
+              var result = myContractInstance.addMember.sendTransaction(newMember, options,
+                function(err, result) {
+                  if (err != null) {
+                    console.log(err);
+                    console.log("ERROR: Transaction didn't go through. See console.");
+                  } else {
+                    console.log("Transaction Successful!");
+                    console.log(result);              
+                  }
+                }
+              );
+
+              myContractInstance.MemberAdded(function(err,res){
+
+                self.memberstatus = 1;
+
+                console.log('MEMBERADDED triggered SUSKE');
+                console.log('err',err);
+                console.log('res',res);
+              });
+      });
+      },
+
+      _account: function(){
+        console.log("Ich hem een accooouunnnt", this. account);
+      }
+
+
+
+    });
+  })();
+  </script>
+</dom-module>
