@@ -74,7 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function(){
-        console.log('a-labs-web3 is ready');
+        // console.log('a-labs-web3 is ready');
       },
 
       initWallet: function(){
@@ -89,9 +89,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },      
 
       loadWallet: function(){
-        console.log('👌 load the wallet',this.walletdata);
+        // console.log('👌 load the wallet',this.walletdata);
         this.global_keystore = new lightwallet.keystore().deserialize(this.walletdata);
-        console.log('loaded keystore. Addressess',this.global_keystore.getAddresses());
+        // console.log('loaded keystore. Addressess',this.global_keystore.getAddresses());
         this.configureWeb3();
       },
 
@@ -118,9 +118,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.connected = true;
 
 
-        console.log('A-labs web3js. RPC host',this.provider);
-        console.log('A-labs web3js. base account for your transactions',this.account);
-        console.log('A-labs web3js. balance of account',this.balance);
+        // console.log('A-labs web3js. RPC host',this.provider);
+        // console.log('A-labs web3js. base account for your transactions',this.account);
+        // console.log('A-labs web3js. balance of account',this.balance);
 
         this.fire('web3-ready');
       },

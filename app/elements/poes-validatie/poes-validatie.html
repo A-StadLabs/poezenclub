@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/LocalsValidation.json');
         this.importHref(this.contracturl, function(e) { 
-          console.log(e.target.import.body.innerText);
+          // console.log(e.target.import.body.innerText);
           self.contractjson = e.target.import.body.innerText;
           self._initcontract();
         }, function(e) {
@@ -199,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _web3: function() {
-        console.log("poes validatiecontract kent web3js ", this.web3);
+        // console.log("poes validatiecontract kent web3js ", this.web3);
         this._initcontract();
       },
 

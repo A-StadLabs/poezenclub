@@ -62,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/LocalsMembership.json');
         this.importHref(this.contracturl, function(e) { 
-          console.log(e.target.import.body.innerText);
+          // console.log(e.target.import.body.innerText);
           self.contractjson = JSON.parse(e.target.import.body.innerText);
           // self._initcontract();
           self._web3();
@@ -77,11 +77,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if (this.contractjson && this.lomqttconnected){
           // console.log("poes contract kent web3js ", this.web3);
-          console.log("contract adres van deze club=", this.contractaddress);
+          // console.log("contract adres van deze club=", this.contractaddress);
           this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
           // Start listening to contract state / event
           
-          console.log("Ik ken web3 EN ik ken contactjson");
+          // console.log("Ik ken web3 EN ik ken contactjson");
           this.memberstatus = this.membershipStatus();
           if (this.memberstatus != 0){
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
