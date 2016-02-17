@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../poes-aai/poes-aai.html">
 
 <dom-module id="poezenclub-stage">
   <template>
@@ -151,7 +152,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       text-transform: capitalize;
       }
 
-
     </style>
 
 
@@ -177,12 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" on-contract-ready="_poescontractready">
         </poes-membership>
 
-
-
-
     <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node1.ma.cx:8545"></alabs-web3js>
-
-
 
     <neon-animated-pages selected="{{rout}}" 
             entry-animation="{{entryAnimation}}"
@@ -195,7 +190,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </neon-animatable>
       
-      <neon-animatable data-route="home">
+      <neon-animatable data-route="selectpussy">
         <div class="canvaspink">
           <h2>Kies een kat!</h2>
             <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="welkepoes" selected="{{poesinit}}">
@@ -246,7 +241,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <button on-tap="toNamepussy" class="main">OK</button>
         </div>
       </neon-animatable>
-      
 
       <neon-animatable data-route="namepussy">
         <div class="canvaspink">
@@ -259,7 +253,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 bind-value="{{poezennaam}}">
             </paper-input-container>
             <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
-          <button on-tap="" class="main">OK</button>
+          <button on-tap="gohome" class="main">OK</button>
         </div>
       </neon-animatable>
       
@@ -276,7 +270,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             bind-value="{{enteredpin}}">
           </paper-input-container>
             <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
-          <button on-tap="" class="main">OK</button>
+          <button on-tap="submitpin" class="main">OK</button>
         </div>
       </neon-animatable>
 
@@ -286,7 +280,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <button class="medium" on-tap="toHome">Terug</button>
         </div>
       </neon-animatable>
-
 
       <neon-animatable data-route="incoming">
         <div class="canvaspink">
@@ -300,7 +293,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </neon-animatable>
 
+      <neon-animatable data-route="home">
+        <div class="canvaspink">
+            <h1>Dit is jouw poes!</h1>
+            <poes-aai catnumber="{{poesinit}}"></poes-aai>
+            <div class="whitespace"></div>
+            <p>{{poezennaam}}</p>
+          <button on-tap="govalidate" class="main">Crush my pusss</button>
+        </div>
+      </neon-animatable>
+
     </neon-animated-pages>
+
   </template>
   <script>
   (function() {
@@ -314,6 +318,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           notify: true,
           observer: '_selected'
+        },
+
+        pincode: {
+          type: String,
+          value: function(){
+            return (Math.floor(Math.random()*90000) + 10000).toString();
+          },
+          notify: true
         },
 
         entryAnimation: {
@@ -339,15 +351,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.entryAnimation = 'slide-from-right-animation';
       },
 
-      // toHome: function(){
-      //   this.rout = 'home';
-      // },
-      // toStart: function(){
-      //   this.rout = 'start';
-      // },
-      // toSelectpussy: function(){
-      //   this.rout = 'selectpussy';
-      // },
       toNamepussy: function(){
         this.rout = 'namepussy';
       },
@@ -356,8 +359,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // this.subscribetoPin();
       },
 
+
+
       _memberstatus: function(){
         console.log("Memberstatus in poezenstage is", this.memberstatus);
+        if(this.memberstatus==1){
+          console.log("ik heb een member");
+          //document.location = '/#!/home';
+          //document.querySelector('app-router').go('/home');
+          this.rout = "home";
+        }
+      },
+
+      gohome: function(){
+        this.rout = 'home';
+      },
+
+      govalidate: function(){
+        this.rout = 'validate';
+      },
+
+      submitpin: function(){
+        var pin = this.enteredpin;
+        this.$.lomqtt.send(pin+"|validate|"+this.account+'|'+this.pincode, 2);
       }
 
     });
