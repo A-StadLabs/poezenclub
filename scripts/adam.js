@@ -1,3 +1,4 @@
+var console = require('winston');
 var mqtt = require('mqtt');
 var Web3 = require('web3');
 var lightwallet = require('eth-lightwallet');
@@ -20,7 +21,7 @@ global_keystore.passwordProvider = function(callback) {
   callback(null, 'testing')
 };
 
-account = global_keystore.getAddresses()[0];
+var account = fixaddress(global_keystore.getAddresses()[0]);
 console.log('Your account is ', account);
 
 web3 = new Web3();
@@ -39,10 +40,11 @@ var gasPrice;
 
 web3.eth.getGasPrice(function(err, result) {
 
-  var gasPrice = result.toNumber(10);
+  gasPrice = result.toNumber(10);
   console.log('gasprice is ', gasPrice);
 
   connectMQTT();
+  printBalance(account);
 
 });
 
@@ -70,17 +72,18 @@ function connectMQTT() {
     console.log(commandarray);
     switch (commandarray[0]) {
       case "requestmembership":
-        var memberaddress = commandarray[1];
+        var memberaddress = fixaddress(commandarray[1]);
         console.log('requestmembership for address ', memberaddress);
 
-        if (isMember(memberaddress)){
+        if (isMember(memberaddress)) {
           console.log('already a member');
-        }else{
+        } else {
           console.log('not a member yet');
           // TODO : maak hem member...
+          requestMembership(memberaddress);
         }
-
         break;
+
       default:
         console.log('unknown command:', commandarray[0]);
         break;
@@ -88,21 +91,42 @@ function connectMQTT() {
   });
 }
 
+var MyContract = web3.eth.contract(membershipcontract.abi);
+var myContractInstance = MyContract.at(membershipcontractaddress);
+
+myContractInstance.MemberAdded(function(err, res) {
+
+  console.log('MEMBERADDED triggered SUSKE');
+  console.log('err', err);
+  console.log('res', res);
+  printBalance(account);
+
+});
+
+
 function isMember(address) {
-  var MyContract = web3.eth.contract(membershipcontract.abi);
-  var myContractInstance = MyContract.at(membershipcontractaddress);
+  //  var MyContract = web3.eth.contract(membershipcontract.abi);
+  //  var myContractInstance = MyContract.at(membershipcontractaddress);
   var r = myContractInstance.membershipStatus(address);
   console.log('membershipStatus voor', address, '=', r.toNumber(10));
   return (r.toNumber(10) != 0);
 }
 
-
+// Add 0x to address 
+function fixaddress(address) {
+  if (!address.startsWith('0x')) {
+    return ('0x' + address);
+  }
+  return address;
+}
 
 function requestMembership(address) {
-  var MyContract = web3.eth.contract(membershipcontract.abi);
-  console.log("Mycontract: ", MyContract);
-  var myContractInstance = MyContract.at(contractaddress);
 
+  address = fixaddress(address);
+
+  // var MyContract = web3.eth.contract(membershipcontract.abi);
+  //console.log("Mycontract: ", MyContract);
+  //  var myContractInstance = MyContract.at(membershipcontractaddress);
 
   var options = {
     from: account,
@@ -112,11 +136,10 @@ function requestMembership(address) {
     nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
   };
 
-  var newMember = '0x' + myArgs._[1] || global_keystore.getAddresses()[2];
+  var newMember = fixaddress(address);
 
   console.log('adding member ', newMember);
   console.log('contract options', options);
-
 
   var result = myContractInstance.addMember.sendTransaction(newMember, options,
     function(err, result) {
@@ -125,11 +148,14 @@ function requestMembership(address) {
         console.log("ERROR: Transaction didn't go through. See console.");
       } else {
         console.log("Transaction Successful!");
-        console.log(result);
-        monitorBalances(newMember);
+        console.log("Transaction hash=", result);
+        printBalance(account);
       }
     }
   );
+}
 
-
+function printBalance(account) {
+  var wei = web3.eth.getBalance(account).toNumber(10);
+  console.log('Account', account, 'has Ξ', web3.fromWei(wei, 'ether'));
 }

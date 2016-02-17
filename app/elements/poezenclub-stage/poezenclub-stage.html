@@ -317,7 +317,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         rout: {
           type: String,
           notify: true,
-          observer: '_selected'
+          observer: 'landed'
         },
 
         pincode: {
@@ -342,17 +342,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      _selected: function(){
-        console.log('Hier de selected', this.rout);
-      },
 
       ready: function(){
         this.exitAnimation = 'slide-left-animation';
         this.entryAnimation = 'slide-from-right-animation';
       },
 
-      toNamepussy: function(){
-        this.rout = 'namepussy';
+      attached: function(){
+        if (!this.poezenclub){
+          this.go('selectpussy');
+        }
+      },
+      toNamepussy: function() {
+        this.go('namepussy');
       },
       mqttconnectedfire: function(){
         console.log("MQTT connected");
@@ -363,25 +365,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _memberstatus: function(){
         console.log("Memberstatus in poezenstage is", this.memberstatus);
-        if(this.memberstatus==1){
+//        if(this.memberstatus==1){
           //console.log("ik heb een member");
           //document.location = '/#!/home';
           //document.querySelector('app-router').go('/home');
-          this.rout = "home";
-        }
+          //this.rout = "home";
+//        }
       },
 
       gohome: function(){
-        this.rout = 'home';
+        this.go('home');
       },
 
+      go: function(state){
+        console.log('going to state',state);
+        this.rout = state;
+      },
+
+      landed: function(){
+        console.log('landed in state',this.rout);
+
+      },
+
+/*
       govalidate: function(){
         this.rout = 'validate';
       },
-
+*/
       submitpin: function(){
         var pin = this.enteredpin;
         this.$.lomqtt.send(pin,"validate|"+this.account+'|'+this.pincode, 2);
+      },
+      
+      initpoes: function(){
+        this.go("selectpussy");
+      },
+
+      localpoes: function(){
+        this.go("home");
       },
 
       msgreceived: function(e){
