@@ -364,7 +364,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _memberstatus: function(){
         console.log("Memberstatus in poezenstage is", this.memberstatus);
         if(this.memberstatus==1){
-          console.log("ik heb een member");
+          //console.log("ik heb een member");
           //document.location = '/#!/home';
           //document.querySelector('app-router').go('/home');
           this.rout = "home";
@@ -381,8 +381,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       submitpin: function(){
         var pin = this.enteredpin;
-        this.$.lomqtt.send(pin+"|validate|"+this.account+'|'+this.pincode, 2);
-      }
+        this.$.lomqtt.send(pin,"validate|"+this.account+'|'+this.pincode, 2);
+      },
+
+      msgreceived: function(e){
+        console.log("MSG received: ",e.detail);
+        // Split the motherfucking string!
+        var commandarray = e.detail.msg.split("|");
+        console.log(commandarray);
+        switch(commandarray[0]) {
+          case "membership":
+          console.log("Meneerke wil lid worden");
+          this.$.poezenpages.selected = 7;
+          this.nonmembername = commandarray[2];
+          this.askeraccount = commandarray[1];
+          break;
+
+          case "validate":
+          console.log("Meneerke wil zijn poes laten valideren");
+          this.incomingpussyname = commandarray[3];
+          this.incomingpin = commandarray[1];
+          this.incomingmember = commandarray[4];
+
+          this.contractaddresstowrite = commandarray[5];
+
+          
+
+          this.incomingpussypic = "../../images/poezen/poes"+commandarray[2]+".png";
+          this.$.poezenpages.selected = 9;
+          break;
+          
+          case "validatedone":
+          console.log("Validatie is done!");
+          this.$.poezenpages.selected = 6;
+          break;
+
+          case "doosisopen":
+          console.log("De doos is open");
+          this.$.poezenpages.selected = 12;
+          break;
+        };
+        
+      },
 
     });
   })();
