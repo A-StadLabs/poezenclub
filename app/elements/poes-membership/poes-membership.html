@@ -75,44 +75,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _web3: function() {
         var self = this;
 
-        if (this.contractjson && this.lomqttconnected){
+        if (this.contractjson && this.lomqttconnected) {
           // console.log("poes contract kent web3js ", this.web3);
           // console.log("contract adres van deze club=", this.contractaddress);
           this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
           // Start listening to contract state / event
-          
+
           // console.log("Ik ken web3 EN ik ken contactjson");
           this.memberstatus = this.membershipStatus();
-          if (this.memberstatus != 0){
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
           var myContractInstance = MyContract.at(self.contractaddress);
-          myContractInstance.MemberAdded(function(err,res){
-            console.log('dees vergelijking doen: ',res.args.invitee, " vs ", self.account);
-            if(res.args.invitee=="0x"+self.account){
-              self.memberstatus = 1;
+          if (this.memberstatus != 0) {
+            myContractInstance.MemberAdded(function(err, res) {
+              console.log('dees vergelijking doen: ', res.args.invitee, " vs ", self.account);
+              if (res.args.invitee == "0x" + self.account) {
+                self.memberstatus = 1;
               }
             });
           } else {
             console.log("Je ne suis pas un lid");
-            self.$.lomqtt.send("adam", "requestmembership"+"|"+self.account, 2);
+
+
+
+            myContractInstance.MemberAdded(function(err, res) {
+
+              self.memberstatus = 1;
+
+              console.log('MEMBERADDED triggered SUSKE');
+              console.log('err', err);
+              console.log('res', res);
+            });
+
+
+
+            self.$.lomqtt.send("adam", "requestmembership" + "|" + self.account, 2);
           }
 
 
-        }  
+        }
       },
 
       _balance: function() {
         console.log("current balance for account ", this.account, ": ", this.balance);
       },
 
-      handleResponse: function() {
-        this.contractjson = this.response;
-        this._web3();
-        //this.stichtNieuweClub();
-        this.memberstatus = this.membershipStatus();
-        console.log("IK BEN LID VAN DE CLUB=",this.memberstatus);
-        //this.runContract();
-      },
+      // handleResponse: function() {
+      //   this.contractjson = this.response;
+      //   this._web3();
+      //   //this.stichtNieuweClub();
+      //   this.memberstatus = this.membershipStatus();
+      //   console.log("IK BEN LID VAN DE CLUB=",this.memberstatus);
+      //   //this.runContract();
+      // },
 
       _keystore: function() {
         console.log("KEYSTORE: ", this.globalkeystore);
