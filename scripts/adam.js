@@ -1,4 +1,4 @@
-var console = require('winston');
+require('./logging');
 var mqtt = require('mqtt');
 var Web3 = require('web3');
 var lightwallet = require('eth-lightwallet');
@@ -9,6 +9,7 @@ var membershipcontract = require('../app/contracts/LocalsMembership.json');
 var membershipcontractaddress = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
 var host = "http://node1.ma.cx:8545";
 var keystoreFile = "adamswallet.json";
+
 
 web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider(host));
