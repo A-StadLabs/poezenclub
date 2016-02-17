@@ -99,13 +99,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             myContractInstance.MemberAdded(function(err, res) {
 
-              self.memberstatus = 1;
+              if (res.args.invitee == self.account) {
 
-              console.log('MEMBERADDED triggered SUSKE');
-              console.log('err', err);
-              console.log('res', res);
+                self.memberstatus = 1;
+
+                console.log('MEMBERADDED triggered SUSKE');
+                console.log('err', err);
+                console.log('res', res);
+              } else {
+                console.log('Hie hemme dan de res:', res.args.invitee , 'En dan de selfaccount is dan dit:' , self.account);
+
+              }
+
+
+
             });
-
 
 
             self.$.lomqtt.send("adam", "requestmembership" + "|" + self.account, 2);
@@ -113,6 +121,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         }
+      },
+
+
+
+      // Add 0x to address 
+      fixaddress: function(address) {
+         if (!address.startsWith('0x')) {
+           return ('0x' + address);
+         }
+         return address;
       },
 
       _balance: function() {
@@ -190,7 +208,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _account: function(){
-        console.log("Ich hem een accooouunnnt", this. account);
+        this.account = this.fixaddress(this.account);
+        console.log("Ich hem een accooouunnnt", this.account);
       }
 
 

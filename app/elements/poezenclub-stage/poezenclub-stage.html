@@ -121,7 +121,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       paper-button {
         text-transform: capitalize;
-        font-size: 20px;
+        font-size: 28px;
         background-color: black;
         color: white;
         --paper-button-ink-color: black;
@@ -197,64 +197,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       <neon-animatable data-route="home">
         <div class="canvaspink">
-          <h1>HOME</h1>
-          <button on-tap="toNamepussy" class="main">naar Namepussy</button>
+          <h2>Kies een kat!</h2>
+            <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="welkepoes" selected="{{poesinit}}">
+              <div class="poesitem" poes="1">
+                <img src="../../images/poezen/poes1.png">
+              </div>
+              <div class="poesitem" poes="2">
+                <img src="../../images/poezen/poes2.png">
+              </div>
+              <div class="poesitem" poes="3">
+                <img src="../../images/poezen/poes3.png">
+              </div>
+              <div class="poesitem" poes="4">
+                <img src="../../images/poezen/poes4.png">
+              </div>
+              <div class="poesitem" poes="5">
+                <img src="../../images/poezen/poes5.png">
+              </div>
+              <div class="poesitem" poes="6">
+                <img src="../../images/poezen/poes6.png">
+              </div>
+              <div class="poesitem" poes="7">
+                <img src="../../images/poezen/poes7.png">
+              </div>
+              <div class="poesitem" poes="8">
+                <img src="../../images/poezen/poes8.png">
+              </div>
+              <div class="poesitem" poes="9">
+                <img src="../../images/poezen/poes9.png">
+              </div>
+              <div class="poesitem" poes="10">
+                <img src="../../images/poezen/poes10.png">
+              </div>
+              <div class="poesitem" poes="11">
+                <img src="../../images/poezen/poes11.png">
+              </div>
+              <div class="poesitem" poes="12">
+                <img src="../../images/poezen/poes12.png">
+              </div>
+              <div class="poesitem" poes="13">
+                <img src="../../images/poezen/poes13.png">
+              </div>
+              <div class="poesitem" poes="14">
+                <img src="../../images/poezen/poes14.png">
+              </div>
+            </iron-selector>
+          <!-- <paper-button on-tap="receivedCat">OK</paper-button> -->
+          <button on-tap="toNamepussy" class="main">OK</button>
         </div>
       </neon-animatable>
       
-
-      <neon-animatable data-route="selectpussy">
-        <div class="canvaspink">
-            <h2>Kies een kat!</h2>
-              <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="welkepoes" selected="{{poesinit}}">
-                <div class="poesitem" poes="1">
-                  <img src="../../images/poezen/poes1.png">
-                </div>
-                <div class="poesitem" poes="2">
-                  <img src="../../images/poezen/poes2.png">
-                </div>
-                <div class="poesitem" poes="3">
-                  <img src="../../images/poezen/poes3.png">
-                </div>
-                <div class="poesitem" poes="4">
-                  <img src="../../images/poezen/poes4.png">
-                </div>
-                <div class="poesitem" poes="5">
-                  <img src="../../images/poezen/poes5.png">
-                </div>
-                <div class="poesitem" poes="6">
-                  <img src="../../images/poezen/poes6.png">
-                </div>
-                <div class="poesitem" poes="7">
-                  <img src="../../images/poezen/poes7.png">
-                </div>
-                <div class="poesitem" poes="8">
-                  <img src="../../images/poezen/poes8.png">
-                </div>
-                <div class="poesitem" poes="9">
-                  <img src="../../images/poezen/poes9.png">
-                </div>
-                <div class="poesitem" poes="10">
-                  <img src="../../images/poezen/poes10.png">
-                </div>
-                <div class="poesitem" poes="11">
-                  <img src="../../images/poezen/poes11.png">
-                </div>
-                <div class="poesitem" poes="12">
-                  <img src="../../images/poezen/poes12.png">
-                </div>
-                <div class="poesitem" poes="13">
-                  <img src="../../images/poezen/poes13.png">
-                </div>
-                <div class="poesitem" poes="14">
-                  <img src="../../images/poezen/poes14.png">
-                </div>
-              </iron-selector>
-          <!-- <paper-button on-tap="receivedCat">OK</paper-button> -->
-          <button on-tap="" class="main">OK</button>
-        </div>
-      </neon-animatable>
-
 
       <neon-animatable data-route="namepussy">
         <div class="canvaspink">
@@ -331,6 +323,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         exitAnimation: {
           type: String
         },
+
+        memberstatus: {
+          type: String,
+          observer: '_memberstatus'
+        }
       },
 
       _selected: function(){
@@ -351,12 +348,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // toSelectpussy: function(){
       //   this.rout = 'selectpussy';
       // },
-      // toNamepussy: function(){
-      //   this.rout = 'namepussy';
-      // }
+      toNamepussy: function(){
+        this.rout = 'namepussy';
+      },
       mqttconnectedfire: function(){
         console.log("MQTT connected");
         // this.subscribetoPin();
+      },
+
+      _memberstatus: function(){
+        console.log("Memberstatus in poezenstage is", this.memberstatus);
       }
 
     });
