@@ -3,6 +3,9 @@
 
 > A starting point for building web applications with Polymer 1.0
 
+Why don't you run your own little ethereum node on testnet?
+geth --testnet --rpc  --rpcaddr "127.0.0.1" --rpcport "8545" --rpcapi "db,eth,net,web3" --rpccorsdomain "*" console
+
 ### Included out of the box:
 
 * [Polymer](https://www.polymer-project.org/), [Paper](https://elements.polymer-project.org/browse?package=paper-elements), [Iron](https://elements.polymer-project.org/browse?package=iron-elements) and [Neon](https://elements.polymer-project.org/browse?package=neon-elements) elements
