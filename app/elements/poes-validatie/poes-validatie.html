@@ -116,7 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('aantal validations=',this.validations);
       },
 
-      addValidation: function(validatorAddress) {
+      addValidation: function(contractAddress,cb) {
         var self = this;
         this.web3.eth.getGasPrice(function(err, result) {
 
@@ -124,7 +124,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           // creation of contract object
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
-          var myContractInstance = MyContract.at(validatorAddress);
+          var myContractInstance = MyContract.at(contractAddress);
 
           var options = {
             from: self.account,
@@ -134,7 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
           };
 
-          console.log('contract to validate ', validatorAddress);
+          console.log('contract to validate ', contractAddress);
           console.log('contract options', options);
 
 
@@ -155,6 +155,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             console.log('ValidationAdded triggered SUSKE');
             console.log('err', err);
             console.log('res', res);
+
+            cb(err,res);
 
             self._getValidations();
 
@@ -215,63 +217,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _keystore: function() {
 //        console.log("KEYSTORE: ", this.globalkeystore);
-      },
-
-      validationStatus: function(account){
-        var myContract = this.web3.eth.contract(this.contractjson.abi);
-        var contractinstance = myContract.at(this.contractaddress);
-        var r = contractinstance.countValidations();
-        console.log('result van MS voor',this.account,'=',r.toNumber(10));
-        return r.toNumber(10);
-      },
-
-      addMember: function(newMemberAddress,cb) {
-        var self = this;
-
-
-        this.web3.eth.getGasPrice(function(err, result) {
-
-          var gasPrice = result.toNumber(10);
-
-              // creation of contract object
-              var MyContract = self.web3.eth.contract(self.contractjson.abi);
-              var myContractInstance = MyContract.at(self.contractaddress);
-
-              var options = {
-                from: self.account,
-                value: 6 * 1e18,
-                gas: 3141590,
-                gasPrice: gasPrice,
-                nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
-              };
-
-              var newMember = '0x' + newMemberAddress;
-
-              console.log('adding member ',newMember);
-              console.log('contract options',options);
-
-
-              var result = myContractInstance.addMember.sendTransaction(newMember, options,
-                function(err, result) {
-                  if (err != null) {
-                    console.log(err);
-                    console.log("ERROR: Transaction didn't go through. See console.");
-                  } else {
-                    console.log("Transaction Successful!");
-                    console.log(result);              
-                  }
-                }
-              );
-
-              myContractInstance.MemberAdded(function(err,res){
-
-                self.memberstatus = 1;
-
-                console.log('MEMBERADDED triggered SUSKE');
-                console.log('err',err);
-                console.log('res',res);
-              });
-      });
       },
 
       _validations: function(){

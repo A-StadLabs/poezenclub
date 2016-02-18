@@ -387,7 +387,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       landed: function(){
         console.log('landed in state',this.rout);
-
       },
 
 
@@ -408,19 +407,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.go("home");
       },
 
+      validateRequest: function() {
+        this.$.poesvalidatie.addValidation(this.contractaddresstowrite, function(err, res) {
+          // nu is de validatsie gebeurd
+          console.log("Validatie is done!");
+          this.go('home');
+        })
+      },
+
       msgreceived: function(e) {
         console.log("MSG received: ", e.detail);
         // Split the motherfucking string!
         var commandarray = e.detail.msg.split("|");
         console.log(commandarray);
         switch (commandarray[0]) {
-          case "membership":
+          /*
+            case "membership":
             console.log("Meneerke wil lid worden");
             this.$.poezenpages.selected = 7;
             this.nonmembername = commandarray[2];
             this.askeraccount = commandarray[1];
             break;
-
+  */
           case "validate":
             console.log("Meneerke wil zijn poes laten valideren");
             this.incomingpussyname = commandarray[3];
@@ -428,14 +436,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.incomingmember = commandarray[4];
             this.contractaddresstowrite = commandarray[5];
             this.incomingpussypic = "../../images/poezen/poes" + commandarray[2] + ".png";
-            this.$.poezenpages.selected = 9;
-            break;
+            //          this.$.poezenpages.selected = 9;
+            this.go('incoming');
 
-          case "validatedone":
+            break;
+            /*        
+            case "validatedone":
             console.log("Validatie is done!");
             this.$.poezenpages.selected = 6;
             break;
-
+  */
           case "doosisopen":
             console.log("De doos is open");
             this.$.poezenpages.selected = 12;

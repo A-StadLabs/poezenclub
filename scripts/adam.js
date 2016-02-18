@@ -10,6 +10,9 @@ var membershipcontractaddress = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
 var host = "http://node1.ma.cx:8545";
 var keystoreFile = "adamswallet.json";
 
+var validationcontract = require('../app/contracts/LocalsValidation.json');
+
+
 
 web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider(host));
@@ -84,6 +87,13 @@ function connectMQTT() {
           requestMembership(memberaddress);
         }
         break;
+      case "validate":
+        var contractaddress = fixaddress(commandarray[1]);
+        console.log('validate for contractaddress ', contractaddress);
+        validate(contractaddress, function(err, res) {
+          console.log('validated');
+        });
+        break;
 
       default:
         console.log('unknown command:', commandarray[0]);
@@ -104,6 +114,54 @@ myContractInstance.MemberAdded(function(err, res) {
 
 });
 
+
+function validate(contractaddress, cb) {
+
+  web3.eth.getGasPrice(function(err, result) {
+
+    var gasPrice = result.toNumber(10);
+
+    // creation of contract object
+    var Myvalidationcontract = web3.eth.contract(validationcontract.abi);
+    var myContractInstance = Myvalidationcontract.at(contractaddress);
+
+    var options = {
+      from: account,
+      value: 3.5 * 1e18,
+      gas: 3141590,
+      gasPrice: gasPrice,
+      nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
+    };
+
+    console.log('contract to validate ', contractaddress);
+    console.log('contract options', options);
+
+
+    var result = myContractInstance.addValidation.sendTransaction(options,
+      function(err, result) {
+        if (err != null) {
+          console.log(err);
+          console.log("ERROR: Transaction didn't go through. See console.");
+        } else {
+          console.log("Transaction Successful!");
+          console.log(result);
+        }
+      }
+    );
+
+    myContractInstance.ValidationAdded(function(err, res) {
+
+      console.log('ValidationAdded triggered SUSKE');
+      console.log('err', err);
+      console.log('res', res);
+
+      cb(err, res);
+
+    });
+  });
+
+
+}
 
 function isMember(address) {
   //  var MyContract = web3.eth.contract(membershipcontract.abi);
