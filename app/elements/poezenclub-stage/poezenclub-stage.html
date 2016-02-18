@@ -286,11 +286,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <neon-animatable data-route="incoming">
         <div class="canvaspink">
           <div class="eighty">
-            <h2>Hier de msg van mqtt dan? En ook als die echt keilang is, mor echt echt SuuuuuuperLang wette wel</h2>
+            <h2>{{incomingpussyname}}</h2>
+            <img src="{{incomingpussypic}}" />
+            <p>{{contractaddresstowrite}}</p>
           </div>
           <div class="layout horizontal center">
             <button class="medium" on-tap="toHome">Annuleren</button>
-            <button class="main">Valideren</button>
+            <button class="main" on-tap="validateRequest">Valideren</button>
           </div>
         </div>
       </neon-animatable>
