@@ -361,7 +361,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // this.subscribetoPin();
       },
 
-
+      welkepoes: function(){
+        console.log('je koos poes');
+      },
 
       _memberstatus: function(){
         console.log("Memberstatus in poezenstage is", this.memberstatus);
@@ -387,11 +389,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
-/*
+
       govalidate: function(){
-        this.rout = 'validate';
+        this.go('validate');
       },
-*/
+
       submitpin: function(){
         var pin = this.enteredpin;
         this.$.lomqtt.send(pin,"validate|"+this.account+'|'+this.pincode, 2);
