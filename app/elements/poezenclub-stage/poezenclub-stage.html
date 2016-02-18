@@ -408,8 +408,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.go("home");
       },
 
-      msgreceived: function(e) {
-        console.log("MSG received: ", e.detail);
+
+      govalidate: function(){
+        this.go("validate");
+      },
+
+      msgreceived: function(e){
+        console.log("MSG received: ",e.detail);
         // Split the motherfucking string!
         var commandarray = e.detail.msg.split("|");
         console.log(commandarray);
