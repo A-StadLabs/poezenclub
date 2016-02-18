@@ -158,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <iron-localstorage name="poezenclub" value="{{poesinit}}"
       on-iron-localstorage-load-empty="initpoes" on-iron-localstorage-load="localpoes"></iron-localstorage>
 
-      <iron-localstorage name="poezennaam" value="{{poezennaam}}"></iron-localstorage>
+      <iron-localstorage name="poezennaam" value="{{poezennaam}}" on-iron-localstorage-load-empty="pussyCheck" ></iron-localstorage>
 
       <iron-localstorage name="baasje" value="{{baasjenaam}}"></iron-localstorage>
 
@@ -177,7 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" on-contract-ready="_poescontractready">
         </poes-membership>
 
-    <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node1.ma.cx:8545"></alabs-web3js>
+    <alabs-web3js id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node1.ma.cx:8545"></alabs-web3js>
 
     <neon-animated-pages selected="{{rout}}" 
             entry-animation="{{entryAnimation}}"
@@ -295,11 +295,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <neon-animatable data-route="home">
         <div class="canvaspink">
-            <h1>Dit is jouw poes!</h1>
+<!--             <p>Dit is jouw poes!</p> -->
+            <h1>{{poezennaam}}</h1>
             <poes-aai catnumber="{{poesinit}}"></poes-aai>
             <div class="whitespace"></div>
-            <p>{{poezennaam}}</p>
-          <button on-tap="govalidate" class="main">Crush my pusss</button>
+
+            <template is="dom-if" if="{{!hasadress}}">
+              <div><p>Valideren wordt geladen</p></div>
+            </template>
+            <template is="dom-if" if="{{hasadress}}">
+              <button on-tap="govalidate" class="main">Crush my pusss</button>
+            </template>
         </div>
       </neon-animatable>
 
@@ -337,8 +343,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         memberstatus: {
-          type: String,
+          type: Number,
           observer: '_memberstatus'
+        },
+
+        contractaddress: {
+          type: String,
+          observer: '_contractaddress'          
         }
       },
 
@@ -349,10 +360,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       attached: function(){
-        if (!this.poezenclub){
+        this.pussyCheck();
+      },
+
+      pussyCheck: function(){
+
+        if (!this.poezennaam){
+          this.go('namepussy');
+        }
+        if (!this.poezenclub && !this.poezennaam){
           this.go('selectpussy');
         }
+
+
+
       },
+
+
       toNamepussy: function() {
         this.go('namepussy');
       },
@@ -367,12 +391,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _memberstatus: function(){
         console.log("Memberstatus in poezenstage is", this.memberstatus);
-//        if(this.memberstatus==1){
-          //console.log("ik heb een member");
-          //document.location = '/#!/home';
-          //document.querySelector('app-router').go('/home');
-          //this.rout = "home";
-//        }
+        if(!this.memberstatus){
+          this.go('start');
+         }; 
+        if(this.memberstatus == 1) {
+          this.pussyCheck();
+        };
       },
 
       gohome: function(){
@@ -403,6 +427,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       initpoes: function(){
         this.go("selectpussy");
       },
+
+
+      // namepoes: function(){
+      //   this.go("namepussy");
+      // },
+
 
       localpoes: function(){
         this.go("home");
@@ -442,6 +472,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             break;
         };
 
+      },
+
+      _contractaddress:function(){
+        console.log('Hemme me hiete een contractaddresske' , this.contractaddress);
+        if (!this.contractaddress){
+          this.hasadress = false;
+        } else {
+          this.hasadress = true;
+
+        }
       },
 
     });
