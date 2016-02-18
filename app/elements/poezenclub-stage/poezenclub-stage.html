@@ -444,21 +444,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   */
           case "validate":
             console.log("Meneerke wil zijn poes laten valideren");
-            this.incomingpussyname = commandarray[3];
-            this.incomingpin = commandarray[1];
-            this.incomingmember = commandarray[4];
-            this.contractaddresstowrite = commandarray[5];
+            this.incomingpussyname = commandarray[1];
             this.incomingpussypic = "../../images/poezen/poes" + commandarray[2] + ".png";
-            //          this.$.poezenpages.selected = 9;
+            this.contractaddresstowrite = commandarray[3];
+            this.incomingpin = commandarray[4];
             this.go('incoming');
-
             break;
-            /*        
-            case "validatedone":
+          case "validatedone":
             console.log("Validatie is done!");
-            this.$.poezenpages.selected = 6;
+//            this.$.poezenpages.selected = 6;
             break;
-  */
           case "doosisopen":
             console.log("De doos is open");
             this.$.poezenpages.selected = 12;
