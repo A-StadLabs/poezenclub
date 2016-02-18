@@ -70,7 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.contracturl = this.resolveUrl('../../contracts/LocalsValidation.json');
         this.importHref(this.contracturl, function(e) { 
           // console.log(e.target.import.body.innerText);
-          self.contractjson = e.target.import.body.innerText;
+          self.contractjson = JSON.parse(e.target.import.body.innerText);
           self._initcontract();
         }, function(e) {
           console.log('ERROR!');
