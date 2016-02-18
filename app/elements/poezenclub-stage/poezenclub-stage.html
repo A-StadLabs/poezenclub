@@ -400,7 +400,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       submitpin: function(){
         var pin = this.enteredpin;
-        this.$.lomqtt.send(pin,"validate|"+this.account+'|'+this.pincode, 2);
+        this.$.lomqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poezenclub+"|"+this.contractaddress+"|"+this.pincode, 2);
       },
       
       initpoes: function(){
