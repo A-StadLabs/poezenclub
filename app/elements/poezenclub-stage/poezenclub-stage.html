@@ -298,6 +298,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </neon-animatable>
 
+      <neon-animatable data-route="openbox">
+        <div class="canvaspink">
+          <div class="eighty">
+            <h2>Check de code op de poezendoos</h2>
+          </div>
+          <paper-input-container no-label-float>
+            <label class="centertexting">pincode</label>
+            <input autofocus class="centertexting"
+            is="iron-input"
+            prevent-invalid-input
+            bind-value="{{boxpin}}">
+          </paper-input-container>
+            <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
+          <button on-tap="submitboxpin" class="main">OK</button>
+        </div>
+      </neon-animatable>
+
       <neon-animatable data-route="home">
         <div class="canvaspink">
 <!--             <p>Dit is jouw poes!</p> -->
@@ -310,6 +327,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
             <template is="dom-if" if="{{hasadress}}">
               <button on-tap="govalidate" class="main">Crush my pusss</button>
+            </template>
+            <template is="dom-if" if="{{memberstatus}}">
+              <button on-tap="openbox" class="main">Open de poezendoos</button>
             </template>
         </div>
       </neon-animatable>
@@ -458,6 +478,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.go("validate");
       },
 
+      openbox: function(){
+        this.go('openbox');
+      },
+
       msgreceived: function(e){
         console.log("MSG received: ",e.detail);
 
@@ -502,6 +526,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         }
       },
+
+      submitboxpin: function(){
+        console.log(this.boxpin);
+        var pin = this.boxpin;
+        this.$.lomqtt.send("poezendoos/"+pin,"checkContract"+"|"+this.contractaddress+"|"+this.pincode, 2);
+      }
 
     });
   })();
