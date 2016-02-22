@@ -25,7 +25,7 @@ global_keystore.passwordProvider = function(callback) {
 
 console.log("Your wallet accounts:",global_keystore.getAddresses());
 
-var account = fixaddress(global_keystore.getAddresses()[0]);
+var account = fixaddress(global_keystore.getAddresses()[0].toString());
 console.log('Your first account is ', account);
 
 web3 = new Web3();
