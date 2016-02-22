@@ -320,7 +320,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="eighty">
             <h2>Neem uw koekje</h2>
           </div>
-
             <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
           <button on-tap="closebox" class="main">Sluit de doos</button>
         </div>
@@ -336,10 +335,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="{{!hasadress}}">
               <div><p>Valideren wordt geladen</p></div>
             </template>
-            <template is="dom-if" if="{{hasadress}}">
+            <template is="dom-if" if="{{memberstatus}}">
               <button on-tap="govalidate" class="main">Crush my pusss</button>
             </template>
-            <template is="dom-if" if="{{memberstatus}}">
+            <template is="dom-if" if="{{validated}}">
               <button on-tap="openbox" class="main">Open de poezendoos</button>
             </template>
         </div>
@@ -523,10 +522,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           case "validatedone":
             console.log("Validatie is done!");
 //            this.$.poezenpages.selected = 6;
+            this.go("home");
             break;
           case "doosisopen":
             console.log("De doos is open");
-            this.$.poezenpages.selected = 12;
+            //this.$.poezenpages.selected = 12;
+            this.go("boxisopen");
             break;
         };
 
@@ -545,7 +546,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log(this.boxpin);
         var pin = this.boxpin;
         this.$.lomqtt.send("poezendoos/"+pin,"checkContract"+"|"+this.contractaddress+"|"+this.pincode, 2);
+        this.go("boxisopen");
+      },
+
+      closebox: function(){
+        this.$.lomqtt.send("poezendoos/"+this.boxpin,"sluitDoos", 2);
+        this.go("home");
       }
+
+
 
     });
   })();
