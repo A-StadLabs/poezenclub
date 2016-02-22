@@ -174,7 +174,8 @@ function isMember(address) {
 
 // Add 0x to address 
 function fixaddress(address) {
-  if (!address.startsWith('0x')) {
+  console.log("Fix address",address);
+  if (!address.toString().startsWith('0x')) {
     return ('0x' + address);
   }
   return address;
