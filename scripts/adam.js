@@ -23,8 +23,10 @@ global_keystore.passwordProvider = function(callback) {
   callback(null, 'testing')
 };
 
+console.log("Your wallet accounts:",global_keystore.getAddresses());
+
 var account = fixaddress(global_keystore.getAddresses()[0]);
-console.log('Your account is ', account);
+console.log('Your first account is ', account);
 
 web3 = new Web3();
 var provider = new HookedWeb3Provider({
