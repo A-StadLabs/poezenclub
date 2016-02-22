@@ -7,7 +7,7 @@ var fs = require('fs');
 
 var membershipcontract = require('../app/contracts/LocalsMembership.json');
 var membershipcontractaddress = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
-var host = "http://127.0.0.1:8545";
+var host = "http://kingflurkel.dtdns.net:8545";
 var keystoreFile = "adamswallet.json";
 
 var validationcontract = require('../app/contracts/LocalsValidation.json');
@@ -86,7 +86,7 @@ function connectMQTT() {
         }
         break;
       case "validate":
-        var contractaddress = fixaddress(commandarray[1]);
+        var contractaddress = fixaddress(commandarray[3]);
         console.log('validate for contractaddress ', contractaddress);
         validate(contractaddress, function(err, res) {
           console.log('validated');
