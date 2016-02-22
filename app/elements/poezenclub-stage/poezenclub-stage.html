@@ -415,7 +415,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
       _validationschanged: function(){
-        this.go('home');
+        if (this.validations > 0){
+          this.go('home');          
+        }
+        if (this.validations > 1){
+          console.log('ik zen gevalideerd');
+          this.go('home');                    
+        }
       },
 
       toNamepussy: function() {
