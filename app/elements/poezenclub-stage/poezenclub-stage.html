@@ -385,6 +385,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         contractaddress: {
           type: String,
           observer: '_contractaddress'          
+        },
+        validations: {
+          type: Number,
+          observer: '_validationschanged'          
         }
       },
 
@@ -410,7 +414,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       },
-
+      _validationschanged: function(){
+        this.go('home');
+      },
 
       toNamepussy: function() {
         this.go('namepussy');
