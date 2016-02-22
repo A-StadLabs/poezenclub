@@ -175,11 +175,14 @@ function isMember(address) {
 // Add 0x to address 
 function fixaddress(address) {
   console.log("Fix address",address);
-  address = "" + address;
-  if (!address.startsWith('0x')) {
+  if (!strStartsWith(address,'0x')) {
     return ('0x' + address);
   }
   return address;
+}
+
+function strStartsWith(str, prefix) {
+    return str.indexOf(prefix) === 0;
 }
 
 function requestMembership(address) {
