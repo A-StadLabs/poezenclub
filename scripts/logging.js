@@ -5,8 +5,10 @@ var util = require('util'),
     logger = new winston.Logger(),
     production = (process.env.NODE_ENV || '').toLowerCase() === 'production';
 
+require('winston-papertrail').Papertrail;
+
 module.exports = {
-    middleware: function(req, res, next){
+    middleware: function(req, res, next) {
         console.info(req.method, req.url, res.statusCode);
         next();
     },
@@ -14,7 +16,7 @@ module.exports = {
 };
 
 // Override the built-in console methods with winston hooks
-switch((process.env.NODE_ENV || '').toLowerCase()){
+switch ((process.env.NODE_ENV || '').toLowerCase()) {
     case 'production':
         production = true;
         logger.add(winston.transports.File, {
@@ -33,25 +35,30 @@ switch((process.env.NODE_ENV || '').toLowerCase()){
             timestamp: true,
             level: 'info'
         });
+        logger.add(winston.transports.Papertrail,{
+            host: 'logs3.papertrailapp.com',
+            port: 16283
+        });
+
         break;
 }
 
-function formatArgs(args){
+function formatArgs(args) {
     return [util.format.apply(util.format, Array.prototype.slice.call(args))];
 }
 
-console.log = function(){
+console.log = function() {
     logger.info.apply(logger, formatArgs(arguments));
 };
-console.info = function(){
+console.info = function() {
     logger.info.apply(logger, formatArgs(arguments));
 };
-console.warn = function(){
+console.warn = function() {
     logger.warn.apply(logger, formatArgs(arguments));
 };
-console.error = function(){
+console.error = function() {
     logger.error.apply(logger, formatArgs(arguments));
 };
-console.debug = function(){
+console.debug = function() {
     logger.debug.apply(logger, formatArgs(arguments));
 };

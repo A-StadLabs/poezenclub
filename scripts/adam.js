@@ -23,8 +23,8 @@ global_keystore.passwordProvider = function(callback) {
   callback(null, 'testing')
 };
 
-console.log("Your wallet accounts:",global_keystore.getAddresses());
-console.log("it s a",typeof global_keystore.getAddresses()[0]);
+console.log("Your wallet accounts:", global_keystore.getAddresses());
+console.log("it s a", typeof global_keystore.getAddresses()[0]);
 
 var account = fixaddress(global_keystore.getAddresses()[0].toString());
 console.log('Your first account is ', account);
@@ -174,15 +174,15 @@ function isMember(address) {
 
 // Add 0x to address 
 function fixaddress(address) {
-  console.log("Fix address",address);
-  if (!strStartsWith(address,'0x')) {
+  console.log("Fix address", address);
+  if (!strStartsWith(address, '0x')) {
     return ('0x' + address);
   }
   return address;
 }
 
 function strStartsWith(str, prefix) {
-    return str.indexOf(prefix) === 0;
+  return str.indexOf(prefix) === 0;
 }
 
 function requestMembership(address) {
