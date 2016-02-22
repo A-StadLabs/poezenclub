@@ -187,7 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <neon-animatable data-route="start">
         <div class="canvaspink">
-          <poezenclub-loader loadmsg="Je gebruikt d'app voor de eerste keer."></poezenclub-loader>
+          <poezenclub-loader id="loader" loadmsg="Je gebruikt d'app voor de eerste keer."></poezenclub-loader>
         </div>
       </neon-animatable>
       
@@ -457,6 +457,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       submitpin: function(){
         var pin = this.enteredpin;
         this.$.lomqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poesinit+"|"+this.contractaddress+"|"+this.pincode, 2);
+        this.$.loader.loadmsg = "Validatie wordt gemined";
+
+        this.go("start");
       },
       
       initpoes: function(){
@@ -474,10 +477,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       validateRequest: function() {
+        var self = this;
         this.$.poesvalidatie.addValidation(this.contractaddresstowrite, function(err, res) {
           // nu is de validatsie gebeurd
           console.log("Validatie is done!");
-          this.go('home');
+          self.go('home');
         })
       },
 
