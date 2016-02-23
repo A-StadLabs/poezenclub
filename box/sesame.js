@@ -4,6 +4,8 @@ var serialPort = new SerialPort("/dev/ttyAMA0", {
   baudrate: 19200
 }, false); // this is the openImmediately flag [default is true]
 var host = "http://kingflurkel.dtdns.net:8545";
+var mqtt = require('mqtt');
+var client = mqtt.connect('ws://opantwerpen.be:15674');
 
 var Web3 = require('web3');
 var contractabi = {
@@ -127,9 +129,6 @@ serialPort.open(function(error) {
     console.log('open');
     schrijflcd("Welkom bij de poezendoos");
 
-    var mqtt = require('mqtt');
-    var client = mqtt.connect('ws://opantwerpen.be:15674');
-
     web3.setProvider(new web3.providers.HttpProvider(host));
 
     client.on('connect', function() {
@@ -177,6 +176,7 @@ serialPort.open(function(error) {
       };
       if (commandarray[0] === 'sluitDoos') {
         console.log('doos gaat dicht.');
+        client.unsubscribe('poezendoos/' + code);
         closeDoor();
       }
 
