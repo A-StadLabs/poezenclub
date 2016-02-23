@@ -420,8 +420,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         if (this.validations > 1){
           console.log('ik zen gevalideerd');
-          this.go('home');                    
+          this.go('home');
+          this.validated = true;
+
         }
+
+
       },
 
       toNamepussy: function() {
