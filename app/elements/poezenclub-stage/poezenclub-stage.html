@@ -335,16 +335,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="{{!hasadress}}">
               <div><p>Valideren wordt geladen</p></div>
             </template>
-            <template is="dom-if" if="{{memberstatus}}">
-              <div class="vertical layout">
-                <poes-validatordetail poesid="2" poezennaam="Johnny" valid on-validate="govalidate">
+<!--             <template is="dom-if" if="{{memberstatus}}"> -->  
+
+      <iron-localstorage name="validator1" value="{{poesobject1}}" on-iron-localstorage-load-empty="initpoes1"></iron-localstorage>
+    <iron-localstorage name="validator2" value="{{poesobject2}}" on-iron-localstorage-load-empty="initpoes2"></iron-localstorage>
+
+            <div class="vertical layout">
+                <poes-validatordetail poesobject="{{poesobject1}}" on-validate="govalidate">
                 </poes-validatordetail>
-                <poes-validatordetail poesid="2" poezennaam="Johnny" valid on-validate="govalidate">
+                <poes-validatordetail poesobject="{{poesobject2}}" on-validate="govalidate">
                 </poes-validatordetail>
               </div>
               <button on-tap="govalidate" class="main">Crush my pusss</button>
-            </template>
-            <template is="dom-if" if="{{validated}}">
+<!--             </template>
+ -->            <template is="dom-if" if="{{validated}}">
               <button on-tap="openbox" class="main">Open de poezendoos</button>
             </template>
         </div>
@@ -574,7 +578,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       closebox: function(){
         this.$.lomqtt.send("poezendoos/"+this.boxpin,"sluitDoos", 2);
         this.go("home");
-      }
+      },
+
+      initpoes1: function(){
+        
+        var poes1 = { 'state': 0,
+                      'avatar': "leeg",
+                     'naam': "lege naam",
+                     'adres': "leeg adres" };
+        this.poesobject1 = JSON.stringify(poes1);
+
+      },
+
+      initpoes2: function(){
+        
+        var poes2 = { 'state': 0,
+                      'avatar': "leeg",
+                     'naam': "lege naam",
+                     'adres': "leeg adres" };
+        this.poesobject2 = JSON.stringify(poes2);
+
+      },
+
+      // val1empty: function(){
+      //   this.validator1 = false;
+      //   console.log("validator1: ", this.validator1);
+      // },
+
+      // val2empty: function(){
+      //   this.validator2 = true;
+      //   console.log("validator2: ", this.validator2);
+      // }
 
 
 

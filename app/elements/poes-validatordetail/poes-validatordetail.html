@@ -17,6 +17,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
+
+    
+
     <template is="dom-if" if="{{valid}}">
       <div><img src="{{poesavatar}}" /></div>
       <div>{{poezennaam}}</div>
@@ -27,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div>...</div>
       <button on-tap="validate">Add validator</button>
     </template>
+  
   </template>
   <script>
   (function() {
@@ -36,20 +40,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'poes-validatordetail',
 
       properties: {
-        poesid: {
+        poesobject: {
           type: String,
-          observer: "_setPuss"
+          notify: true
+        },
+        valid: {
+          type: Boolean,
+          value: true
         }
       },
 
-      _setPuss: function(){
-        console.log("../../images/poezen/poes"+this.poesid+".png");
-        this.poesavatar = "../../images/poezen/poes"+this.poesid+".png";
-      },
+      
 
       validate: function(){
         this.fire('validate');
       }
+
+      
 
     });
   })();
