@@ -62,26 +62,11 @@ web3 = new Web3();
 
 function schrijflcd(text, cb) {
   console.log("Writing to LCD:", text);
-  serialPort.write(String.fromCharCode(17) + String.fromCharCode(12) + text, function(err, results) {
+  serialPort.write(String.fromCharCode(17) + String.fromCharCode(12) + (text + "                                ").substring(0,32), function(err, results) {
     //serialPort.close();
     console.log("Done writing to LCD");
     if (cb) cb();
   });
-
-  //      serialPort.on('data', function(data) {
-  //        console.log('data received: ' + data);
-  //      });
-  /*
-        serialPort.write(String.fromCharCode(17), function(err, results) {
-          serialPort.write(String.fromCharCode(12), function(err, results) {
-            serialPort.write(tekst, function(err, results) {
-              //serialPort.close();
-              if (cb) cb();
-            });
-          });
-        });
-        */
-  //  });
 }
 
 var lidstatus = "closed";
