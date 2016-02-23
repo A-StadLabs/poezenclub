@@ -108,7 +108,7 @@ function beweeglid(command, cb) {
 }
 
 function doelid(command, cb) {
-  child = exec("./motor 730 0 " + command, function(error, stdout, stderr) {
+  child = exec(__dirname + "/motor 730 0 " + command, function(error, stdout, stderr) {
     if (error !== null) {
       console.log('exec error: ' + error);
     }
