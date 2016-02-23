@@ -64,7 +64,9 @@ var writingtothelcd = false;
 function schrijflcd(text, cb) {
   if (writingtothelcd === true) {
     console.log('still writing to the LCD... queueing command');
-    return setTimeout(schrijflcd(text), 500);
+    return setTimeout(function() {
+      schrijflcd(text)
+    }, 500);
   }
   console.log("Writing to LCD: [" + text + "]");
   writingtothelcd = true;
