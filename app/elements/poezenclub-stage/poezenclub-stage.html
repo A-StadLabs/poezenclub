@@ -77,9 +77,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-      poezenclub-loader {
-/*        width: 150px;
-*/      }
+      #memberloader {
+        padding: 25px;
+        border-box:box-sizing;
+
+        width: 250px;
+      }
 
 
 
@@ -301,27 +304,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <poes-aai catnumber="{{poezenimage}}"></poes-aai>
   <div class="whitespace"></div>
 
-  <template is="dom-if" if="{{!hasadress}}">
+<!--   <template is="dom-if" if="{{!hasadress}}">
     <div>
       <p>Valideren wordt geladen</p>
     </div>
-  </template>
-  <template is="dom-if" if="{{ismember}}">
-    IK ZEN MEMBER
-  </template>
-  <iron-localstorage name="validator1" value="{{poesobject1}}" on-iron-localstorage-load-empty="initpoes1"></iron-localstorage>
-  <iron-localstorage name="validator2" value="{{poesobject2}}" on-iron-localstorage-load-empty="initpoes2"></iron-localstorage>
+  </template> -->
 
-  <div class="vertical layout">
-    <poes-validatordetail poesobject="{{poesobject1}}" on-validate="govalidate"></poes-validatordetail>
-    <poes-validatordetail poesobject="{{poesobject2}}" on-validate="govalidate"></poes-validatordetail>
-  </div>
-  <button on-tap="govalidate" class="main">Crush my pusss</button>
-  <!--             </template>
-  -->
-  <template is="dom-if" if="{{validated}}">
-    <button on-tap="openbox" class="main">Open de poezendoos</button>
+
+  <template is="dom-if" if="{{!ismember}}">
+    <poezenclub-loader normal id="memberloader" loadmsg="Je poes wordt geinischeerd"></poezenclub-loader>
   </template>
+
+  <template is="dom-if" if="{{ismember}}">
+    <h2>Sponnet, fixte gij dan hiete die validatordetails?</h2>
+    <iron-localstorage name="validator1" value="{{poesobject1}}" on-iron-localstorage-load-empty="initpoes1"></iron-localstorage>
+    <iron-localstorage name="validator2" value="{{poesobject2}}" on-iron-localstorage-load-empty="initpoes2"></iron-localstorage>
+
+    <div class="vertical layout">
+      <poes-validatordetail poesobject="{{poesobject1}}" on-validate="govalidate"></poes-validatordetail>
+      <poes-validatordetail poesobject="{{poesobject2}}" on-validate="govalidate"></poes-validatordetail>
+    </div>
+    <button on-tap="govalidate" class="main">Crush my pusss</button>
+    <template is="dom-if" if="{{validated}}">
+      <button on-tap="openbox" class="main">Open de poezendoos</button>
+    </template>
+  </template>
+
 </div>
 </neon-animatable>
 
