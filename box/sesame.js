@@ -59,12 +59,19 @@ var contractabi = {
 web3 = new Web3();
 
 
+var writingtothelcd = false;
 
 function schrijflcd(text, cb) {
+  if (writingtothelcd === true) {
+    console.log('still writing to the LCD... queueing command');
+    return setTimeout(schrijflcd(text), 500);
+  }
   console.log("Writing to LCD: [" + text + "]");
+  writingtothelcd = true;
   serialPort.write(String.fromCharCode(17) + String.fromCharCode(12) + (text + "                                ").substring(0, 32), function(err, results) {
     //serialPort.close();
     console.log("Done writing to LCD");
+    writingtothelcd = false;
     if (cb) cb();
   });
 }
@@ -113,7 +120,7 @@ serialPort.open(function(error) {
     console.log('failed to open: ' + error);
   } else {
     console.log('open');
-    schrijflcd("Welkom bij de poezendoos");
+    //schrijflcd("Welkom bij de poezendoos");
 
     web3.setProvider(new web3.providers.HttpProvider(host));
 
