@@ -6,6 +6,7 @@ var serialPort = new SerialPort("/dev/ttyAMA0", {
 var host = "http://kingflurkel.dtdns.net:8545";
 var mqtt = require('mqtt');
 var client = mqtt.connect('ws://opantwerpen.be:15674');
+var code;
 
 var Web3 = require('web3');
 var contractabi = {
@@ -136,11 +137,10 @@ serialPort.open(function(error) {
       client.publish('poezendoos', 'Poezendoos online!');
     });
 
-    generateCode(function(code) {
-      client.subscribe('poezendoos/' + code);
-      client.publish('poezendoos/' + code, 'command|listening');
-      schrijflcd("   poezendoos" + String.fromCharCode(13) + "     " + code);
-    });
+    generateCode();
+    client.subscribe('poezendoos/' + code);
+    client.publish('poezendoos/' + code, 'command|listening');
+    schrijflcd("   poezendoos" + String.fromCharCode(13) + "     " + code);
 
     client.on('message', function(topic, message) {
       // message is Buffer
@@ -201,18 +201,17 @@ function closeDoor() {
   beweeglid('close', function() {
     schrijflcd('de doos is terug toe');
     console.log('closed');
-    generateCode(function(code) {
-      client.subscribe('poezendoos/' + code);
-      client.publish('poezendoos/' + code, 'command|listening');
-      schrijflcd("   poezendoos" + String.fromCharCode(13) + "     " + code);
-    });
+    generateCode();
+    client.subscribe('poezendoos/' + code);
+    client.publish('poezendoos/' + code, 'command|listening');
+    schrijflcd("   poezendoos" + String.fromCharCode(13) + "     " + code);
   });
 };
 
-function generateCode(fn) {
-  var code = Math.floor(Math.random() * 90000) + 10000;
-  console.log(code);
-  fn(code);
+function generateCode() {
+  code = Math.floor(Math.random() * 90000) + 10000;
+  //console.log(code);
+  //fn(code);
 };
 
 function checkContract(contractaddress, fn) {
