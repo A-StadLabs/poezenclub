@@ -6,7 +6,7 @@ var serialPort = new SerialPort("/dev/ttyAMA0", {
 var host = "http://kingflurkel.dtdns.net:8545";
 
 
-function schrijflcd(tekst, cb) {
+function schrijflcd(text, cb) {
   serialPort.write(String.fromCharCode(17) + String.fromCharCode(12) + text, function(err, results) {
     //serialPort.close();
     if (cb) cb();
@@ -216,9 +216,11 @@ function checkContract(contractaddress, fn) {
   console.log("Checking contract: ", contractaddress);
   console.log("Checking balance: ", web3.eth.getBalance(contractaddress).toNumber(10));
   var MyContract = web3.eth.contract(contractabi.abi);
-  console.log("Mycontract: ", MyContract);
+  //console.log("Mycontract: ", MyContract);
+  console.log('get contract from blockchain');
   var myContractInstance = MyContract.at(contractaddress);
+  console.log('run countValidations');
   var result = myContractInstance.countValidations().toNumber(10);
-  console.log("Result: ", result);
+  console.log("got result: ", result);
   fn(result);
 };
