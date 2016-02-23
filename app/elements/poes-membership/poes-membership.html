@@ -45,7 +45,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         memberstatus: {
           type: Number,
-          notify:true
+          notify:true,
+          observer: "_memberstatuschanged"
+        },
+        ismember: {
+          type: Boolean,
+          notify:true          
         },
         contractaddress: {
           type: String,
@@ -71,7 +76,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
           console.log('LOMQTT is hiiieerr!', this.lomqtt);
       },
-
+      _memberstatuschanged: function(){
+        if (this.memberstatus == 1){
+          this.ismember = true;
+        }else{
+          this.ismember = false;          
+        }
+      },
       _web3: function() {
         var self = this;
 

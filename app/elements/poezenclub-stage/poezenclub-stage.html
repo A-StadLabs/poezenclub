@@ -154,18 +154,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
+    <iron-localstorage name="poezenimage" value="{{poezenimage}}"
+       on-iron-localstorage-load="poes_loaded"></iron-localstorage>
 
-     <iron-localstorage name="poezenclub" value="{{poesinit}}"
-      on-iron-localstorage-load-empty="initpoes" on-iron-localstorage-load="localpoes"></iron-localstorage>
+    <iron-localstorage name="poezennaam" value="{{poezennaam}}" on-iron-localstorage-load="poes_loaded"></iron-localstorage>
 
-      <iron-localstorage name="poezennaam" value="{{poezennaam}}" on-iron-localstorage-load-empty="pussyCheck" ></iron-localstorage>
-
-      <iron-localstorage name="baasje" value="{{baasjenaam}}"></iron-localstorage>
-
-      <iron-localstorage name="mypoescontract" value="{{poescontract}}"></iron-localstorage>
-
-      <iron-localstorage name="memberstatus" on-iron-localstorage-load-empty="initmember" value="{{memberstatus}}"></iron-localstorage>
-
+    <iron-localstorage name="baasje" value="{{baasjenaam}}"></iron-localstorage>
+    <iron-localstorage name="mypoescontract" value="{{poescontract}}"></iron-localstorage>
+    <!--
+    <iron-localstorage name="memberstatus" on-iron-localstorage-load-empty="initmember" value="{{memberstatus}}"</iron-localstorage>
+-->
       <lo-mqtt connected="{{mqttconnected}}" subs
       on-message-received="msgreceived"
       on-mqtt-connected="mqttconnectedfire"
@@ -174,190 +172,163 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <poes-validatie id="poesvalidatie" web3="{{web3}}" account="{{account}}" contractaddress="{{contractaddress}}" validations="{{validations}}"></poes-validatie>
 
-      <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" on-contract-ready="_poescontractready">
-        </poes-membership>
+      <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" ismember={{ismember}} on-contract-ready="_poescontractready"></poes-membership>
 
+      <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://kingflurkel.dtdns.net:8545"></alabs-web3js>
 
-    <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://kingflurkel.dtdns.net:8545"></alabs-web3js>
-
-    <neon-animated-pages selected="{{rout}}" 
+      <neon-animated-pages selected="{{state}}" 
             entry-animation="{{entryAnimation}}"
             exit-animation="{{exitAnimation}}"
             attr-for-selected="data-route">
-
-      <neon-animatable data-route="start">
-        <div class="canvaspink">
-          <poezenclub-loader id="loader" loadmsg="Je gebruikt d'app voor de eerste keer." normal></poezenclub-loader>
-        </div>
-      </neon-animatable>
-      
-      <neon-animatable data-route="selectpussy">
-        <div class="canvaspink">
-          <h2>Kies een kat!</h2>
-            <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="welkepoes" selected="{{poesinit}}">
+        <neon-animatable data-route="selectpussy">
+          <div class="canvaspink">
+            <h2>Kies een kat!</h2>
+            <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="poezenimage_selected" selected="{{poezenimage}}">
               <div class="poesitem" poes="1">
-                <img src="../../images/poezen/poes1.png">
-              </div>
+                <img src="../../images/poezen/poes1.png"></div>
               <div class="poesitem" poes="2">
-                <img src="../../images/poezen/poes2.png">
-              </div>
+                <img src="../../images/poezen/poes2.png"></div>
               <div class="poesitem" poes="3">
-                <img src="../../images/poezen/poes3.png">
-              </div>
+                <img src="../../images/poezen/poes3.png"></div>
               <div class="poesitem" poes="4">
-                <img src="../../images/poezen/poes4.png">
-              </div>
+                <img src="../../images/poezen/poes4.png"></div>
               <div class="poesitem" poes="5">
-                <img src="../../images/poezen/poes5.png">
-              </div>
+                <img src="../../images/poezen/poes5.png"></div>
               <div class="poesitem" poes="6">
-                <img src="../../images/poezen/poes6.png">
-              </div>
+                <img src="../../images/poezen/poes6.png"></div>
               <div class="poesitem" poes="7">
-                <img src="../../images/poezen/poes7.png">
-              </div>
+                <img src="../../images/poezen/poes7.png"></div>
               <div class="poesitem" poes="8">
-                <img src="../../images/poezen/poes8.png">
-              </div>
+                <img src="../../images/poezen/poes8.png"></div>
               <div class="poesitem" poes="9">
-                <img src="../../images/poezen/poes9.png">
-              </div>
+                <img src="../../images/poezen/poes9.png"></div>
               <div class="poesitem" poes="10">
-                <img src="../../images/poezen/poes10.png">
-              </div>
+                <img src="../../images/poezen/poes10.png"></div>
               <div class="poesitem" poes="11">
-                <img src="../../images/poezen/poes11.png">
-              </div>
+                <img src="../../images/poezen/poes11.png"></div>
               <div class="poesitem" poes="12">
-                <img src="../../images/poezen/poes12.png">
-              </div>
+                <img src="../../images/poezen/poes12.png"></div>
               <div class="poesitem" poes="13">
-                <img src="../../images/poezen/poes13.png">
-              </div>
+                <img src="../../images/poezen/poes13.png"></div>
               <div class="poesitem" poes="14">
-                <img src="../../images/poezen/poes14.png">
-              </div>
+                <img src="../../images/poezen/poes14.png"></div>
             </iron-selector>
-          <!-- <paper-button on-tap="receivedCat">OK</paper-button> -->
           <button on-tap="toNamepussy" class="main">OK</button>
         </div>
       </neon-animatable>
 
       <neon-animatable data-route="namepussy">
         <div class="canvaspink">
-            <h1>Hoe heet jouw poes?</h1>
-            <div class="whitespace"></div>
-            <paper-input-container no-label-float>
-              <input autofocus class="centertexting"
+          <h1>Hoe heet jouw poes?</h1>
+          <div class="whitespace"></div>
+          <paper-input-container no-label-float>
+            <input autofocus class="centertexting"
                 is="iron-input"
                 prevent-invalid-input
-                bind-value="{{poezennaam}}">
-            </paper-input-container>
-            <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
-          <button on-tap="gohome" class="main">OK</button>
-        </div>
+                bind-value="{{poezennaam}}"></paper-input-container>
+        <button on-tap="poezennaam_selected" class="main">OK</button>
+      </div>
       </neon-animatable>
-      
+
       <neon-animatable data-route="validate">
-        <div class="canvaspink">
-          <div class="eighty">
-            <h2>Vraag een pincode aan iemand met een gevalideerde poes</h2>
-          </div>
-          <paper-input-container no-label-float>
-            <label class="centertexting">pincode</label>
-            <input autofocus class="centertexting"
+      <div class="canvaspink">
+        <div class="eighty">
+          <h2>Vraag een pincode aan iemand met een gevalideerde poes</h2>
+        </div>
+        <paper-input-container no-label-float>
+          <label class="centertexting">pincode</label>
+          <input autofocus class="centertexting"
             is="iron-input"
             prevent-invalid-input
-            bind-value="{{enteredpin}}">
-          </paper-input-container>
-            <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
-          <button on-tap="submitpin" class="main">OK</button>
-        </div>
+            bind-value="{{enteredpin}}"></paper-input-container>
+        <button on-tap="submitpin" class="main">OK</button>
+      </div>
       </neon-animatable>
 
       <neon-animatable data-route="pin">
-        <div class="canvaspink">
-          <p>Jouw pincode</p>
-          <h1>{{pincode}}</h1>
+      <div class="canvaspink">
+        <p>Jouw pincode</p>
+        <h1>{{pincode}}</h1>
 
-          <button class="medium" on-tap="toHome">Terug</button>
-        </div>
+        <button class="medium" on-tap="toHome">Terug</button>
+      </div>
       </neon-animatable>
 
       <neon-animatable data-route="incoming">
-        <div class="canvaspink">
-          <div class="eighty">
-            <h2>{{incomingpussyname}}</h2>
-            <img src="{{incomingpussypic}}" />
-            <p>{{contractaddresstowrite}}</p>
-          </div>
-          <div class="layout horizontal center">
-            <button class="medium" on-tap="toHome">Annuleren</button>
-            <button class="main" on-tap="validateRequest">Valideren</button>
-          </div>
+      <div class="canvaspink">
+        <div class="eighty">
+          <h2>{{incomingpussyname}}</h2>
+          <img src="{{incomingpussypic}}" />      
+          <p>{{contractaddresstowrite}}</p>
         </div>
+        <div class="layout horizontal center">
+          <button class="medium" on-tap="toHome">Annuleren</button>
+          <button class="main" on-tap="validateRequest">Valideren</button>
+        </div>
+      </div>
       </neon-animatable>
 
       <neon-animatable data-route="openbox">
-        <div class="canvaspink">
-          <div class="eighty">
-            <h2>Check de code op de poezendoos</h2>
-          </div>
-          <paper-input-container no-label-float>
-            <label class="centertexting">pincode</label>
-            <input autofocus class="centertexting"
+      <div class="canvaspink">
+        <div class="eighty">
+          <h2>Check de code op de poezendoos</h2>
+        </div>
+        <paper-input-container no-label-float>
+          <label class="centertexting">pincode</label>
+          <input autofocus class="centertexting"
             is="iron-input"
             prevent-invalid-input
-            bind-value="{{boxpin}}">
-          </paper-input-container>
-            <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
-          <button on-tap="submitboxpin" class="main">OK</button>
-        </div>
+            bind-value="{{boxpin}}"></paper-input-container>
+        <!-- <paper-button on-tap="shavePussy">OK</paper-button>
+      -->
+      <button on-tap="submitboxpin" class="main">OK</button>
+      </div>
       </neon-animatable>
+<neon-animatable data-route="boxisopen">
+  <div class="canvaspink">
+    <div class="eighty">
+      <h2>Neem uw koekje</h2>
+    </div>
+    <!-- <paper-button on-tap="shavePussy">OK</paper-button>
+  -->
+  <button on-tap="closebox" class="main">Sluit de doos</button>
+</div>
+</neon-animatable>
 
-      <neon-animatable data-route="boxisopen">
-        <div class="canvaspink">
-          <div class="eighty">
-            <h2>Neem uw koekje</h2>
-          </div>
-            <!-- <paper-button on-tap="shavePussy">OK</paper-button> -->
-          <button on-tap="closebox" class="main">Sluit de doos</button>
-        </div>
-      </neon-animatable>
+<neon-animatable data-route="pussybase">
+  <div class="canvaspink">
+  <h1>{{poezennaam}}</h1>
+  <poes-aai catnumber="{{poezenimage}}"></poes-aai>
+  <div class="whitespace"></div>
 
-      <neon-animatable data-route="home">
-        <div class="canvaspink">
-<!--             <p>Dit is jouw poes!</p> -->
-            <h1>{{poezennaam}}</h1>
-            <poes-aai catnumber="{{poesinit}}"></poes-aai>
-            <div class="whitespace"></div>
-
-            <template is="dom-if" if="{{!hasadress}}">
-              <div><p>Valideren wordt geladen</p></div>
-            </template>
-<!--             <template is="dom-if" if="{{memberstatus}}"> -->  
-
-      <iron-localstorage name="validator1" value="{{poesobject1}}" on-iron-localstorage-load-empty="initpoes1"></iron-localstorage>
-    <iron-localstorage name="validator2" value="{{poesobject2}}" on-iron-localstorage-load-empty="initpoes2"></iron-localstorage>
-
-            <div class="vertical layout">
-                <poes-validatordetail poesobject="{{poesobject1}}" on-validate="govalidate">
-                </poes-validatordetail>
-                <poes-validatordetail poesobject="{{poesobject2}}" on-validate="govalidate">
-                </poes-validatordetail>
-              </div>
-              <button on-tap="govalidate" class="main">Crush my pusss</button>
-<!--             </template>
- -->            <template is="dom-if" if="{{validated}}">
-              <button on-tap="openbox" class="main">Open de poezendoos</button>
-            </template>
-        </div>
-      </neon-animatable>
-
-    </neon-animated-pages>
-
+  <template is="dom-if" if="{{!hasadress}}">
+    <div>
+      <p>Valideren wordt geladen</p>
+    </div>
   </template>
-  <script>
+  <template is="dom-if" if="{{ismember}}">
+    IK ZEN MEMBER
+  </template>
+  <iron-localstorage name="validator1" value="{{poesobject1}}" on-iron-localstorage-load-empty="initpoes1"></iron-localstorage>
+  <iron-localstorage name="validator2" value="{{poesobject2}}" on-iron-localstorage-load-empty="initpoes2"></iron-localstorage>
+
+  <div class="vertical layout">
+    <poes-validatordetail poesobject="{{poesobject1}}" on-validate="govalidate"></poes-validatordetail>
+    <poes-validatordetail poesobject="{{poesobject2}}" on-validate="govalidate"></poes-validatordetail>
+  </div>
+  <button on-tap="govalidate" class="main">Crush my pusss</button>
+  <!--             </template>
+  -->
+  <template is="dom-if" if="{{validated}}">
+    <button on-tap="openbox" class="main">Open de poezendoos</button>
+  </template>
+</div>
+</neon-animatable>
+
+</neon-animated-pages>
+
+</template>
+<script>
   (function() {
     'use strict';
 
@@ -387,11 +358,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String
         },
 
-        memberstatus: {
-          type: Number,
-          observer: '_memberstatus'
+        ismember: {
+          type: Boolean,
+          notify:true
         },
-
         contractaddress: {
           type: String,
           observer: '_contractaddress'          
@@ -408,22 +378,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.entryAnimation = 'slide-from-right-animation';
       },
 
+      poes_loaded: function(){
+        if (this.poezenimage && this.poezennaam){
+          if (this.state = 'selectpussy'){
+            this.go('pussybase');
+          }
+        }
+      },
+
+      poezenimage_selected: function(){
+
+      },
+
+      poezennaam_selected: function(){
+        this.go('pussybase');
+      },
+
       attached: function(){
-        this.pussyCheck();
+        this.go('selectpussy');
       },
 
-      pussyCheck: function(){
 
-        if (!this.poezennaam){
-          this.go('namepussy');
-        }
-        if (!this.poezenclub && !this.poezennaam){
-          this.go('selectpussy');
-        }
-
-
-
-      },
       _validationschanged: function(){
         if (this.validations > 0){
           this.go('home');          
@@ -432,10 +407,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('ik zen gevalideerd');
           this.go('home');
           this.validated = true;
-
         }
-
-
       },
 
       toNamepussy: function() {
@@ -452,12 +424,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _memberstatus: function(){
         console.log("Memberstatus in poezenstage is", this.memberstatus);
+/*
         if(!this.memberstatus){
           this.go('start');
          }; 
         if(this.memberstatus == 1) {
           this.pussyCheck();
         };
+        */
       },
 
       gohome: function(){
@@ -465,9 +439,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.go('home');
       },
 
-      go: function(state){
-        console.log('going to state',state);
-        this.rout = state;
+      go: function(tostate){
+        switch (tostate){
+          case "start":
+          case "selectpussy":
+            // we come in selectpussy
+            if (this.poezenimage && this.poezennaam){
+              this.go('pussybase');
+            }
+            break;
+
+        }
+        console.log('going to state',tostate);
+        this.state = tostate;
       },
 
       landed: function(){
@@ -484,11 +468,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.lomqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poesinit+"|"+this.contractaddress+"|"+this.pincode, 2);
         this.$.loader.loadmsg = "Validatie wordt gemined";
 
-        this.go("start");
+        //this.go("start");
       },
       
       initpoes: function(){
-        this.go("selectpussy");
+        //this.go("selectpussy");
       },
 
 
@@ -498,7 +482,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       localpoes: function(){
-        this.go("home");
+        //this.go("home");
       },
 
       validateRequest: function() {
@@ -506,7 +490,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.poesvalidatie.addValidation(this.contractaddresstowrite, function(err, res) {
           // nu is de validatsie gebeurd
           console.log("Validatie is done!");
-          self.go('home');
+          //self.go('home');
         })
       },
 
@@ -515,11 +499,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       govalidate: function(){
-        this.go("validate");
+        //this.go("validate");
       },
 
       openbox: function(){
-        this.go('openbox');
+        //this.go('openbox');
       },
 
       msgreceived: function(e){
@@ -543,17 +527,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.incomingpussypic = "../../images/poezen/poes" + commandarray[2] + ".png";
             this.contractaddresstowrite = commandarray[3];
             this.incomingpin = commandarray[4];
-            this.go('incoming');
+            //this.go('incoming');
             break;
           case "validatedone":
             console.log("Validatie is done!");
 //            this.$.poezenpages.selected = 6;
-            this.go("home");
+            //this.go("home");
             break;
           case "doosisopen":
             console.log("De doos is open");
             //this.$.poezenpages.selected = 12;
-            this.go("boxisopen");
+            //this.go("boxisopen");
             break;
         };
 
@@ -577,7 +561,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       closebox: function(){
         this.$.lomqtt.send("poezendoos/"+this.boxpin,"sluitDoos", 2);
-        this.go("home");
+        //this.go("home");
       },
 
       initpoes1: function(){
