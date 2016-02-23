@@ -336,6 +336,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div><p>Valideren wordt geladen</p></div>
             </template>
             <template is="dom-if" if="{{memberstatus}}">
+              <div class="vertical layout">
+                <poes-validatordetail poesid="2" poezennaam="Johnny" valid on-validate="govalidate">
+                </poes-validatordetail>
+                <poes-validatordetail poesid="2" poezennaam="Johnny" valid on-validate="govalidate">
+                </poes-validatordetail>
+              </div>
               <button on-tap="govalidate" class="main">Crush my pusss</button>
             </template>
             <template is="dom-if" if="{{validated}}">
