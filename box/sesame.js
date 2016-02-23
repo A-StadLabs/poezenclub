@@ -120,7 +120,7 @@ serialPort.open(function(error) {
     console.log('failed to open: ' + error);
   } else {
     console.log('open');
-    //schrijflcd("Welkom bij de poezendoos");
+    schrijflcd("Welkom bij de poezendoos");
 
     web3.setProvider(new web3.providers.HttpProvider(host));
 
