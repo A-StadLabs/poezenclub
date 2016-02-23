@@ -104,12 +104,12 @@ client.on('message', function (topic, message) {
 
     checkContract(contractaddress, function(result){
       console.log("ik heb een result: ", result);
-      if (result<2){
+      if (result>1){
         schrijflcd('u heeft ' + result + ' validaties');
         openDoor();
         client.publish(pincode, 'doosisopen');
       }else{
-
+        schrijflcd('u heeft ' + result + ' validaties. Dat is niet genoeg');
       }
     });
     // check if the contract is valid.
