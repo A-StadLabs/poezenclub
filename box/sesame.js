@@ -5,6 +5,57 @@ var serialPort = new SerialPort("/dev/ttyAMA0", {
 }, false); // this is the openImmediately flag [default is true]
 var host = "http://kingflurkel.dtdns.net:8545";
 
+var Web3 = require('web3');
+var contractabi = {
+  "bytecode": "60606040526000805560018054600160a060020a0319163317905560f6806100276000396000f3606060405260e060020a600035046333ac20098114602e57806384394e6f146037578063fa52c7d8146060575b005b60776000545b90565b6077600160a060020a033316600090815260026020526040812054600114156089575060016034565b607760043560026020526000908152604090205481565b60408051918252519081900360200190f35b6040812060019081905581548101825554600160a060020a03168134606082818181858883f1505060408051600160a060020a033316815290517fc950a438e6ad1cf066a2ec63cd7e6753ed8e6fe1d55949e889204d0f0230a23f94509081900360200192509050a1603456",
+  "abi": [{
+    "constant": true,
+    "inputs": [],
+    "name": "countValidations",
+    "outputs": [{
+      "name": "count",
+      "type": "uint256"
+    }],
+    "type": "function"
+  }, {
+    "constant": false,
+    "inputs": [],
+    "name": "addValidation",
+    "outputs": [{
+      "name": "returnCode",
+      "type": "uint256"
+    }],
+    "type": "function"
+  }, {
+    "constant": true,
+    "inputs": [{
+      "name": "",
+      "type": "address"
+    }],
+    "name": "validators",
+    "outputs": [{
+      "name": "",
+      "type": "uint256"
+    }],
+    "type": "function"
+  }, {
+    "inputs": [],
+    "type": "constructor"
+  }, {
+    "anonymous": false,
+    "inputs": [{
+      "indexed": false,
+      "name": "validator",
+      "type": "address"
+    }],
+    "name": "ValidationAdded",
+    "type": "event"
+  }]
+};
+
+web3 = new Web3();
+
+
 
 function schrijflcd(text, cb) {
   serialPort.write(String.fromCharCode(17) + String.fromCharCode(12) + text, function(err, results) {
@@ -76,57 +127,7 @@ serialPort.open(function(error) {
 
     var mqtt = require('mqtt');
     var client = mqtt.connect('ws://opantwerpen.be:15674');
-    var Web3 = require('web3');
 
-
-    var contractabi = {
-      "bytecode": "60606040526000805560018054600160a060020a0319163317905560f6806100276000396000f3606060405260e060020a600035046333ac20098114602e57806384394e6f146037578063fa52c7d8146060575b005b60776000545b90565b6077600160a060020a033316600090815260026020526040812054600114156089575060016034565b607760043560026020526000908152604090205481565b60408051918252519081900360200190f35b6040812060019081905581548101825554600160a060020a03168134606082818181858883f1505060408051600160a060020a033316815290517fc950a438e6ad1cf066a2ec63cd7e6753ed8e6fe1d55949e889204d0f0230a23f94509081900360200192509050a1603456",
-      "abi": [{
-        "constant": true,
-        "inputs": [],
-        "name": "countValidations",
-        "outputs": [{
-          "name": "count",
-          "type": "uint256"
-        }],
-        "type": "function"
-      }, {
-        "constant": false,
-        "inputs": [],
-        "name": "addValidation",
-        "outputs": [{
-          "name": "returnCode",
-          "type": "uint256"
-        }],
-        "type": "function"
-      }, {
-        "constant": true,
-        "inputs": [{
-          "name": "",
-          "type": "address"
-        }],
-        "name": "validators",
-        "outputs": [{
-          "name": "",
-          "type": "uint256"
-        }],
-        "type": "function"
-      }, {
-        "inputs": [],
-        "type": "constructor"
-      }, {
-        "anonymous": false,
-        "inputs": [{
-          "indexed": false,
-          "name": "validator",
-          "type": "address"
-        }],
-        "name": "ValidationAdded",
-        "type": "event"
-      }]
-    };
-
-    web3 = new Web3();
     web3.setProvider(new web3.providers.HttpProvider(host));
 
     client.on('connect', function() {
