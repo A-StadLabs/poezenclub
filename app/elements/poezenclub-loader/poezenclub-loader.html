@@ -25,6 +25,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
       }
 
+      .loadersmall {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        width: 100%;
+      }
+
 
       h1 {
         @apply(--theme-font-title);
@@ -86,11 +92,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     </style>
+    <template is="dom-if" if="{{normal}}">
     <div class="loader">
       <div class="draaierke" on-tap="gaDan"><img src="../../images/poezen/poes1.png"></div>
       <h1>Even geduld...</h1>
       <p>{{loadmsg}}</p>
     </div>
+    </template>
+
+    <template is="dom-if" if="{{small}}">
+    <div class="loadersmall">
+      <div class="draaierke" on-tap="gaDan"><img src="../../images/poezen/poes1.png"></div>
+      <p>{{loadmsg}}</p>
+    </div>
+    </template>
+
+
   </template>
   <script>
   (function() {
@@ -102,6 +119,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         loadmsg: {
           type: String,
+          notify: true
+        },
+
+        small: {
+          type: Boolean,
+          notify: true
+        },
+
+        normal: {
+          type: Boolean,
           notify: true
         }
       }
