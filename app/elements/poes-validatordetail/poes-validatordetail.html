@@ -12,25 +12,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="poes-validatordetail">
   <template>
+
+    <iron-localstorage name="{{ref}}" value="{{poes}}" on-iron-localstorage-load="loadpoes" on-iron-localstorage-load-empty="initpoes"></iron-localstorage>
+    <iron-localstorage name="poezenimage" value="{{poezenimage}}"></iron-localstorage>
+    <iron-localstorage name="poezennaam" value="{{poezennaam}}"></iron-localstorage>
+    <iron-localstorage name="poes-validatiecontract" value="{{poescontract}}"></iron-localstorage>
+
     <style>
       :host {
         display: block;
       }
     </style>
 
-    
-BLA
     <template is="dom-if" if="{{valid}}">
-    WEL
-      <div><img src="{{poesavatar}}" /></div>
-      <div>{{poezennaam}}</div>
+      <div><img src="{{poesimage}}" /></div>
+      <div>{{poescontract.naam}}</div>
     </template>
 
     <template is="dom-if" if="{{!valid}}">
-    NI
       <div><img src="../../images/poezen/empty-poes-01.png" /></div>
-      <div>...</div>
-      <button on-tap="validate">Add validator</button>
+       <paper-input-container no-label-float>
+            <label class="centertexting">pincode</label>
+            <input autofocus class="centertexting"
+            is="iron-input"
+            prevent-invalid-input
+            bind-value="{{enteredpin}}"></paper-input-container>
+            <button on-tap="submitpin" class="main">OK</button>
+      
     </template>
   
   </template>
@@ -42,23 +50,71 @@ BLA
       is: 'poes-validatordetail',
 
       properties: {
-        poesobject: {
-          type: String,
-          notify: true
+        poes: {
+          type: String
+        },
+        ref: {
+          type: String
         },
         valid: {
           type: Boolean,
-          value: true
+          value: false
+        },
+        poesobject: {
+          type: Object,
+          observer: "poeschanged",
+          notify:true
         }
       },
 
-      
+      ready: function() {
+        this.mqtt = document.getElementById('lomqtt');
+      },
+      initpoes: function(){
+        this.poesobject = {
+          'valid': false,
+          'image': "leeg",
+          'naam': "lege naam",
+          'address': "leeg adres"
+        };
 
-      validate: function(){
-        this.fire('validate');
+      },
+      loadpoes: function(){
+        try{
+          this.poesobject = JSON.parse(this.poes);
+          this.fire('poesvalidator-loaded');
+        }catch(e){
+          console.log('cannot parse poes data from localstorage...',this.poes);
+        }
+      },
+      poeschanged: function(){
+        this.poesimage = "../../images/poezen/poes" + this.poesobject.image + ".png";
+        this.poes = JSON.stringify(this.poesobject);
+        this.valid = this.poesobject.valid;
+      },
+      /*
+      validate: function() {
+        this.poesobject.valid = true;
+        this.poeschanged();
+        this.fire('validated');
+      }*/
+        submitpin: function(){
+        var pin = this.enteredpin;
+        this.mqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poezenimage+"|"+this.poescontract+"|"+this.pincode+"|"+this.ref, 2);
+//        this.$.loader.loadmsg = "Validatie wordt gemined";
+
+        //this.go("start");
+      },
+      validationStarted: function(poezennaam,poezenimage,address){
+        this.poesobject.naam = poezennaam;
+        this.poesobject.image = poezenimage;
+        this.poesobject.address = address;
+        this.poeschanged();
+        console.log('validation started...',this.poesobject);
+
       }
 
-      
+
 
     });
   })();
