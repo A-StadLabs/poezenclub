@@ -160,7 +160,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-localstorage name="poezenimage" value="{{poezenimage}}"
        on-iron-localstorage-load="poes_loaded"></iron-localstorage>
     <iron-localstorage name="poezennaam" value="{{poezennaam}}" on-iron-localstorage-load="poes_loaded"></iron-localstorage>
-    <iron-localstorage name="mypoescontract" value="{{poescontract}}"></iron-localstorage>
+<!--    <iron-localstorage name="mypoescontract" value="{{poescontract}}"></iron-localstorage>-->
 
     <lo-mqtt connected="{{mqttconnected}}" subs
       on-message-received="msgreceived"
@@ -379,8 +379,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _ismemberchanged: function(){
         if (this.ismember){
-                  this.$.poesvalidatie.createContract();
-
+          this.$.poesvalidatie.createContract();
         }
       },
       topussybase: function(){
@@ -417,6 +416,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _validationschanged: function(){
+/*
         if (this.validations > 0){
           this.go('home');          
         }
@@ -425,6 +425,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.go('home');
           this.validated = true;
         }
+        */
       },
 
       toNamepussy: function() {

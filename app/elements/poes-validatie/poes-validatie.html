@@ -63,6 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function() {
+        this.hascontractaddress = false;
       },
 
       _hascontractaddress: function(){
@@ -71,6 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.importHref(this.contracturl, function(e) { 
           // console.log(e.target.import.body.innerText);
           self.contractjson = JSON.parse(e.target.import.body.innerText);
+          this.hascontractaddress = true;
           self._initcontract();
         }, function(e) {
           console.log('ERROR!');
@@ -86,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _initcontract: function() {
         var self = this;
-        if (this.web3 && this.contractjson && this.account) {
+        if (this.web3 && this.contractjson && this.account && this.hascontractaddress) {
           if (!this.contractaddress) {
             console.log('poezen-validatie: ik heb geen contract');
           } else {
@@ -165,7 +167,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       createContract: function() {
-
+        if(this.contractaddress){
+          console.log('ik heb al een adres!');
+          return;
+        }
         var self = this;
         this.web3.eth.getGasPrice(function(err, result) {
           var gasPrice = result.toNumber(10);
