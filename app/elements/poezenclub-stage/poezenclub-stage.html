@@ -611,7 +611,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       openbox: function(){
-        //this.go('openbox');
+        this.go('openbox');
       },
 
       msgreceived: function(e){
@@ -670,6 +670,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       closebox: function(){
         this.$.lomqtt.send("poezendoos/"+this.boxpin,"sluitDoos", 2);
+        this.topussybase();
         //this.go("home");
       },
 
