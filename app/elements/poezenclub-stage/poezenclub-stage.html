@@ -266,16 +266,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <button on-tap="submitpin" class="main">OK</button>
         </div>
       </neon-animatable>
+-->
 
       <neon-animatable data-route="pin">
-        <div class="canvaspink">
-          <p>Jouw pincode</p>
-          <h1>{{pincode}}</h1>
 
-          <button class="medium" on-tap="toHome">Terug</button>
-        </div>
+        <template is="dom-if" if="{{validate}}">
+          <div class="canvaspink">
+            <p>Jouw pincode</p>
+            <h1>{{pincode}}</h1>
+
+            <button class="medium" on-tap="toHome">Terug</button>
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{!validate}}">
+          <div class="canvaspink">
+            <p>Je kan pas iemand valideren als je zelf gevalideerd bent.</p>
+            <button class="medium" on-tap="toHome">Terug</button>
+          </div>
+        </template>
       </neon-animatable>
--->
+
       <neon-animatable data-route="incoming">
         <div class="canvaspink">
           <div class="eighty">
