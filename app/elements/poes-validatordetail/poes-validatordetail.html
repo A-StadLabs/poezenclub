@@ -28,15 +28,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
         @apply(--layout-center);
         box-sizing:border-box;
-        padding: 20px;
-        background-color: rgba(255,255,255,0.15);
-        border-radius: 10px;
-
+        padding: 30px 20px 30px 20px;
+        background-color: rgba(0,0,0,0.05);
       }
 
       .validpic {
-        width: 100px;
-        height: 100px;
+        width: 60px;
+        height: 60px;
         background-color: rgba(0,0,0,0.05);
         border-radius: 50%;
         margin: 0px 10px 0px 0px;
@@ -47,38 +45,103 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-      h1 {
-        @apply(--theme-font-title);
-        text-align: center;
+      h2 {
+        @apply(--theme-font-subhead);
+        @apply(--no-edges);
       }
       p {
         @apply(--theme-font-body1);
       }
 
+
+      .tovalidate {
+        width: 100%;
+        box-sizing:border-box;
+        padding: 20px;
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+      }
+
+
+      paper-input-container {
+        width: 250px;
+        background-color: white;
+        margin-bottom: 20px;
+        padding: 30px;
+      }
+
+      .paper-input-container-0 label, paper-input-char-counter, .paper-input-container-0 input {
+      font-family: 'Indie Flower', cursive;
+      text-transform: capitalize;
+      }
+
+      .main {
+        @apply(--main-btn);
+        width: 100%;
+      }
+      .main:hover {
+        @apply(--btns-hovercolors);
+      }
+      .medium {
+        @apply(--medium-btn);
+      }
+      .medium:hover {
+        @apply(--btns-hovercolors);
+      }
+      .small {
+        min-width: 100px;
+        @apply(--small-btn);
+      }
+      .small:hover {
+        @apply(--btns-altcolors);
+      }
+
+
+      .addbtn {
+        width: 100%;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+      .addbtn img {
+        width: 40px;
+        height: 40px;
+        margin: 0px 20px 0px 0px;
+      }
+
+
     </style>
 
     <template is="dom-if" if="{{valid}}" >
-
-
       <div class="valide">
         <div class="validpic"><img src="{{poesimage}}" /></div>
-      <div class="layout vertical start">
-        <p>Gevalideerd door</p>
-        <h1>{{poesobject.naam}}</h1>
-      </div>
+        <div class="layout vertical start">
+          <p>Gevalideerd door</p>
+          <h2>{{poesobject.naam}}</h2>
+        </div>
       </div>
     </template>
 
     <template is="dom-if" if="{{!valid}}">
-      <div><img src="../../images/poezen/empty-poes-01.png" /></div>
-       <paper-input-container no-label-float>
-            <label class="centertexting">pincode</label>
-            <input autofocus class="centertexting"
-            is="iron-input"
-            prevent-invalid-input
-            bind-value="{{enteredpin}}"></paper-input-container>
-            <button on-tap="submitpin" class="main">OK</button>
-      
+      <div class="tovalidate">
+      <template is="dom-if" if="{{fase1}}" >
+        <button on-tap="toPin" class="main">
+          <div class="addbtn">
+          <img src="../../images/poezen/paw3-01.png">
+          Validatie toevoegen
+          </div>
+        </button>
+      </template>
+      <template is="dom-if" if="{{!fase1}}" >
+         <paper-input-container no-label-float>
+          <label class="centertexting">pincode</label>
+          <input autofocus class="centertexting"
+          is="iron-input"
+          prevent-invalid-input
+          bind-value="{{enteredpin}}"></paper-input-container>
+          <button on-tap="submitpin" class="main">OK</button>
+      </template>
+
+      </div>
     </template>
   
   </template>
@@ -104,6 +167,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object,
           observer: "poeschanged",
           notify:true
+        },
+
+        fase1: {
+          type: Boolean,
+          value: true
         }
       },
 
