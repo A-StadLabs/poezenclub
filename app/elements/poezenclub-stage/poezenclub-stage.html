@@ -237,7 +237,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="errormsg">
             <template is="dom-if" if="{{!web3connected}}">web3 NOT connected</template>
             <h2>Je bent niet correct geconnecteerd. Probeer het later opnieuw.</h2>
-            <template is="dom-if" if="{{!mqttconnected}}">mqtt NOT connected</template>
+            <template is="dom-if" if="{{mqttconnected}}">mqtt connected</template>
           </div>
 
           <h2>Kies een kat!</h2>
