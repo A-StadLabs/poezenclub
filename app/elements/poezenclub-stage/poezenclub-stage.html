@@ -498,10 +498,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.validated=true;
         }
       },
+      _fixaddress: function(address) {
+        console.log("Fix address", address);
+        if (!strStartsWith(address, '0x')) {
+          return ('0x' + address);
+        }
+        return address;
+      },
       validationreceived: function(res){
+
           console.log("Validation received");
-          console.log(res);
-          console.log(this.poesobject1,this.poesobject2);
+          var validatoraddress = this._fixaddress(res.detail.args.validator);
+          console.log("...from",validatoraddress);
+  
+          if (this._fixaddress(this.poesobject1.address) == validatoraddress){
+            console.log("is from validator1",this.poesobject1);
+            return document.getElementById("validator1").setValidated();
+          }
+          if (this._fixaddress(this.poesobject2.address) == validatoraddress){
+            console.log("is from validator2",this.poesobject2);
+            return document.getElementById("validator2").setValidated();
+          }
+          console.log('unknown validator... ignoring this.');
+
       },
 
       _validationschanged: function(){
