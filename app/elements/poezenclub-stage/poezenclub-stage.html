@@ -514,14 +514,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var commandarray = e.detail.msg.split("|");
         console.log(commandarray);
         switch (commandarray[0]) {
-          /*
-            case "membership":
-            console.log("Meneerke wil lid worden");
-            this.$.poezenpages.selected = 7;
-            this.nonmembername = commandarray[2];
-            this.askeraccount = commandarray[1];
-            break;
-  */
           case "validate":
             console.log("Meneerke wil zijn poes laten valideren");
             this.incomingpussyname = commandarray[1];
@@ -573,37 +565,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.lomqtt.send("poezendoos/"+this.boxpin,"sluitDoos", 2);
         //this.go("home");
       },
-/*
-      initpoes1: function(){
-        
-        var poes1 = { 'state': 0,
-                      'avatar': "leeg",
-                     'naam': "lege naam",
-                     'adres': "leeg adres" };
-        this.poesobject1 = JSON.stringify(poes1);
-
-      },
-
-      initpoes2: function(){
-        
-        var poes2 = { 'state': 0,
-                      'avatar': "leeg",
-                     'naam': "lege naam",
-                     'adres': "leeg adres" };
-        this.poesobject2 = JSON.stringify(poes2);
-
-      },
-*/
-      // val1empty: function(){
-      //   this.validator1 = false;
-      //   console.log("validator1: ", this.validator1);
-      // },
-
-      // val2empty: function(){
-      //   this.validator2 = true;
-      //   console.log("validator2: ", this.validator2);
-      // }
-
 
 
     });
