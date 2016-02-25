@@ -51,6 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       p {
         @apply(--theme-font-body1);
+        text-transform: none;
       }
 
 
@@ -64,9 +65,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       paper-input-container {
-        width: 250px;
+        width: 80%;
+        max-width: 450px;
         background-color: white;
-        margin-bottom: 20px;
+        margin: 10px 10px 10px 0px;
         padding: 30px;
       }
 
@@ -82,6 +84,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .main:hover {
         @apply(--btns-hovercolors);
       }
+
+      .main2 {
+        @apply(--main2-btn);
+        width: 20%;
+      }
+
       .medium {
         @apply(--medium-btn);
       }
@@ -107,43 +115,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 40px;
         margin: 0px 20px 0px 0px;
       }
+      neon-animated-pages {
+        height: 100%;
+      }
 
+      .width {
+        width: 100%;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
 
     </style>
 
-    <template is="dom-if" if="{{valid}}" >
-      <div class="valide">
-        <div class="validpic"><img src="{{poesimage}}" /></div>
-        <div class="layout vertical start">
-          <p>Gevalideerd door</p>
-          <h2>{{poesobject.naam}}</h2>
-        </div>
-      </div>
-    </template>
 
-    <template is="dom-if" if="{{!valid}}">
-      <div class="tovalidate">
-      <template is="dom-if" if="{{fase1}}" >
-        <button on-tap="toPin" class="main">
-          <div class="addbtn">
-          <img src="../../images/poezen/paw3-01.png">
-          Validatie toevoegen
+    <neon-animated-pages selected="{{validstate}}" 
+            entry-animation="{{entryAnimation}}"
+            exit-animation="{{exitAnimation}}"
+            attr-for-selected="currentvalidstate">
+
+        <!-- startbutton  -->
+        <neon-animatable currentvalidstate="startbutton">
+        <div class="tovalidate">
+          <button on-tap="toPin" class="main">
+            <div class="addbtn">
+            <img src="../../images/poezen/paw3-01.png">
+            Validatie toevoegen
+            </div>
+          </button>
+        </div>  
+        </neon-animatable>
+
+        <!-- pinner  -->
+        <neon-animatable currentvalidstate="pinner">
+        <div class="tovalidate">
+          <p>Vraag een pincode aan een gevalideerde poes</p> 
+          <div class="width">
+           <paper-input-container no-label-float>
+            <label class="centertexting">pincode</label>
+            <input autofocus class="centertexting"
+            is="iron-input"
+            prevent-invalid-input
+            bind-value="{{enteredpin}}"></paper-input-container>
+            <button on-tap="toSpin" class="main2">OK</button>
           </div>
-        </button>
-      </template>
-      <template is="dom-if" if="{{!fase1}}" >
-         <paper-input-container no-label-float>
-          <label class="centertexting">pincode</label>
-          <input autofocus class="centertexting"
-          is="iron-input"
-          prevent-invalid-input
-          bind-value="{{enteredpin}}"></paper-input-container>
-          <button on-tap="submitpin" class="main">OK</button>
-      </template>
+        </div>
+        </neon-animatable>
 
-      </div>
-    </template>
-  
+        <!-- spinner  -->
+        <neon-animatable currentvalidstate="spinner">
+        <div class="tovalidate">
+          <poezenclub-loader small loadmsg="Je validatie is in aanvraag"></poezenclub-loader>
+        </div>
+        </neon-animatable>
+
+        <!-- validepoes  -->
+        <neon-animatable currentvalidstate="validepoes">
+          <div class="valide">
+            <div class="validpic"><img src="{{poesimage}}" /></div>
+            <div class="layout vertical start">
+              <p>Gevalideerd door</p> 
+              <h2>{{poesobject.naam}}</h2>
+            </div>
+          </div>
+        </neon-animatable>
+
+    </neon-animated-pages>
   </template>
   <script>
   (function() {
@@ -161,7 +197,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         valid: {
           type: Boolean,
-          value: false
+          value: false,
         },
         poesobject: {
           type: Object,
@@ -169,23 +205,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify:true
         },
 
-        fase1: {
-          type: Boolean,
-          value: true
-        }
+        // validstate: {
+        //   type: String,
+        //   value: 'startbutton2'
+        // }
       },
 
       ready: function() {
         this.mqtt = document.getElementById('lomqtt');
+        this.validstate = "startbutton";
+        this.exitAnimation = 'fade-out-animation';
+        this.entryAnimation = 'fade-in-animation';
       },
       initpoes: function(){
         this.poesobject = {
           'valid': false,
           'image': "leeg",
           'naam': "lege naam",
-          'address': "leeg adres"
+          'address': "leeg adres",
+          'validstate': "startbutton"
         };
-
+        this.validstate = this.poesobject.validstate;
       },
       loadpoes: function(){
         try{
@@ -194,11 +234,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }catch(e){
           console.log('cannot parse poes data from localstorage...',this.poes);
         }
+        if(this.poesobject.validstate == 'pinner'){
+          this.poesobject.validstate = 'startbutton';
+        }
+        this.validstate = this.poesobject.validstate;
       },
       poeschanged: function(){
         this.poesimage = "../../images/poezen/poes" + this.poesobject.image + ".png";
         this.poes = JSON.stringify(this.poesobject);
         this.valid = this.poesobject.valid;
+        this.validstate = this.poesobject.validstate;
       },
       /*
       validate: function() {
@@ -220,7 +265,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.poeschanged();
         console.log('validation started...',this.poesobject);
 
+      },
+
+      toPin: function(){
+        this.poesobject.validstate = "pinner";
+        this.poeschanged();
+      },
+
+      toSpin: function(){
+        this.poesobject.validstate = "spinner";
+        this.poeschanged();
       }
+
+      // isitvalid:function(){
+      //   if(this.valid){
+      //   this.poesobject.validstate = "validepoes";
+      //   this.poeschanged();  
+      //   };
+      // }
+
+      // isState: function(state){
+      //   return(this.poesobject.state == state);
+      // }
 
 
 
