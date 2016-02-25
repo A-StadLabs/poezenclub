@@ -26,6 +26,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 80%;
       }
 
+      .middle {
+        text-align: center;
+      }
+
 
       .canvaspink {
         @apply(--canvas-pink);
@@ -242,11 +246,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="data-route">
       <neon-animatable data-route="selectpussy">
         <div class="canvaspink">
-          <div class="errormsg">
+<!--           <div class="errormsg">
             <template is="dom-if" if="{{!web3connected}}">web3 NOT connected</template>
             <h2>Je bent niet correct geconnecteerd. Probeer het later opnieuw.</h2>
             <template is="dom-if" if="{{mqttconnected}}">mqtt connected</template>
-          </div>
+          </div> -->
 
           <h2>Kies een kat!</h2>
           <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="poezenimage_selected" selected="{{poezenimage}}">
@@ -378,8 +382,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="whitespace"></div>
       <div class="whitespace"></div>
 
-
+      <div class="eighty middle">
       <h1>{{poezennaam}}</h1>
+      </div>
       <poes-aai catnumber="{{poezenimage}}"></poes-aai>
       <div class="whitespace"></div>
 
