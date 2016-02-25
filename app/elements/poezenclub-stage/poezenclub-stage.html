@@ -310,7 +310,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="canvaspink">
             <p>Jouw pincode</p>
             <h1>{{pincode}}</h1>
-
             <button class="medium" on-tap="topussybase">Terug</button>
           </div>
         </template>
@@ -576,8 +575,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.lomqtt.send(this.incomingpin,"validationstarted"+"|"+this.poezenimage+"|"+this.poezennaam+"|"+this.account+"|"+this.incomingref);
         this.$.poesvalidatie.addValidation(this.contractaddresstowrite, function(err, res) {
           console.log("Validatie is started...!");
-          self.go('pussybase');
-        })
+          //self.go('pussybase');
+        });
+        this.go("topussybase");
       },
 
       msgreceived: function(e) {
