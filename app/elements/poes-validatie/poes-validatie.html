@@ -96,6 +96,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               console.log('err', err);
               console.log('res', res);
 
+              self.fire('validation-received',res);
+
               self._getValidations();
 
             });
@@ -143,7 +145,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               }
             }
           );
-
+/*
           myContractInstance.ValidationAdded(function(err, res) {
 
             console.log('ValidationAdded triggered SUSKE');
@@ -157,6 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             self._getValidations();
 
           });
+          */
         });
       },
 

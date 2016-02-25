@@ -254,6 +254,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
+      setValidated: function(){
+              this.poesobject.validstate = "validepoes";
+              this.poeschanged();
+
+      },
+
       toPin: function(){
         this.poesobject.validstate = "pinner";
         this.poeschanged();
