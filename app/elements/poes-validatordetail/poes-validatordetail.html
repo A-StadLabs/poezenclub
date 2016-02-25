@@ -204,11 +204,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           observer: "poeschanged",
           notify:true
         },
-
-        // validstate: {
-        //   type: String,
-        //   value: 'startbutton2'
-        // }
+        from: {
+          type:String,
+          notify:true
+        },
       },
 
       ready: function() {
@@ -244,19 +243,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.poes = JSON.stringify(this.poesobject);
         this.valid = this.poesobject.valid;
         this.validstate = this.poesobject.validstate;
-      },
-      /*
-      validate: function() {
-        this.poesobject.valid = true;
-        this.poeschanged();
-        this.fire('validated');
-      }*/
-        submitpin: function(){
-        var pin = this.enteredpin;
-        this.mqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poezenimage+"|"+this.poescontract+"|"+this.pincode+"|"+this.ref, 2);
-//        this.$.loader.loadmsg = "Validatie wordt gemined";
-
-        //this.go("start");
+        this.from = this.poesobject.address;
       },
       validationStarted: function(poezennaam,poezenimage,address){
         this.poesobject.naam = poezennaam;
@@ -273,6 +260,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       toSpin: function(){
+        var pin = this.enteredpin;
+        this.mqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poezenimage+"|"+this.poescontract+"|"+this.pincode+"|"+this.ref, 2);
+
         this.poesobject.validstate = "spinner";
         this.poeschanged();
       }

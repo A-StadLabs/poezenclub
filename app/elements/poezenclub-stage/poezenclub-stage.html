@@ -198,7 +198,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       pincode="{{pincode}}"
       id="lomqtt"></lo-mqtt>
 
-    <poes-validatie id="poesvalidatie" web3="{{web3}}" account="{{account}}" contractaddress="{{contractaddress}}" validations="{{validations}}"></poes-validatie>
+    <poes-validatie id="poesvalidatie" web3="{{web3}}" account="{{account}}" contractaddress="{{contractaddress}}" on-validation-received="validationreceived" validations="{{validations}}"></poes-validatie>
 
     <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" ismember={{ismember}} on-contract-ready="_poescontractready"></poes-membership>
 
@@ -474,6 +474,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log("JE POES IS VALIDE");
           this.validated=true;
         }
+      },
+      validationreceived: function(res){
+          console.log("Validation received");
+          console.log(res);
+          console.log(this.poesobject1,this.poesobject2);
       },
 
       _validationschanged: function(){
