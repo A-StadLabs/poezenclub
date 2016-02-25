@@ -8,10 +8,10 @@ var fs = require('fs');
 var membershipcontract = require('../app/contracts/LocalsMembership.json');
 var membershipcontractaddress = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
 var host = "http://kingflurkel.dtdns.net:8545";
-//var channel = "adam";
-//var keystoreFile = "adamswallet.json";
-var keystoreFile = "evaswallet.json";
-var channel = "eva";
+var channel = "adam";
+var keystoreFile = "adamswallet.json";
+//var keystoreFile = "evaswallet.json";
+//var channel = "eva";
 
 var validationcontract = require('../app/contracts/LocalsValidation.json');
 
