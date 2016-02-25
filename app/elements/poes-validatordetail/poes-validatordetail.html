@@ -92,30 +92,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.poes = JSON.stringify(this.poesobject);
         this.valid = this.poesobject.valid;
       },
-      /*
-      validate: function() {
-        this.poesobject.valid = true;
-        this.poeschanged();
-        this.fire('validated');
-      }*/
-        submitpin: function(){
-        var pin = this.enteredpin;
-        this.mqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poezenimage+"|"+this.poescontract+"|"+this.pincode+"|"+this.ref, 2);
-//        this.$.loader.loadmsg = "Validatie wordt gemined";
-
-        //this.go("start");
+      
+      submitpin: function(){
+      var pin = this.enteredpin;
+      this.mqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poezenimage+"|"+this.poescontract+"|"+this.pincode+"|"+this.ref, 1);
       },
+      
       validationStarted: function(poezennaam,poezenimage,address){
         this.poesobject.naam = poezennaam;
         this.poesobject.image = poezenimage;
         this.poesobject.address = address;
         this.poeschanged();
         console.log('validation started...',this.poesobject);
-
       }
-
-
-
     });
   })();
   </script>

@@ -309,7 +309,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template is="dom-if" if="{{contractaddress}}">
         <div class="vertical layout">
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
+          <!--
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
+          -->
         </div>
    
         <template is="dom-if" if="{{validated}}">
@@ -479,12 +481,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //this.go("selectpussy");
       },
 
-
-      // namepoes: function(){
-      //   this.go("namepussy");
-      // },
-
-
       localpoes: function(){
         //this.go("home");
       },
@@ -492,11 +488,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       validateRequest: function() {
         var self = this;
         // send my pussydetails to the requester..
-        this.$.lomqtt.send(this.incomingpin,"validationstarted"+"|"+this.poezenimage+"|"+this.poezennaam+"|"+this.account+"|"+this.incomingref);
+        this.$.lomqtt.send(this.incomingpin, "validationstarted" + "|" + this.poezenimage + "|" + this.poezennaam + "|" + this.account + "|" + this.incomingref);
         this.$.poesvalidatie.addValidation(this.contractaddresstowrite, function(err, res) {
           console.log("Validatie is started...!");
-          self.go('pussybase');
-        })
+        });
+        self.go('pussybase');
       },
 
       msgreceived: function(e) {
