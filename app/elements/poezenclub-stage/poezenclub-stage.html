@@ -155,6 +155,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       text-transform: capitalize;
       }
 
+
+      .validatorz {
+        width: 100vw;
+        max-width: 600px;
+      }
+
     </style>
 
     <iron-localstorage name="poezenimage" value="{{poezenimage}}"
@@ -307,7 +313,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
 
       <template is="dom-if" if="{{contractaddress}}">
-        <div class="vertical layout">
+        <div class="validatorz vertical layout">
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
         </div>
