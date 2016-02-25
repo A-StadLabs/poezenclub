@@ -176,6 +176,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 0px;
       }
 
+      .errormsg {
+        width: 100%;
+        background-color: black;
+        height: 50px;
+        color: white;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      }
+
     </style>
 
     <iron-localstorage name="poezenimage" value="{{poezenimage}}"
@@ -195,8 +204,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://kingflurkel.dtdns.net:8545"></alabs-web3js>
 
-    <template is="dom-if" if="{{!web3connected}}">web3 NOT connected</template>
-    <template is="dom-if" if="{{!mqttconnected}}">mqtt NOT connected</template>
+
 
     <neon-animated-pages selected="{{state}}" 
             entry-animation="{{entryAnimation}}"
@@ -204,6 +212,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="data-route">
       <neon-animatable data-route="selectpussy">
         <div class="canvaspink">
+          <div class="errormsg">
+            <template is="dom-if" if="{{!web3connected}}">web3 NOT connected</template>
+            <h2>Je bent niet correct geconnecteerd. Probeer het later opnieuw.</h2>
+            <template is="dom-if" if="{{!mqttconnected}}">mqtt NOT connected</template>
+          </div>
+
           <h2>Kies een kat!</h2>
           <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="poezenimage_selected" selected="{{poezenimage}}">
             <div class="poesitem" poes="1">
