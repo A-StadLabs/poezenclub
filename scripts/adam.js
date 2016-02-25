@@ -140,7 +140,7 @@ function validate(contractaddress, cb) {
 
     var options = {
       from: account,
-      value: 3.5 * 1e18,
+      value: 1.5 * 1e18,
       gas: 3141590,
       gasPrice: gasPrice,
       nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
