@@ -125,6 +125,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.fire('web3-ready');
       },
 
+      getbalance: function(){
+        return this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
+      },
+
       importAccount: function(){
         console.log("Import account activated");
       },

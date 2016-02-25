@@ -174,6 +174,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://kingflurkel.dtdns.net:8545"></alabs-web3js>
 
+    <template is="dom-if" if="{{!web3connected}}">web3 NOT connected</template>
+    <template is="dom-if" if="{{!mqttconnected}}">mqtt NOT connected</template>
+
     <neon-animated-pages selected="{{state}}" 
             entry-animation="{{entryAnimation}}"
             exit-animation="{{exitAnimation}}"
@@ -290,6 +293,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </neon-animatable>
 
   <neon-animatable data-route="pussybase">
+          <template is="dom-if" if="{{validated}}">
+          <button on-tap="tooncode" class="main">Valideer iemand anders</button>
+        </template>
+
     <div class="canvaspink">
       <h1>{{poezennaam}}</h1>
       <poes-aai catnumber="{{poezenimage}}"></poes-aai>
@@ -332,9 +339,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         pincode: {
           type: String,
-          value: function(){
-            return (Math.floor(Math.random()*90000) + 10000).toString();
-          },
           notify: true
         },
 
@@ -366,9 +370,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function(){
+        this.makepincode();
         this.exitAnimation = 'slide-left-animation';
         this.entryAnimation = 'slide-from-right-animation';
         this.state = "selectpussy";
+      },
+
+      makepincode: function(){
+            this.pincode = (Math.floor(Math.random()*90000) + 10000).toString();
       },
 
       attached: function(){
@@ -436,15 +445,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // this.subscribetoPin();
       },
 
-      welkepoes: function(){
-        console.log('je koos poes');
-      },
-/*
-      gohome: function(){/
-        this.$.poesvalidatie.createContract();
-        this.go('home');
-      },
-*/
       go: function(tostate){
         console.log('going to state',tostate);
         this.state = tostate;
