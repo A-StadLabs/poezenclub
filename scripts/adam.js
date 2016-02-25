@@ -97,6 +97,15 @@ function connectMQTT() {
         validate(contractaddress, function(err, res) {
           console.log('validated');
         });
+        // Send message back...
+        var incomingpussyname = commandarray[1];
+        var incomingpussypic = "../../images/poezen/poes" + commandarray[2] + ".png";
+        var contractaddresstowrite = commandarray[3];
+        var incomingpin = commandarray[4];
+        var incomingref = commandarray[5];
+
+        client.send(incomingpin, "validationstarted" + "|adampoes|Adam|" + account + "|" + incomingref);
+
         break;
 
       default:
