@@ -177,7 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="validpic"><img src="{{poesimage}}" /></div>
             <div class="layout vertical start">
               <p>Gevalideerd door</p> 
-              <h2>{{poesobject.naam}}</h2>
+              <h2>{{poesnaam}}</h2>
             </div>
           </div>
         </neon-animatable>
@@ -243,11 +243,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       poeschanged: function(){
         this.poesimage = "../../images/poezen/poes" + this.poesobject.image + ".png";
+        this.poesnaam = this.poesobject.naam;
         this.poes = JSON.stringify(this.poesobject);
         this.valid = this.poesobject.valid;
         this.validstate = this.poesobject.validstate;
         this.from = this.poesobject.address;
-        
+
       },
       validationStarted: function(poezennaam,poezenimage,address){
         this.poesobject.naam = poezennaam;
