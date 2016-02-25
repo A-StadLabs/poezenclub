@@ -475,6 +475,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
       _fixaddress: function(address) {
+
+        function strStartsWith(str, prefix) {
+            return str.indexOf(prefix) === 0;
+        }
+
         console.log("Fix address", address);
         if (!strStartsWith(address, '0x')) {
           return ('0x' + address);
@@ -482,6 +487,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return address;
       },
       validationreceived: function(res){
+
+ 
 
           console.log("Validation received");
           var validatoraddress = this._fixaddress(res.detail.args.validator);
