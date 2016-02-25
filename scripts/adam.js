@@ -64,7 +64,7 @@ function connectMQTT() {
   var client = mqtt.connect('ws://opantwerpen.be:15674');
 
   client.on('connect', function() {
-    console.log('Adam is connected');
+    console.log('Adam is connected to MQTT');
     client.subscribe(channel);
   });
 
@@ -104,7 +104,7 @@ function connectMQTT() {
         var incomingpin = commandarray[4];
         var incomingref = commandarray[5];
 
-        client.send(incomingpin, "validationstarted" + "|adampoes|Adam|" + account + "|" + incomingref);
+        client.publish(incomingpin, "validationstarted" + "|adampoes|Adam|" + account + "|" + incomingref);
 
         break;
 
