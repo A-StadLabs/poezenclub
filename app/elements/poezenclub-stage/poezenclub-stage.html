@@ -159,11 +159,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .validatorz {
         width: 100vw;
         max-width: 600px;
-        padding-bottom: 30px; 
       }
 
       poes-validatordetail {
-        height: 160px;
+        height: 140px;
       }
 
       hr {
@@ -181,9 +180,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: black;
         height: 50px;
         color: white;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
       }
+
+      .toppertje {
+        width: 100%;
+        box-sizing:border-box;
+        padding: 20px;
+        @apply(--pink-bgcolor);
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-end-justified);
+      }
+
+      .valideerbtn {
+      outline: 0; 
+      margin: 5px 5px 5px 0px;
+      box-sizing:border-box;
+      border-radius: 8px;
+      cursor: pointer;
+      @apply(--theme-font-button);
+        background-color: transparent;
+        border: 1px solid black; 
+      padding: 15px 15px 15px 15px;
+      font-size: 22px;
+    }
 
     </style>
 
@@ -339,34 +361,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </neon-animatable>
 
   <neon-animatable data-route="pussybase">
-          <template is="dom-if" if="{{validated}}">
-          <button on-tap="tooncode" class="main">Valideer iemand anders</button>
-        </template>
+
+<!--           <template is="dom-if" if="{{validated}}">
+          <div class="toppertje">
+          </div>
+        </template> -->
 
     <div class="canvaspink">
       <div class="whitespace"></div>
       <div class="whitespace"></div>
-      <div class="whitespace"></div>
+
 
       <h1>{{poezennaam}}</h1>
       <poes-aai catnumber="{{poezenimage}}"></poes-aai>
       <div class="whitespace"></div>
-      <div class="whitespace"></div>
-      <div class="whitespace"></div>
+
       <template is="dom-if" if="{{!contractaddress}}">
         <poezenclub-loader normal id="memberloader" loadmsg="Je poes wordt geinischeerd"></poezenclub-loader>
       </template>
 
       <template is="dom-if" if="{{contractaddress}}">
-        <div class="validatorz vertical layout">
-          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
-          <hr>
-          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
-        </div>
-   
         <template is="dom-if" if="{{validated}}">
           <button on-tap="openbox" class="main">Open de poezendoos</button>
+          <button on-tap="tooncode" class="valideerbtn">Valideer iemand anders</button>
         </template>
+      <div class="whitespace"></div>
+      <div class="whitespace"></div>
+      <div class="validatorz vertical layout">
+        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
+        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
+      </div>
       </template>
 
     </div>
