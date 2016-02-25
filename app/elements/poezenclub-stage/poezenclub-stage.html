@@ -111,7 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     #poezenselector {
-      width: 80vw;
+      width: 100vw;
       max-width: 800px;
       @apply(--layout-horizontal);
       @apply(--layout-wrap);
@@ -159,6 +159,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .validatorz {
         width: 100vw;
         max-width: 600px;
+        padding-bottom: 30px; 
+      }
+
+      poes-validatordetail {
+        height: 160px;
+      }
+
+      hr {
+        color: rgba(0,0,0,0.15);
+        background-color: rgba(0,0,0,0.25);
+        height: 1px;
+        outline: none;
+        border: 0px;
+        margin: 0px;
+        padding: 0px;
       }
 
     </style>
@@ -304,10 +319,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template>
 
     <div class="canvaspink">
+      <div class="whitespace"></div>
+      <div class="whitespace"></div>
+      <div class="whitespace"></div>
+
       <h1>{{poezennaam}}</h1>
       <poes-aai catnumber="{{poezenimage}}"></poes-aai>
       <div class="whitespace"></div>
-
+      <div class="whitespace"></div>
+      <div class="whitespace"></div>
       <template is="dom-if" if="{{!contractaddress}}">
         <poezenclub-loader normal id="memberloader" loadmsg="Je poes wordt geinischeerd"></poezenclub-loader>
       </template>
@@ -315,9 +335,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template is="dom-if" if="{{contractaddress}}">
         <div class="validatorz vertical layout">
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
-          <!--
+          <hr>
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
-          -->
         </div>
    
         <template is="dom-if" if="{{validated}}">
@@ -487,6 +506,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //this.go("selectpussy");
       },
 
+
+      // namepoes: function(){
+      //   this.go("namepussy");
+      // },
+
+
       localpoes: function(){
         //this.go("home");
       },
@@ -494,11 +519,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       validateRequest: function() {
         var self = this;
         // send my pussydetails to the requester..
-        this.$.lomqtt.send(this.incomingpin, "validationstarted" + "|" + this.poezenimage + "|" + this.poezennaam + "|" + this.account + "|" + this.incomingref);
+        this.$.lomqtt.send(this.incomingpin,"validationstarted"+"|"+this.poezenimage+"|"+this.poezennaam+"|"+this.account+"|"+this.incomingref);
         this.$.poesvalidatie.addValidation(this.contractaddresstowrite, function(err, res) {
           console.log("Validatie is started...!");
-        });
-        self.go('pussybase');
+          self.go('pussybase');
+        })
       },
 
       msgreceived: function(e) {

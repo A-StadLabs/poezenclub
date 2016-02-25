@@ -28,15 +28,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
         @apply(--layout-center);
         box-sizing:border-box;
-        padding: 20px;
-        background-color: rgba(255,255,255,0.15);
-        border-radius: 10px;
-
+        padding: 30px 20px 30px 20px;
+        background-color: rgba(0,0,0,0.05);
       }
 
       .validpic {
-        width: 100px;
-        height: 100px;
+        width: 60px;
+        height: 60px;
         background-color: rgba(0,0,0,0.05);
         border-radius: 50%;
         margin: 0px 10px 0px 0px;
@@ -47,40 +45,141 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-      h1 {
-        @apply(--theme-font-title);
-        text-align: center;
+      h2 {
+        @apply(--theme-font-subhead);
+        @apply(--no-edges);
       }
       p {
         @apply(--theme-font-body1);
+        text-transform: none;
+      }
+
+
+      .tovalidate {
+        width: 100%;
+        box-sizing:border-box;
+        padding: 20px;
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+      }
+
+
+      paper-input-container {
+        width: 80%;
+        max-width: 450px;
+        background-color: white;
+        margin: 10px 10px 10px 0px;
+        padding: 30px;
+      }
+
+      .paper-input-container-0 label, paper-input-char-counter, .paper-input-container-0 input {
+      font-family: 'Indie Flower', cursive;
+      text-transform: capitalize;
+      }
+
+      .main {
+        @apply(--main-btn);
+        width: 100%;
+      }
+      .main:hover {
+        @apply(--btns-hovercolors);
+      }
+
+      .main2 {
+        @apply(--main2-btn);
+        width: 20%;
+      }
+
+      .medium {
+        @apply(--medium-btn);
+      }
+      .medium:hover {
+        @apply(--btns-hovercolors);
+      }
+      .small {
+        min-width: 100px;
+        @apply(--small-btn);
+      }
+      .small:hover {
+        @apply(--btns-altcolors);
+      }
+
+
+      .addbtn {
+        width: 100%;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+      .addbtn img {
+        width: 40px;
+        height: 40px;
+        margin: 0px 20px 0px 0px;
+      }
+      neon-animated-pages {
+        height: 100%;
+      }
+
+      .width {
+        width: 100%;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
       }
 
     </style>
 
-    <template is="dom-if" if="{{valid}}" >
 
+    <neon-animated-pages selected="{{validstate}}" 
+            entry-animation="{{entryAnimation}}"
+            exit-animation="{{exitAnimation}}"
+            attr-for-selected="currentvalidstate">
 
-      <div class="valide">
-        <div class="validpic"><img src="{{poesimage}}" /></div>
-      <div class="layout vertical start">
-        <p>Gevalideerd door</p>
-        <h1>{{poesobject.naam}}</h1>
-      </div>
-      </div>
-    </template>
+        <!-- startbutton  -->
+        <neon-animatable currentvalidstate="startbutton">
+        <div class="tovalidate">
+          <button on-tap="toPin" class="main">
+            <div class="addbtn">
+            <img src="../../images/poezen/paw3-01.png">
+            Validatie toevoegen
+            </div>
+          </button>
+        </div>  
+        </neon-animatable>
 
-    <template is="dom-if" if="{{!valid}}">
-      <div><img src="../../images/poezen/empty-poes-01.png" /></div>
-       <paper-input-container no-label-float>
+        <!-- pinner  -->
+        <neon-animatable currentvalidstate="pinner">
+        <div class="tovalidate">
+          <p>Vraag een pincode aan een gevalideerde poes</p> 
+          <div class="width">
+           <paper-input-container no-label-float>
             <label class="centertexting">pincode</label>
             <input autofocus class="centertexting"
             is="iron-input"
             prevent-invalid-input
             bind-value="{{enteredpin}}"></paper-input-container>
-            <button on-tap="submitpin" class="main">OK</button>
-      
-    </template>
-  
+            <button on-tap="toSpin" class="main2">OK</button>
+          </div>
+        </div>
+        </neon-animatable>
+
+        <!-- spinner  -->
+        <neon-animatable currentvalidstate="spinner">
+        <div class="tovalidate">
+          <poezenclub-loader small loadmsg="Je validatie is in aanvraag"></poezenclub-loader>
+        </div>
+        </neon-animatable>
+
+        <!-- validepoes  -->
+        <neon-animatable currentvalidstate="validepoes">
+          <div class="valide">
+            <div class="validpic"><img src="{{poesimage}}" /></div>
+            <div class="layout vertical start">
+              <p>Gevalideerd door</p> 
+              <h2>{{poesobject.naam}}</h2>
+            </div>
+          </div>
+        </neon-animatable>
+
+    </neon-animated-pages>
   </template>
   <script>
   (function() {
@@ -98,26 +197,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         valid: {
           type: Boolean,
-          value: false
+          value: false,
         },
         poesobject: {
           type: Object,
           observer: "poeschanged",
           notify:true
-        }
+        },
+
+        // validstate: {
+        //   type: String,
+        //   value: 'startbutton2'
+        // }
       },
 
       ready: function() {
         this.mqtt = document.getElementById('lomqtt');
+        this.validstate = "startbutton";
+        this.exitAnimation = 'fade-out-animation';
+        this.entryAnimation = 'fade-in-animation';
       },
       initpoes: function(){
         this.poesobject = {
           'valid': false,
           'image': "leeg",
           'naam': "lege naam",
-          'address': "leeg adres"
+          'address': "leeg adres",
+          'validstate': "startbutton"
         };
-
+        this.validstate = this.poesobject.validstate;
       },
       loadpoes: function(){
         try{
@@ -126,25 +234,62 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }catch(e){
           console.log('cannot parse poes data from localstorage...',this.poes);
         }
+        if(this.poesobject.validstate == 'pinner'){
+          this.poesobject.validstate = 'startbutton';
+        }
+        this.validstate = this.poesobject.validstate;
       },
       poeschanged: function(){
         this.poesimage = "../../images/poezen/poes" + this.poesobject.image + ".png";
         this.poes = JSON.stringify(this.poesobject);
         this.valid = this.poesobject.valid;
+        this.validstate = this.poesobject.validstate;
       },
-      
-      submitpin: function(){
-      var pin = this.enteredpin;
-      this.mqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poezenimage+"|"+this.poescontract+"|"+this.pincode+"|"+this.ref, 1);
+      /*
+      validate: function() {
+        this.poesobject.valid = true;
+        this.poeschanged();
+        this.fire('validated');
+      }*/
+        submitpin: function(){
+        var pin = this.enteredpin;
+        this.mqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poezenimage+"|"+this.poescontract+"|"+this.pincode+"|"+this.ref, 2);
+//        this.$.loader.loadmsg = "Validatie wordt gemined";
+
+        //this.go("start");
       },
-      
       validationStarted: function(poezennaam,poezenimage,address){
         this.poesobject.naam = poezennaam;
         this.poesobject.image = poezenimage;
         this.poesobject.address = address;
         this.poeschanged();
         console.log('validation started...',this.poesobject);
+
+      },
+
+      toPin: function(){
+        this.poesobject.validstate = "pinner";
+        this.poeschanged();
+      },
+
+      toSpin: function(){
+        this.poesobject.validstate = "spinner";
+        this.poeschanged();
       }
+
+      // isitvalid:function(){
+      //   if(this.valid){
+      //   this.poesobject.validstate = "validepoes";
+      //   this.poeschanged();  
+      //   };
+      // }
+
+      // isState: function(state){
+      //   return(this.poesobject.state == state);
+      // }
+
+
+
     });
   })();
   </script>

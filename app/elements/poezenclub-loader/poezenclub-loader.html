@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
         width: 100%;
+        height: 100%;
       }
 
 
@@ -23,12 +24,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-vertical);
         @apply(--layout-center-center);
         width: 100%;
+        text-align: center;
+
       }
 
       .loadersmall {
         @apply(--layout-horizontal);
         @apply(--layout-center-center);
         width: 100%;
+        text-align: left;
       }
 
 
@@ -40,13 +44,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       p {
         @apply(--theme-font-body2);
-        width: 100%;
-        text-align: center;
       }
 
       .draaierke img {
-        width: 80%;
-        height: 80%;
+        width: 100%;
+        height: 100%;
            -webkit-animation-name: rotate; 
           -webkit-animation-duration: 1s; 
           -webkit-animation-iteration-count: infinite;
@@ -59,7 +61,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           animation-duration: 1s; 
           animation-iteration-count: infinite;
           animation-timing-function: linear;
-        padding: 10%;
       }
 
       .draaierke {
@@ -69,7 +70,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         background-color: rgba(0,0,0,0.05);
         border-radius: 50%;
+
       }
+
+
+
+      .draaierkesmall img {
+        width: 80px;
+        height: 80px;
+           -webkit-animation-name: rotate; 
+          -webkit-animation-duration: 1s; 
+          -webkit-animation-iteration-count: infinite;
+          -webkit-animation-timing-function: linear;
+          -moz-animation-name: rotate; 
+          -moz-animation-duration: 1s; 
+          -moz-animation-iteration-count: infinite;
+          -moz-animation-timing-function: linear;
+          animation-name: rotate; 
+          animation-duration: 1s; 
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+      }
+
+      .draaierkesmall {
+
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+
 
 
 
@@ -94,7 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <template is="dom-if" if="{{normal}}">
     <div class="loader">
-      <div class="draaierke" on-tap="gaDan"><img src="../../images/poezen/poes1.png"></div>
+      <div class="draaierke" on-tap="gaDan"><img src="../../images/poezen/poes1loader.png"></div>
       <h1>Even geduld...</h1>
       <p>{{loadmsg}}</p>
     </div>
@@ -102,7 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <template is="dom-if" if="{{small}}">
     <div class="loadersmall">
-      <div class="draaierke" on-tap="gaDan"><img src="../../images/poezen/poes1.png"></div>
+      <div class="draaierkesmall" on-tap="gaDan"><img src="../../images/poezen/poes1loader.png"></div>
       <p>{{loadmsg}}</p>
     </div>
     </template>
