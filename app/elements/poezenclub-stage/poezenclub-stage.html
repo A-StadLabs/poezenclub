@@ -207,6 +207,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-size: 22px;
     }
 
+    .incomingpic {
+      width: 250px;
+      height: 250px;
+            background-color: rgba(0,0,0,0.1);
+      border-radius: 50%;
+
+    }
+
     </style>
 
     <iron-localstorage name="poezenimage" value="{{poezenimage}}"
@@ -308,7 +316,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <template is="dom-if" if="{{validated}}">
           <div class="canvaspink">
-            <p>Jouw pincode</p>
+                      <p>Jouw pincode</p>
             <h1>{{pincode}}</h1>
             <button class="medium" on-tap="topussybase">Terug</button>
           </div>
@@ -326,7 +334,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="canvaspink">
           <div class="eighty">
             <h2>{{incomingpussyname}}</h2>
-            <img src="{{incomingpussypic}}" />
+            <div class="incomingpic"><img src="{{incomingpussypic}}" /></div>
             <p>{{contractaddresstowrite}}</p>
           </div>
           <div class="layout horizontal center">
