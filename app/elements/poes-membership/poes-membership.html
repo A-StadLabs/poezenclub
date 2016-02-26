@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
       _updateBalance: function() {
-        this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
+        this.balance = parseFloat(this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether'));
         return this.balance;
       },
       _web3: function() {

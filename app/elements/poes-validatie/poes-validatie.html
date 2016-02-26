@@ -133,6 +133,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('contract to validate ', contractAddress);
           console.log('contract options', options);
 
+          console.log("balance before invocation of contract:",self.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether'));
+
 
           var result = myContractInstance.addValidation.sendTransaction(options,
             function(err, result) {
@@ -145,6 +147,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               }
             }
           );
+
+          console.log("balance after invocation of contract:",self.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether'));
+
 /*
           myContractInstance.ValidationAdded(function(err, res) {
 
