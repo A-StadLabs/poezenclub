@@ -89,11 +89,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _web3: function() {
         var self = this;
-
+        this._updateBalance();
         if (this.contractjson && this.lomqttconnected) {
           // console.log("poes contract kent web3js ", this.web3);
           // console.log("contract adres van deze club=", this.contractaddress);
-          this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
+          //this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
           // Start listening to contract state / event
 
           // console.log("Ik ken web3 EN ik ken contactjson");
