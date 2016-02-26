@@ -238,8 +238,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://kingflurkel.dtdns.net:8545"></alabs-web3js>
 
-
-
     <neon-animated-pages selected="{{state}}" 
             entry-animation="{{entryAnimation}}"
             exit-animation="{{exitAnimation}}"
@@ -471,6 +469,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         validations: {
           type: Number,
           observer: '_validationschanged'          
+        },
+        validated: {
+          type: Boolean,
+          observer: "_validated",
+          value: false
         }
       },
 
@@ -551,10 +554,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if (this._fixaddress(this.poesobject1.address) == validatoraddress){
             console.log("is from validator1",this.poesobject1);
             return document.getElementById("validator1").setValidated();
+            this.checkvalidationstate();
           }
           if (this._fixaddress(this.poesobject2.address) == validatoraddress){
             console.log("is from validator2",this.poesobject2);
             return document.getElementById("validator2").setValidated();
+            this.checkvalidationstate();
           }
           console.log('unknown validator... ignoring this.');
 
@@ -571,6 +576,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.validated = true;
         }
         */
+      },
+
+      _validated: function(){
+        console.log("Validated changed: ", this.validated);
       },
 
       toNamepussy: function() {
