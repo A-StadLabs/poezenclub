@@ -8,16 +8,16 @@ var fs = require('fs');
 var membershipcontract = require('../app/contracts/LocalsMembership.json');
 var membershipcontractaddress = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
 var host = "http://kingflurkel.dtdns.net:8545";
+/*
 var channel = "adam";
 var keystoreFile = "adamswallet.json";
 var poesimage = "adampoes";
 var poesname = "Adam";
-/*
+*/
 var keystoreFile = "evaswallet.json";
 var channel = "eva";
 var poesimage = "evapoes";
 var poesname = "Eva";
-*/
 
 var validationcontract = require('../app/contracts/LocalsValidation.json');
 
@@ -70,13 +70,13 @@ function connectMQTT() {
   var client = mqtt.connect('ws://opantwerpen.be:15674');
 
   client.on('connect', function() {
-    console.log('Adam is connected to MQTT');
+    console.log(poesname,' is connected to MQTT');
     client.subscribe(channel);
   });
 
   client.on('message', function(topic, message) {
     // message is Buffer
-    console.log('Adam received a message');
+    console.log(poesname,' received a message');
     console.log(message.toString());
 
     var msg = message.toString();

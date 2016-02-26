@@ -24,6 +24,7 @@ var historyApiFallback = require('connect-history-api-fallback');
 var packageJson = require('./package.json');
 var crypto = require('crypto');
 var ensureFiles = require('./tasks/ensure-files.js');
+var bb = require('bitballoon');
 
 // var ghPages = require('gulp-gh-pages');
 
@@ -122,7 +123,7 @@ gulp.task('lint', ['ensureFiles'], function() {
 //      'app/scripts/**/*.js',
 //      'app/elements/**/*.js',
 //      'app/elements/**/*.html',
-      'gulpfile.js'
+//      'gulpfile.js'
     ])
     .pipe(reload({
       stream: true,
@@ -161,6 +162,13 @@ gulp.task('copy', function() {
   var bower = gulp.src([
     'app/bower_components/{webcomponentsjs,platinum-sw,sw-toolbox,promise-polyfill}/**/*'
   ]).pipe(gulp.dest(dist('bower_components')));
+
+ gulp.src(['app/scripts/hooked.js','app/scripts/lightwallet.min.js'])
+    .pipe(gulp.dest(path.join(dist(), 'scripts')));
+
+ gulp.src(['app/contracts/*'])
+    .pipe(gulp.dest(path.join(dist(), 'contracts')));
+
 
   return merge(app, bower)
     .pipe($.size({
@@ -307,6 +315,29 @@ gulp.task('build-deploy-gh-pages', function(cb) {
     'default',
     'deploy-gh-pages',
     cb);
+});
+
+// deploy to bitballoon
+gulp.task('deploy', function() {
+/*
+  var client = bb.createClient({
+    client_id: "zigge",
+    client_secret: "zagge"
+  });
+*/
+//  client.authorizeFromCredentials(function(err, access_token) {
+   // if (err) return console.log(err);
+    bb.deploy({
+      access_token: "9e992858a1f1519a6edc38f32f9f5cca8bc494c2f15f2a3d92532c7d66086352",
+      site_id: "poezenclub.bitballoon.com",
+      dir: "dist"
+    }, function(err, deploy) {
+      if (err) {
+        throw (err)
+      }
+    });
+
+ // });
 });
 
 // Deploy to GitHub pages gh-pages branch
