@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         balance: {
           type: Number,
           notify: true,
-          observer: "_balance"
+//          observer: "_balance"
         },
         globalkeystore: {
           type: Object,
@@ -85,6 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _updateBalance: function() {
         this.balance = parseFloat(this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether'));
+        console.log('updatebalance called. Balance is',this.balance);
         return this.balance;
       },
       _web3: function() {
@@ -140,9 +141,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          return address;
       },
 
-      _balance: function() {
-        console.log("current balance for account ", this.account, ": ", this.balance);
-      },
+//      _balance: function() {
+        //console.log("current balance for account ", this.account, ": ", this.balance);
+//      },
 
       // handleResponse: function() {
       //   this.contractjson = this.response;
