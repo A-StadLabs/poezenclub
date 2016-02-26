@@ -157,13 +157,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <neon-animatable currentvalidstate="pinner">
         <div class="tovalidate">
           <div class="width">
-           <paper-input-container no-label-float>
-            <label class="centertexting">Vraag een pincode aan een gevalideerde poes</label>
-            <input autofocus class="centertexting"
+            <paper-input-container no-label-float>
+              <label class="centertexting">Vraag een pincode aan een gevalideerde poes</label>
+              <input autofocus class="centertexting"
             is="iron-input"
             prevent-invalid-input
             bind-value="{{enteredpin}}"></paper-input-container>
-            <button on-tap="toSpin" class="main2">OK</button>
+            <template is="dom-if" if="{{!showOKbutton}}">
+              <button on-tap="toStart" class="main2">X</button>
+            </template>
+            <template is="dom-if" if="{{showOKbutton}}">
+              <button on-tap="toSpin" class="main2">OK</button>
+            </template>
           </div>
         </div>
         </neon-animatable>
@@ -215,6 +220,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type:String,
           notify:true
         },
+        enteredpin: {
+          type: String,
+          observer: "_pinchanged"
+        },
+        showOKbutton: {
+          type: Boolean,
+          value: false
+        }
       },
 
       ready: function() {
@@ -223,6 +236,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.exitAnimation = 'fade-out-animation';
         this.entryAnimation = 'fade-in-animation';
       },
+      _pinchanged: function(){
+        if (!this.enteredpin || this.enteredpin.length === 0){
+          this.showOKbutton = false;
+        }else{
+          this.showOKbutton = true;
+        }
+      },
+
       initpoes: function(){
         this.poesobject = {
           'valid': false,
@@ -267,7 +288,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.poesobject.valid = true;
         this.poesobject.validstate = "validepoes";
         this.poeschanged();
+        this.fire('validated');
 
+      },
+
+      toStart: function(){
+        this.poesobject.validstate = 'startbutton';
+        this.poeschanged();
       },
 
       toPin: function(){
