@@ -161,12 +161,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       .validatorz {
-        width: 100vw;
+        width: 92vw;
         max-width: 600px;
       }
 
       poes-validatordetail {
-        height: 140px;
+        height: 100px;
       }
 
       hr {
@@ -371,6 +371,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
   </neon-animatable>
 
+
+
+    <neon-animatable data-route="clearconfirm">
+      <div class="canvaspink">
+        <div class="eighty">
+          <h2>Wil je volledig opnieuw beginnen?</h2>
+        </div>
+          <div class="layout horizontal center">
+            <button class="medium" on-tap="topussybase">Annuleren</button>
+            <button class="medium" on-tap="opnieuw">Opnieuw beginnen</button>
+          </div>
+    </div>
+  </neon-animatable>
+
+
+
+
   <neon-animatable data-route="pussybase">
 
 <!--           <template is="dom-if" if="{{validated}}">
@@ -381,15 +398,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="canvaspink">
       <div class="whitespace"></div>
       <div class="whitespace"></div>
-
+      <div class="whitespace"></div>
       <div class="eighty middle">
       <h1>{{poezennaam}}</h1>
       </div>
-      <poes-aai catnumber="{{poezenimage}}"></poes-aai>
+      <poes-aai catnumber="{{poezenimage}}" on-cleared="goClear"></poes-aai>
       <div class="whitespace"></div>
 
       <template is="dom-if" if="{{!contractaddress}}">
-        <poezenclub-loader normal id="memberloader" loadmsg="Je poes wordt geinischeerd"></poezenclub-loader>
+        <poezenclub-loader normal id="memberloader" loadmsg="Je poescontract wordt aangemaakt"></poezenclub-loader>
       </template>
 
       <template is="dom-if" if="{{contractaddress}}">
@@ -559,6 +576,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       toNamepussy: function() {
         this.go('namepussy');
       },
+
+      goClear: function(){
+        this.go('clearconfirm');
+      },
+
+      opnieuw: function(){
+      window.localStorage.clear();
+      location.reload();
+      },
+
+
       mqttconnectedfire: function(){
         console.log("MQTT connected");
         // this.subscribetoPin();
