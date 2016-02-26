@@ -322,9 +322,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <template is="dom-if" if="{{hasenoughcredits}}">
 
-          <div class="canvaspink">
+          <div class="canvaspink layout center center">
             <p>Jouw pincode</p>
             <h1>{{pincode}}</h1>
+            <small>Je kan nog <span>{{cleansaldo}}</span> validaties doen.</small>
             <button class="medium" on-tap="topussybase">Terug</button>
           </div>
 
@@ -428,7 +429,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-if" if="{{validated}}">
           <button on-tap="openbox" class="main">Open de poezendoos</button>
           <template is="dom-if" if="{{hasenoughcredits}}">
-            <button on-tap="tooncode" class="valideerbtn">Ξ<span>{{saldo}}</span> Valideer iemand anders</button>
+            <button on-tap="tooncode" class="valideerbtn">Valideer iemand anders</button>
           </template>
         </template>
 
@@ -533,6 +534,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }else{
           this.hasenoughcredits = false;
         }
+        this.cleansaldo = Math.floor(this.saldo);
       },
       _statechanged: function(){
         console.log('state changed to',this.state);
