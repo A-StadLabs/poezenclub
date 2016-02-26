@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
         @apply(--layout-center);
         box-sizing:border-box;
-        padding: 30px 20px 30px 20px;
+        padding: 0px 20px 0px 20px;
         background-color: rgba(0,0,0,0.05);
       }
 
@@ -38,6 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 60px;
         background-color: rgba(0,0,0,0.05);
         border-radius: 50%;
+        overflow: hidden;
         margin: 0px 10px 0px 0px;
       }
       .validpic img {
@@ -60,8 +61,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         height: 100%;
 
-        box-sizing:border-box;
-        padding: 20px;
+/*        box-sizing:border-box;
+        padding: 20px;*/
         @apply(--layout-vertical);
         @apply(--layout-center-center);
       }
@@ -72,12 +73,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 450px;
         background-color: white;
         margin: 10px 10px 10px 0px;
-        padding: 30px;
+        padding: 24px;
       }
 
       .paper-input-container-0 label, paper-input-char-counter, .paper-input-container-0 input {
       font-family: 'Indie Flower', cursive;
-      text-transform: capitalize;
+/*      text-transform: capitalize;*/
       }
 
       .main {
@@ -151,10 +152,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- pinner  -->
         <neon-animatable currentvalidstate="pinner">
         <div class="tovalidate">
-          <p>Vraag een pincode aan een gevalideerde poes</p> 
           <div class="width">
            <paper-input-container no-label-float>
-            <label class="centertexting">pincode</label>
+            <label class="centertexting">Vraag een pincode aan een gevalideerde poes</label>
             <input autofocus class="centertexting"
             is="iron-input"
             prevent-invalid-input
