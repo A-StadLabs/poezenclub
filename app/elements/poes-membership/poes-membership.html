@@ -83,6 +83,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.ismember = false;          
         }
       },
+      _updateBalance: function() {
+        this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
+        return this.balance;
+      },
       _web3: function() {
         var self = this;
 
@@ -121,9 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 console.log('Hie hemme dan de res:', res.args.invitee , 'En dan de selfaccount is dan dit:' , self.account);
 
               }
-
-
-
+              this._updateBalance();
             });
 
 
@@ -207,13 +209,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
               );
 
-              myContractInstance.MemberAdded(function(err,res){
+              myContractInstance.MemberAdded(function(err, res) {
 
                 self.memberstatus = 1;
 
                 console.log('MEMBERADDED triggered SUSKE');
-                console.log('err',err);
-                console.log('res',res);
+                console.log('err', err);
+                console.log('res', res);
+
+                this._updateBalance();
+
               });
       });
       },

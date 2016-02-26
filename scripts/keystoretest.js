@@ -82,6 +82,12 @@ if (!fs.existsSync(keystoreFile)) {
 			case "balances":
 					showBalances(myArgs._[1]);
 				break;
+
+			case "checkcontract":
+			var contractaddress = myArgs._[1];
+				console.log("Check validationcontract ",contractaddress);
+			0x6edbd6c6b61892156166d9b906e596282ae331e0
+
 			case "deploycontract":
 					console.log(contract.bytecode);
 				var MyContract = web3.eth.contract(contract.abi);
