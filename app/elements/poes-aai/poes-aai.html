@@ -50,7 +50,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         clearcount: {
           type: Number,
-          observer: '_clearCount'
+          observer: '_clearCount',
+          notify: true
         }
       },
 
@@ -97,6 +98,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log("Dit is de clearcount: " + this.clearcount);
           if (this.clearcount>2){
             this.fire('cleared');
+            this.clearcount = 0;
           }
         }
 
