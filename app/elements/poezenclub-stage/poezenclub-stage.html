@@ -318,11 +318,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <neon-animatable data-route="pin">
 
         <template is="dom-if" if="{{validated}}">
+
+          <template is="dom-if" if="{{hasenoughcredit}}">
+
           <div class="canvaspink">
-                      <p>Jouw pincode</p>
+            <p>Jouw pincode</p>
             <h1>{{pincode}}</h1>
             <button class="medium" on-tap="topussybase">Terug</button>
           </div>
+
+          </template>
+
+           <template is="dom-if" if="{{!hasenoughcredit}}">
+
+          <div class="canvaspink">
+            <h1>Je hebt genoeg poezen gevalideerd.</h1>
+            <button class="medium" on-tap="topussybase">Terug</button>
+          </div>
+
+          </template>
+
         </template>
 
         <template is="dom-if" if="{{!validated}}">
