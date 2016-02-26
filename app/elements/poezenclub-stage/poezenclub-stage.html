@@ -320,7 +320,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <template is="dom-if" if="{{validated}}">
 
-          <template is="dom-if" if="{{hasenoughcredit}}">
+          <template is="dom-if" if="{{hasenoughcredits}}">
 
           <div class="canvaspink">
             <p>Jouw pincode</p>
@@ -330,7 +330,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           </template>
 
-           <template is="dom-if" if="{{!hasenoughcredit}}">
+           <template is="dom-if" if="{{!hasenoughcredits}}">
 
           <div class="canvaspink">
             <h1>Je hebt genoeg poezen gevalideerd.</h1>
@@ -428,7 +428,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template is="dom-if" if="{{validated}}">
           <button on-tap="openbox" class="main">Open de poezendoos</button>
           <template is="dom-if" if="{{hasenoughcredits}}">
-            <button on-tap="tooncode" class="valideerbtn">Ξ{{saldo}} Valideer iemand anders</button>
+            <button on-tap="tooncode" class="valideerbtn">Ξ<span>{{saldo}}</span> Valideer iemand anders</button>
           </template>
         </template>
       <div class="whitespace"></div>
@@ -461,7 +461,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         saldo: {
           type: Number,
           notify: true,
-          observer: 'saldochanged'
+          observer: 'saldochanged',
+          value: 1
         },
 
         pincode: {
@@ -496,6 +497,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         hasenoughcredits: {
           type: Boolean,
+          value: true
+        },
+        validated: {
+          type: Boolean,
           value: false
         }
       },
@@ -517,9 +522,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       saldochanged: function(){
         console.log('saldo is nu ',this.saldo);
         if (this.saldo > 1){
-          hasenoughcredits = true;
+          this.hasenoughcredits = true;
         }else{
-          hasenoughcredits = false;
+          this.hasenoughcredits = false;
         }
       },
       _statechanged: function(){
@@ -552,11 +557,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       attached: function(){
         //this.go('selectpussy');
+
       },
 
       checkvalidationstate: function(){
         // hier checken of 2 validaties OK zijn.
         // zoja -> toon knop openmaken die doos
+
         if (this.poesobject1 && this.poesobject1.valid === true && this.poesobject2 && this.poesobject2.valid === true){
           console.log("JE POES IS VALIDE");
           this.validated=true;
@@ -576,7 +583,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       validationreceived: function(res){
 
- 
 
           console.log("Validation received");
           var validatoraddress = this._fixaddress(res.detail.args.validator);
@@ -585,6 +591,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if (this._fixaddress(this.poesobject1.address) == validatoraddress){
             console.log("is from validator1",this.poesobject1);
             return document.getElementById("validator1").setValidated();
+
           }
           if (this._fixaddress(this.poesobject2.address) == validatoraddress){
             console.log("is from validator2",this.poesobject2);
@@ -639,7 +646,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             //}
             break;
           case "pussybase":
-            //this.checkvalidationstate();
             break;
         }
       },
@@ -750,6 +756,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       tooncode: function(){
+        this.$.poescontract._updateBalance();
         this.go("pin");
       }
 
