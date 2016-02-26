@@ -355,10 +355,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-input-container no-label-float>
             <label class="centertexting">pincode</label>
             <input autofocus class="centertexting"
-            is="iron-input"
+            is="iron-input" type="number"
             prevent-invalid-input
             bind-value="{{boxpin}}"></paper-input-container>
+
         <button on-tap="submitboxpin" class="main">OK</button>
+        <button class="medium" on-tap="topussybase">Annuleren</button>
       </div>
     </neon-animatable>
     <neon-animatable data-route="boxisopen">
