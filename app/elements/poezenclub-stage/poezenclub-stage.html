@@ -376,6 +376,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             prevent-invalid-input
             bind-value="{{boxpin}}"></paper-input-container>
         <button on-tap="submitboxpin" class="main">OK</button>
+        <button on-tap="toPussybase" class="main">Niet nu</button>
       </div>
     </neon-animatable>
     <neon-animatable data-route="boxisopen">
@@ -640,6 +641,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       mqttconnectedfire: function(){
         console.log("MQTT connected");
         // this.subscribetoPin();
+      },
+      
+      toPussybase: function(){
+        this.go('pussybase');
       },
 
       go: function(tostate){
