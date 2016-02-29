@@ -264,8 +264,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(this.poesobject.validstate == 'pinner'){
           this.poesobject.validstate = 'startbutton';
         }
+        // if I enter and am spinning - then setup an interval to check this validation
+        if (this.poesobject.validstate == 'spinner'){
+            this.checkValidation();
+        }
         this.validstate = this.poesobject.validstate;
       },
+
+      checkValidation: function() {
+        var self = this;
+    
+        function check() {
+          var state = document.getElementById('poesvalidatie')._getValidation(self.poesobject.address);
+          console.log('getValidation says: ', state);
+          if (state == 1) {
+            self.setValidated();
+          }
+        }
+
+        check();
+        this.timer = setInterval(check, 10 * 1000);        
+
+      },
+
+
       poeschanged: function(){
         this.poesimage = "../../images/poezen/poes" + this.poesobject.image + ".png";
         this.poesnaam = this.poesobject.naam;
@@ -279,17 +301,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.poesobject.naam = poezennaam;
         this.poesobject.image = poezenimage;
         this.poesobject.address = address;
-        this.poeschanged();
+        this.poeschanged();        
         console.log('validation started...',this.poesobject);
-
       },
 
       setValidated: function() {
+        if (this.timer){
+          console.log('clearing timer');
+          clearInterval(this.timer);
+        }
         this.poesobject.valid = true;
         this.poesobject.validstate = "validepoes";
         this.poeschanged();
         this.fire('validated');
-
       },
 
       toStart: function(){

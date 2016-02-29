@@ -105,11 +105,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      // return number of validations
       _getValidations: function(){
         var myContract = this.web3.eth.contract(this.contractjson.abi);
         var contractinstance = myContract.at(this.contractaddress);
         this.validations = contractinstance.countValidations().toNumber(10);
         console.log('aantal validations=',this.validations);
+      },
+
+      // did this address validate me ? Returns 0 or 1
+      _getValidation: function (address){
+        if (!this.web3 || !this.contractjson || !this.contractaddress){
+          return 0;
+        }
+        var myContract = this.web3.eth.contract(this.contractjson.abi);
+        var contractinstance = myContract.at(this.contractaddress);
+        return contractinstance.validators(address).toNumber(10);
+
       },
 
       addValidation: function(contractAddress,cb) {
