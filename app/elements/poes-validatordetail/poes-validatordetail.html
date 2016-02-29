@@ -243,7 +243,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.showOKbutton = true;
         }
       },
-
+      fixaddress: function(address) {
+         if (!address.startsWith('0x')) {
+           return ('0x' + address);
+         }
+         return address;
+      },
       initpoes: function(){
         this.poesobject = {
           'valid': false,
@@ -275,7 +280,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var self = this;
     
         function check() {
-          var state = document.getElementById('poesvalidatie')._getValidation(self.poesobject.address);
+          var state = document.getElementById('poesvalidatie')._getValidation(self.fixaddress(self.poesobject.address));
           console.log('getValidation says: ', state);
           if (state == 1) {
             self.setValidated();
