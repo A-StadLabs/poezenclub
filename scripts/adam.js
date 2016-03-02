@@ -8,16 +8,17 @@ var fs = require('fs');
 var membershipcontract = require('../app/contracts/LocalsMembership.json');
 var membershipcontractaddress = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
 var host = "http://kingflurkel.dtdns.net:8545";
-/*
+
 var channel = "adam";
 var keystoreFile = "adamswallet.json";
 var poesimage = "adampoes";
 var poesname = "Adam";
-*/
+/*
 var keystoreFile = "evaswallet.json";
 var channel = "eva";
 var poesimage = "evapoes";
 var poesname = "Eva";
+*/
 
 var validationcontract = require('../app/contracts/LocalsValidation.json');
 
@@ -213,7 +214,7 @@ function requestMembership(address) {
 
   var options = {
     from: account,
-    value: 6 * 1e18,
+    value: 2 * 1e18,
     gas: 3141590,
     gasPrice: gasPrice,
     nonce: Math.floor(Math.random(999999)) + new Date().getTime(),

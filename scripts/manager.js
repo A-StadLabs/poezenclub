@@ -62,8 +62,6 @@ if (!fs.existsSync(keystoreFile)) {
 				var price = parseInt(myArgs._[1]);
 				console.log('setting contract value to:',price);
 			
-				process.exit();
-
 				// creation of contract object
 				var MyContract = web3.eth.contract(contract.abi);
 				var myContractInstance = MyContract.at(poezencontract);
@@ -76,7 +74,7 @@ if (!fs.existsSync(keystoreFile)) {
 					nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
 				};
 
-				var result = myContractInstance.setPrice.sendTransaction(newMember, options,
+				var result = myContractInstance.setPrice.sendTransaction(price, options,
 					function(err, result) {
 						if (err != null) {
 							console.log(err);
@@ -84,7 +82,7 @@ if (!fs.existsSync(keystoreFile)) {
 						} else {
 							console.log("Transaction Successful!");
 							console.log(result);
-							monitorBalances(newMember);
+							//monitorBalances(newMember);
 						}
 					}
 				);
