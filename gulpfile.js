@@ -352,6 +352,38 @@ gulp.task('deploy-gh-pages', function() {
     }), $.ghPages()));
 });
 
+
+gulp.task('compile-solidity', function() {
+
+  glob([
+    './app/contracts/*.sol',
+  ], {
+    cwd: '.'
+  }, function(error, files) {
+    files.forEach(function(file) {
+      console.log('compiling sol file', file);
+
+      var fileContent = fs.readFileSync(file, "utf8");
+
+      var solc = require('solc');
+      var input = fileContent;
+      var output = solc.compile(input, 1); // 1 activates the optimiser
+      for (var contractName in output.contracts) {
+        var data = {
+          bytecode: output.contracts[contractName].bytecode,
+          abi: JSON.parse(output.contracts[contractName].interface)
+        }
+        var outputFileName = require('path').dirname(file) + '/' + contractName + ".json";
+        console.log('saving to', outputFileName);
+
+        fs.writeFile(outputFileName, JSON.stringify(data), 'utf8');
+
+      }
+    });
+  });
+});
+
+
 // Load tasks for web-component-tester
 // Adds tasks for `gulp test:local` and `gulp test:remote`
 // require('web-component-tester').gulp.init(gulp);

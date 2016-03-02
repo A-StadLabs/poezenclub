@@ -90,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _web3: function() {
         var self = this;
-        if (this.web3){
+        if (this.web3 && this.web3.connected){
          this._updateBalance();
         }
         if (this.web3 && this.contractjson && this.lomqttconnected) {
@@ -98,26 +98,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
           var myContractInstance = MyContract.at(self.contractaddress);
           if (this.memberstatus != 0) {
+            console.log('I am already a member');
+            /*
             myContractInstance.MemberAdded(function(err, res) {
               console.log('dees vergelijking doen: ', res.args.invitee, " vs ", self.account);
               if (res.args.invitee == "0x" + self.account) {
                 self.memberstatus = 1;
               }
             });
+            */
           } else {
-            console.log("Je ne suis pas un lid");
+            console.log("I am not a member yet. Request Membership");
 
+            // So start listening to this contract
             myContractInstance.MemberAdded(function(err, res) {
+              console.log('poes-memnbership: MemberAdded event received');
+              if (err){
+                console.log('error:', err);
+              }
 
               if (res.args.invitee == self.account) {
-
+                console.log('account ',self.account,'is now member of the poezenclub');
                 self.memberstatus = 1;
-
-                console.log('MEMBERADDED triggered SUSKE');
-                console.log('err', err);
-                console.log('res', res);
               } else {
-                console.log('Hie hemme dan de res:', res.args.invitee , 'En dan de selfaccount is dan dit:' , self.account);
+                console.log('')
+                console.log('invitee address does not match my account:', res.args.invitee , '!=' , self.account);
+                console.log(res);
 
               }
               self._updateBalance();
@@ -165,7 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('result van MS voor',this.account,'=',r.toNumber(10));
         return r.toNumber(10);
       },
-
+/*
       addMember: function(newMemberAddress,cb) {
         var self = this;
 
@@ -217,10 +223,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               });
       });
       },
-
+*/
       _account: function(){
         this.account = this.fixaddress(this.account);
-        console.log("Ich hem een accooouunnnt", this.account);
+        console.log("My account is", this.account);
       }
 
 

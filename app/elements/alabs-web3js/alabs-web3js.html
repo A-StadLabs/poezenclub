@@ -116,6 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
         this.connected = true;
+        this.web3.connected = true;
 
 
         // console.log('A-labs web3js. RPC host',this.provider);

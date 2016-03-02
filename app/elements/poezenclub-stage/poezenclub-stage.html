@@ -236,7 +236,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" balance="{{saldo}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" ismember={{ismember}} on-contract-ready="_poescontractready"></poes-membership>
 
-    <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://kingflurkel.dtdns.net:8545"></alabs-web3js>
+    <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
 
 
 
@@ -422,6 +422,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <poes-aai catnumber="{{poezenimage}}" on-cleared="goClear"></poes-aai>
       <div class="whitespace"></div>
+
+      <template is="dom-if" if="{{!ismember}}">
+        <poezenclub-loader normal id="memberloader" loadmsg="Je lidmaatschap wordt aangemaakt"></poezenclub-loader>
+      </template>
 
       <template is="dom-if" if="{{!contractaddress}}">
         <poezenclub-loader normal id="memberloader" loadmsg="Je poescontract wordt aangemaakt"></poezenclub-loader>

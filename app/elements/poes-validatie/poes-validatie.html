@@ -185,6 +185,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('ik heb al een adres!');
           return;
         }
+        console.log('Creating validation contract!');
         var self = this;
         this.web3.eth.getGasPrice(function(err, result) {
           var gasPrice = result.toNumber(10);
@@ -204,11 +205,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               // e.g. check tx hash on the first call (transaction send)
               if (!myContract.address) {
-                console.log("Your contract has been deployed to the Ethereum network. Transaction hash is", myContract.transactionHash);
+                console.log("Your validation contract has been deployed to the Ethereum network. Transaction hash is", myContract.transactionHash);
                 console.log("Wait a new moments while we mine it. You will receive your address when it is mined.");
                 // check address on the second call (contract deployed)
               } else {
-                console.log("Your contract has been deployed. Your contract address is", myContract.address);
+                console.log("Your validation contract has been deployed. Your contract address is", myContract.address);
                 self.contractaddress = myContract.address;
                 self._initcontract();
               }
