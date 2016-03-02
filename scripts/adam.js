@@ -214,7 +214,7 @@ function requestMembership(address) {
 
   var options = {
     from: account,
-    value: 2 * 1e18,
+    value: 2.2 * 1e18,
     gas: 3141590,
     gasPrice: gasPrice,
     nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
