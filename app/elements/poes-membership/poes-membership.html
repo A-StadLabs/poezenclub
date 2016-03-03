@@ -141,10 +141,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       // Add 0x to address 
       fixaddress: function(address) {
-         if (!address.startsWith('0x')) {
-           return ('0x' + address);
-         }
-         return address;
+
+        function strStartsWith(str, prefix) {
+            return str.indexOf(prefix) === 0;
+        }
+
+        console.log("Fix address", address);
+        if (!strStartsWith(address, '0x')) {
+          return ('0x' + address);
+        }
+        return address;
+
       },
 
 //      _balance: function() {
