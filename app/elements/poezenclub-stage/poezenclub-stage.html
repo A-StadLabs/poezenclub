@@ -530,9 +530,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.pincode = (Math.floor(Math.random()*90000) + 10000).toString();
       },
 
-      attached: function(){
-       
-      },
       saldochanged: function(){
         console.log('saldo is nu ',this.saldo);
         if (this.saldo > 1){
@@ -703,10 +700,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           //self.go('pussybase');
         });
         this.topussybase();
-      },
-
-      msgreceived: function(e) {
-        console.log("MSG received: ", e.detail);
       },
 
       openbox: function(){
