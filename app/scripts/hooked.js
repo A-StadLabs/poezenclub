@@ -41,32 +41,11 @@ var factory = function factory(Web3) {
           requests = [requests];
         }
 
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = requests[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var request = _step.value;
-
+		requests.forEach(function(request) {
             if (request.method == "eth_sendTransaction") {
               throw new Error("HookedWeb3Provider does not support synchronous transactions. Please provide a callback.");
             }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"]) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
+		});
 
         var finishedWithRewrite = function finishedWithRewrite() {
           return _get(Object.getPrototypeOf(HookedWeb3Provider.prototype), "send", _this).call(_this, payload, callback);
@@ -178,16 +157,16 @@ var factory = function factory(Web3) {
             // Update the transaction parameters.
             tx_params.nonce = Web3.prototype.toHex(final_nonce);
 
-            // Update caches.
-            session_nonces[sender] = final_nonce + 1;
-            _this3.global_nonces[sender] = final_nonce + 1;
-
             // If our transaction signer does represent the address,
             // sign the transaction ourself and rewrite the payload.
             _this3.transaction_signer.signTransaction(tx_params, function (err, raw_tx) {
               if (err != null) {
                 return next(err);
               }
+
+              // Update caches. (moved after signTransaction success)
+              session_nonces[sender] = final_nonce + 1;
+              _this3.global_nonces[sender] = final_nonce + 1;
 
               payload.method = "eth_sendRawTransaction";
               payload.params = [raw_tx];
