@@ -132,7 +132,7 @@ serialPort.open(function(error) {
     });
 
     generateCode();
-    client.subscribe('poezendoos/' + code);
+    client.subscribe(['poezendoos/service','poezendoos/' + code]);
     client.publish('poezendoos/' + code, 'command|listening');
     schrijflcd("   poezendoos" + String.fromCharCode(13) + "     " + code);
 

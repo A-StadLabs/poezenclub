@@ -46,24 +46,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           notify: true,
           observer: 'pictureTime'
-        },
-
-        clearcount: {
-          type: Number,
-          observer: '_clearCount',
-          notify: true
         }
-      },
-
-
-
-      listeners: {
-        track: 'mouseTrack'
       },
 
       ready:function(){
         // this.pictureTime();
-        this.clearcount = 0;
       },
 
       pictureTime:function(){
@@ -73,34 +60,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
 
-        mouseTrack: function(e) {
-          switch(e.detail.state) {
-            case 'start':
-              this.startmouse = e.detail.x;
-              // console.log("Tracking started!" + this.startmouse);
-              break;
-            case 'end':
-              this.endmouse = e.detail.x;
-              // console.log("Tracking ended!" + this.endmouse);
-              this.swiper = this.startmouse - this.endmouse;
-                if(this.swiper>10){
-                  this.$.poezenaudio.play();
-                };
-                if(this.swiper<100){
-                  this.clearcount++;
-                };
+        // mouseTrack: function(e) {
+        //   switch(e.detail.state) {
+        //     case 'start':
+        //       this.startmouse = e.detail.x;
+        //       // console.log("Tracking started!" + this.startmouse);
+        //       break;
+        //     case 'end':
+        //       this.endmouse = e.detail.x;
+        //       // console.log("Tracking ended!" + this.endmouse);
+        //       this.swiper = this.startmouse - this.endmouse;
+        //         if(this.swiper>10){
+        //           this.$.poezenaudio.play();
+        //         };
+        //         if(this.swiper<100){
+        //           this.clearcount++;
+        //         };
 
-              break;
-          }
-        },
+        //       break;
+        //   }
+        // },
 
-        _clearCount: function(){
-          console.log("Dit is de clearcount: " + this.clearcount);
-          if (this.clearcount>2){
-            this.fire('cleared');
-            this.clearcount = 0;
-          }
-        }
+        // _clearCount: function(){
+        //   console.log("Dit is de clearcount: " + this.clearcount);
+        //   if (this.clearcount>2){
+        //     this.fire('cleared');
+        //     this.clearcount = 0;
+        //   }
+        // }
 
 
     });
