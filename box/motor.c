@@ -21,11 +21,13 @@ int main (int argc, char **argv)
 
   pinMode (0, OUTPUT) ;         // aka BCM_GPIO pin 17
   pinMode (2, OUTPUT) ;         // aka BCM_GPIO pin 27
+  pinMode (4,OUTPUT);
 
+  digitalWrite(4,0);		// enable motor
   if (p3==0){
-    digitalWrite (2, 1) ;       // On
+    digitalWrite (2, 1) ;       // Open
   }else{
-    digitalWrite (2, 0) ;       // On
+    digitalWrite (2, 0) ;       // Toe
   }
 
   double accel,decel;
@@ -39,5 +41,11 @@ int main (int argc, char **argv)
     digitalWrite (0, 0) ;       // Off
     delay (1+p2) ;
   }
+
+  // Doos is dichtgegaan
+  if (p3 == 0){
+   digitalWrite(4,1); // disable motor
+  }
+
   return 0 ;
 }
