@@ -17,8 +17,45 @@ var account;
 var web3;
 var web3_monitor;
 
+if (myArgs._[0] == "makewallet"){
+	console.log('Create a wallet requested');
+
+	var walletfile = myArgs._[1];
+	var pwd = myArgs._[2];
+
+	if (!walletfile || !pwd){
+		console.log('needs parameters <walletfilename> and <password>');
+		process.exit();
+	}
+
+  console.log('walletfile = ',walletfile);
+  console.log('pwd = ',pwd);
+
+
+	// maak nieuwe wallet en exit
+	var secretSeed = lightwallet.keystore.generateRandomSeed();
+	global_keystore = new lightwallet.keystore(secretSeed, pwd);
+	global_keystore.generateNewAddress(pwd, 2);
+	var keyStoreString = global_keystore.serialize();
+
+	fs.writeFileSync(walletfile, keyStoreString);
+	console.log("The keystore was saved! ==> ", walletfile);
+	
+	account = global_keystore.getAddresses()[0];
+	console.log('Your main account is ', account);
+	console.log('now send this guy some ether in your geth client please');
+	console.log("eth.sendTransaction({from:eth.coinbase, to:'" + global_keystore.getAddresses()[0] + "',value: web3.toWei(500, \"ether\")})");
+	console.log("eth.sendTransaction({from:eth.coinbase, to:'" + global_keystore.getAddresses()[1] + "',value: web3.toWei(500, \"ether\")})");
+
+	console.log("Goodbye!");
+	process.exit();
+
+}
+
+
 
 if (!fs.existsSync(keystoreFile)) {
+
 
 	// maak nieuwe wallet en exit
 	var secretSeed = lightwallet.keystore.generateRandomSeed();
