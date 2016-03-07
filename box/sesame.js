@@ -3,7 +3,7 @@ var SerialPort = require("serialport").SerialPort
 var serialPort = new SerialPort("/dev/ttyAMA0", {
   baudrate: 19200
 }, false); // this is the openImmediately flag [default is true]
-var host = "http://kingflurkel.dtdns.net:8545";
+var host = "http://109.123.70.141:8545";
 var mqtt = require('mqtt');
 var client = mqtt.connect('ws://opantwerpen.be:15674');
 var code;
