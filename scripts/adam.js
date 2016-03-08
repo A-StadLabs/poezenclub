@@ -4,22 +4,21 @@ var Web3 = require('web3');
 var lightwallet = require('eth-lightwallet');
 var HookedWeb3Provider = require("hooked-web3-provider");
 var fs = require('fs');
+var request = require('request');
 
 var membershipcontract = require('../app/contracts/LocalsMembership.json');
 var membershipcontractaddress = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
 var host = "http://109.123.70.141:8545";
-/*
-var channel = "adam";
-var keystoreFile = "adamswallet.json";
-var poesimage = "adampoes";
-var poesname = "Adam";
-*/
+//var host = "http://kingflurkel.dtdns.net:8545";
+
 var keystoreFile = process.env.WALLETFILE; //"evaswallet.json";
 var keystorePass = process.env.WALLETPWD;
 
-var channel = "eva";
+var channel = "adam";
 var poesimage = "evapoes";
 var poesname = "Eva";
+
+var hashes = {};
 
 if (!process.env.WALLETFILE || !process.env.WALLETPWD) {
   console.log('please provide the environment vars WALLETFILE and WALLETPWD and come again.');
@@ -65,13 +64,25 @@ var gasPrice;
 web3.eth.getGasPrice(function(err, result) {
 
   gasPrice = result.toNumber(10);
-  console.log('gasprice is ', gasPrice);
+  console.log('network gasprice is ', gasPrice);
+  //gasPrice = Math.ceil(gasPrice * 1.2);
+  //console.log('settings our gasprice to ', gasPrice);
 
   connectMQTT();
+
+  printBlockchainStats();
   printBalance(global_keystore.getAddresses()[0]);
   printBalance(global_keystore.getAddresses()[1]);
 
 });
+
+
+setInterval(function() {
+  printBlockchainStats();
+  printBalance(global_keystore.getAddresses()[0]);
+  printBalance(global_keystore.getAddresses()[1]);
+
+}, 30 * 1000);
 
 var client;
 
@@ -150,12 +161,19 @@ var MyContract = web3.eth.contract(membershipcontract.abi);
 var myContractInstance = MyContract.at(membershipcontractaddress);
 
 myContractInstance.MemberAdded(function(err, res) {
-
-  console.log('MEMBERADDED triggered SUSKE');
+  console.log('MemberAdded triggered');
   console.log('err', err);
   console.log('res', res);
-  printBalance(global_keystore.getAddresses()[0]);
-  printBalance(global_keystore.getAddresses()[1]);
+
+  if (res.transactionHash){
+    if (hashes[res.transactionHash]){
+      console.log('found a transactionhash in our list',hashes[res.transactionHash]);
+      var s = "a few";
+      client.publish('poezenclubservice', "newmember" + "|" + hashes[res.transactionHash].newmember + " took " + s + " seconds");
+      
+      delete hashes[res.transactionHash];
+    }
+  }
 
 });
 
@@ -166,48 +184,48 @@ function validate(contractaddress, walletindex, cb) {
 
   console.log('Request validation from', seedaccount, 'to contractaddress', contractaddress);
 
-  web3.eth.getGasPrice(function(err, result) {
+  //  web3.eth.getGasPrice(function(err, result) {
 
-    var gasPrice = result.toNumber(10);
+  //    var gasPrice = result.toNumber(10);
 
-    // creation of contract object
-    var Myvalidationcontract = web3.eth.contract(validationcontract.abi);
-    var myContractInstance = Myvalidationcontract.at(contractaddress);
+  // creation of contract object
+  var Myvalidationcontract = web3.eth.contract(validationcontract.abi);
+  var myContractInstance = Myvalidationcontract.at(contractaddress);
 
-    var options = {
-      from: seedaccount,
-      value: 1 * 1e18,
-      gas: 3141590,
-      gasPrice: gasPrice,
-      nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
-    };
+  var options = {
+    from: seedaccount,
+    value: 1 * 1e18,
+    gas: 100000,
+    gasPrice: gasPrice,
+    nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
+  };
 
-    console.log('contract to validate ', contractaddress);
-    console.log('contract options', options);
+  console.log('contract to validate ', contractaddress);
+  console.log('contract options', options);
 
 
-    var result = myContractInstance.addValidation.sendTransaction(options,
-      function(err, result) {
-        if (err != null) {
-          console.log(err);
-          console.log("ERROR: Transaction didn't go through. See console.");
-        } else {
-          console.log("Transaction Successful!");
-          console.log(result);
-        }
+  var result = myContractInstance.addValidation.sendTransaction(options,
+    function(err, result) {
+      if (err != null) {
+        console.log(err);
+        console.log("ERROR: Transaction didn't go through. See console.");
+      } else {
+        console.log("Transaction Successful!");
+        console.log(result);
       }
-    );
+    }
+  );
 
-    myContractInstance.ValidationAdded(function(err, res) {
+  myContractInstance.ValidationAdded(function(err, res) {
 
-      console.log('ValidationAdded triggered SUSKE');
-      console.log('err', err);
-      console.log('res', res);
+    console.log('ValidationAdded triggered SUSKE');
+    console.log('err', err);
+    console.log('res', res);
 
-      cb(err, res);
+    cb(err, res);
 
-    });
   });
+  //});
 
 
 }
@@ -222,7 +240,7 @@ function isMember(address) {
 
 // Add 0x to address 
 function fixaddress(address) {
-  console.log("Fix address", address);
+  //console.log("Fix address", address);
   if (!strStartsWith(address, '0x')) {
     return ('0x' + address);
   }
@@ -235,28 +253,24 @@ function strStartsWith(str, prefix) {
 
 function requestMembership(address, walletindex) {
 
-  address = fixaddress(address);
-
-  // var MyContract = web3.eth.contract(membershipcontract.abi);
-  //console.log("Mycontract: ", MyContract);
-  //  var myContractInstance = MyContract.at(membershipcontractaddress);
-
   var seedaccount = global_keystore.getAddresses()[walletindex];
+  var newMember = fixaddress(address);
 
-  console.log('Request membership from', seedaccount, 'to', address);
+  console.log('Request membership from', seedaccount, 'to', newMember);
 
   var options = {
     from: seedaccount,
     value: 2.2 * 1e18,
-    gas: 3141590,
+    gas: 100000,
     gasPrice: gasPrice,
     nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
   };
 
-  var newMember = fixaddress(address);
 
   console.log('adding member ', newMember);
   console.log('contract options', options);
+
+  //web3.eth.estimateGas(
 
   var result = myContractInstance.addMember.sendTransaction(newMember, options,
     function(err, result) {
@@ -266,6 +280,11 @@ function requestMembership(address, walletindex) {
       } else {
         console.log("Transaction Successful!");
         console.log("Transaction hash=", result);
+        hashes[result] = {
+          newmember : newMember,
+          created : new Date()
+        };
+
         printBalance(global_keystore.getAddresses()[0]);
         printBalance(global_keystore.getAddresses()[1]);
       }
@@ -273,15 +292,51 @@ function requestMembership(address, walletindex) {
   );
 }
 
-function printBalance(account) {
-  account = fixaddress(account);
-   var     etherbalance = parseFloat(web3.fromWei(web3.eth.getBalance(account).toNumber(), 'ether'));
+function printBlockchainStats() {
+  console.log('----- Time for Stats -----');
+  request('http://testnet.etherscan.io/api?module=proxy&action=eth_blockNumber', function(error, response, body) {
+    lastblock = 0;
+    if (!error && response.statusCode == 200) {
+      try {
+        var r = JSON.parse(body);
+        lastblock = parseInt(r.result);
+        console.log('testnet.etherscan.io is at block', lastblock);
+      } catch (e) {
+        console.log('cannot parse blocknumber from testnet.etherscan.io');
+      }
+    }
 
-//  var etherbalance = web3.fromWei(web3.eth.getBalance(account), 'ether').toNumber(10);
+    var tr = web3.eth.getBlockTransactionCount(web3.eth.blockNumber);
+    console.log('We are at block ', web3.eth.blockNumber, 'it has', tr, 'transactions - we are ',(lastblock - web3.eth.blockNumber),'blocks behind');
+    if (lastblock != 0) {
+      if (lastblock - web3.eth.blockNumber > 20) {
+        client.publish('poezenclubservice', "alert" + "|we are more than 20 blocks behind the blockchain " + lastblock - web3.eth.blockNumber);
+      }
+    }
+
+
+    console.log('We are connected to', web3.net.peerCount, 'peers');
+    if (web3.net.peerCount == 0) {
+      client.publish('poezenclubservice', "alert" + "|not connected to any peers");
+    }
+
+    console.log('pending transactions without validation',hashes);
+
+    console.log('----- ------------- -----');
+
+  });
+}
+
+function printBalance(account) {
+
+  account = fixaddress(account);
+  var etherbalance = parseFloat(web3.fromWei(web3.eth.getBalance(account).toNumber(), 'ether'));
+
+  //  var etherbalance = web3.fromWei(web3.eth.getBalance(account), 'ether').toNumber(10);
   console.log('Account', account, 'has Ξ', etherbalance);
-  if (etherbalance < 5){
+  if (etherbalance < 5) {
     console.log('Send alert - balance low');
-    client.publish('poezenclubservice', "balancealert" + "|accountbalance too low|" + account + "|" + etherbalance);
+    client.publish('poezenclubservice', "alert" + "|accountbalance too low|" + account + "|" + etherbalance);
   }
 
 

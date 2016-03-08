@@ -2,13 +2,13 @@ var lightwallet = require('eth-lightwallet');
 var Web3 = require('web3');
 var fs = require('fs');
 //var keystoreFile = "wallet.json";
-var keystoreFile = "../../poezenclub/scripts/evaswallet.json";
+var keystoreFile = "../../poezenclub/scripts/adamswallet.json";
 
 var myArgs = require('optimist').argv;
 var HookedWeb3Provider = require("hooked-web3-provider");
 var contract = require('../app/contracts/LocalsMembership.json');
 
-var host = "http://kingflurkel.dtdns.net:8545";
+var host = "http://109.123.70.141:8545";
 
 var poezencontract = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
 

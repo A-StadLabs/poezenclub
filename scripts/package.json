@@ -12,6 +12,7 @@
     "eth-lightwallet": "^1.0.1",
     "hooked-web3-provider": "^1.0.0",
     "mqtt": "^1.7.0",
+    "request": "^2.69.0",
     "web3": "^0.15.1",
     "winston": "^2.1.1",
     "winston-papertrail": "^1.0.2"
