@@ -37,6 +37,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-center-center);
       }
 
+      .canvasblank {
+        @apply(--total-canvas);
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+        @apply(--layout-start);
+        box-sizing:border-box;
+        padding: 50px;
+      }
+
 
       h1 {
         @apply(--theme-font-title);
@@ -222,6 +231,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       width: 100%;
       height: 100%;
     }
+
+    .version {
+      width: 100%;
+    }
+
+
+    .version h2 {
+      font-size: 22px;
+    }
+
+      .version p  {
+      font-size: 26px;
+    }
+
+
 
     </style>
 
@@ -448,15 +472,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="whitespace"></div>
 
       <div class="validatorz vertical layout">
-        
         <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
-        
         <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
-      
+        <div class="whitespace"></div>
+        <div on-tap="toVersion" class="version"><h2>{{version}}</h2></div>      
+        <div class="whitespace"></div>
+        <div class="whitespace"></div>
       </div>
 
       </template>
 
+    </div>
+  </neon-animatable>
+
+  <neon-animatable data-route="version">
+    <div class="canvasblank">
+    <h1>{{version}}</h1>
+    <div class="whitespace"></div>
+    <p>Mijn Ether-saldo</p>
+    <p class="clipper">{{saldo}}</p>
+    <div class="whitespace"></div>
+    <p>Mijn validatiecontractadres</p>
+    <p class="clipper">{{contractaddress}}</p>
+    <p>Mijn validatiecontractadres</p>
+    <p class="clipper">{{contractaddress}}</p>
     </div>
   </neon-animatable>
 
@@ -520,7 +559,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         validated: {
           type: Boolean,
           value: false
-        }
+        },
+
+        version: {
+          type: String,
+          value: 'Poezenclub v0.0.1'
+        },
       },
 
       ready: function(){
@@ -631,6 +675,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       toNamepussy: function() {
         this.go('namepussy');
+      },
+
+      toVersion: function() {
+        this.go('version');
       },
 
       goClear: function(){
