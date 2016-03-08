@@ -472,18 +472,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <div class="whitespace"></div>
 
-   </template>
+   
 
       <div class="validatorz vertical layout">
         <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
         <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
         <div class="whitespace"></div>
-        <div on-tap="toVersion" class="version"><h2>{{version}}</h2></div>      
+              
         <div class="whitespace"></div>
         <div class="whitespace"></div>
       </div>
 
-   
+   </template>
+
+   <div on-tap="toVersion" class="version"><h2>{{version}}</h2></div>
 
     </div>
   </neon-animatable>
