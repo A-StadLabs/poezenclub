@@ -169,8 +169,7 @@ myContractInstance.MemberAdded(function(err, res) {
     if (hashes[res.transactionHash]){
       console.log('found a transactionhash in our list',hashes[res.transactionHash]);
       var s = "a few";
-      client.publish('poezenclubservice', "newmember" + "|" + hashes[res.transactionHash].newmember + " took " + s + " seconds");
-      
+      client.publish('poezenclubservice', "newmember" + "|" + hashes[res.transactionHash].newmember + " requested at " + hashes[res.transactionHash].created );      
       delete hashes[res.transactionHash];
     }
   }
@@ -221,6 +220,8 @@ function validate(contractaddress, walletindex, cb) {
     console.log('ValidationAdded triggered SUSKE');
     console.log('err', err);
     console.log('res', res);
+
+    client.publish('poezenclubservice', "newvalidation" + "|validation was added ");      
 
     cb(err, res);
 
