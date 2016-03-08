@@ -51,6 +51,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type:Number,
           notify:true,
           observer: "_validations"
+        },
+        txhash: {
+          type: String,
+          notify: true
         }
       },
 
@@ -206,6 +210,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               // e.g. check tx hash on the first call (transaction send)
               if (!myContract.address) {
                 console.log("Your validation contract has been deployed to the Ethereum network. Transaction hash is", myContract.transactionHash);
+                self.txhash = myContract.transactionHash;
                 console.log("Wait a new moments while we mine it. You will receive your address when it is mined.");
                 // check address on the second call (contract deployed)
               } else {
