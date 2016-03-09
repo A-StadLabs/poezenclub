@@ -190,7 +190,7 @@ function openDoor() {
 
   setTimeout(function(){
     closeDoor();
-  },10*1000);
+  },15*1000);
 
 };
 

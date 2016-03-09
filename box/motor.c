@@ -37,10 +37,11 @@ int main (int argc, char **argv)
   {
     int extradelay=0;
     digitalWrite (0, 1) ;       // On
-    delay (1+p2) ;               // mS
+    nanosleep (p2/100) ;               // mS
     digitalWrite (0, 0) ;       // Off
-    delay (1+p2) ;
+    nanosleep (p2/100) ;
   }
+  p2--;
 
   // Doos is dichtgegaan
   if (p3 == 0){
