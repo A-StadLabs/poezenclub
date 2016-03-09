@@ -41,12 +41,12 @@ int main (int argc, char **argv)
     delayMicroseconds (p2/100) ;               // mS
     digitalWrite (0, 0) ;       // Off
     delayMicroseconds (p2/100) ;
-  }
-  if (p2 > 200000){
-    p2-=p3;
-    printf("p2=%d",p2);
-  }else{
-    printf("p2 final=%d",p2);    
+    if (p2 > 200000){
+      p2-=p3;
+//      printf("p2=%d",p2);
+    }else{
+//      printf("p2 final=%d",p2);    
+    }
   }
 
   // Doos is dichtgegaan
