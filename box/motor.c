@@ -37,9 +37,9 @@ int main (int argc, char **argv)
   {
     int extradelay=0;
     digitalWrite (0, 1) ;       // On
-    nanosleep (p2/100) ;               // mS
+    delayMicroseconds (p2/100) ;               // mS
     digitalWrite (0, 0) ;       // Off
-    nanosleep (p2/100) ;
+    delayMicroseconds (p2/100) ;
   }
   p2--;
 
