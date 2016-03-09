@@ -173,9 +173,8 @@ serialPort.open(function(error) {
       if (commandarray[0] === 'sluitDoos') {
         console.log('doos gaat dicht.');
         client.unsubscribe('poezendoos/' + code);
-        closeDoor();
+        //closeDoor();
       }
-
       //client.end();
 
     });
@@ -189,14 +188,17 @@ function openDoor() {
     schrijflcd('de doos is open');
   });
 
-
+  setTimeout(function(){
+    closeDoor();
+  },10*1000);
 
 };
 
 function closeDoor() {
+  client.unsubscribe('poezendoos/' + code);
   beweeglid('close', function() {
     schrijflcd('de doos is terug toe');
-    console.log('closed');
+    console.log('closed');    
     generateCode();
     client.subscribe('poezendoos/' + code);
     client.publish('poezendoos/' + code, 'command|listening');
