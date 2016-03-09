@@ -15,7 +15,7 @@ int main (int argc, char **argv)
   p2 = atoi(argv[2]); /* better to use strtol */
   p3 = atoi(argv[3]); /* better to use strtol */
   p4 = atoi(argv[4]); /* better to use strtol */
-  printf("steps=%d delay=%d\n", p1,p2);
+  printf("steps=%d startspeed=%d accel=%d direction=%d\n", p1,p2,p3,p4);
 
   if (wiringPiSetup () == -1)
     return 1 ;
@@ -44,6 +44,9 @@ int main (int argc, char **argv)
   }
   if (p2 > 200000){
     p2-=p3;
+    printf("p2=%d",p2);
+  }else{
+    printf("p2 final=%d",p2);    
   }
 
   // Doos is dichtgegaan
