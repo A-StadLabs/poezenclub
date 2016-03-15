@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="poes-voting">
   <template>
+
     <style>
       :host {
         display: block;
@@ -41,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     .square-chart {
-      
+      margin-bottom: 20px;
     }
 
     paper-toolbar {
@@ -53,7 +54,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     .keuzeoptie {
       @apply(--layout-horizontal);
+      margin-bottom: 10px;
     }
+
+    .bolleke {
+      margin-right: 10px;
+    }
+
     </style>
     <div>
       <paper-toolbar>
@@ -66,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <iron-selector attr-for-selected="key" selected="0" class="choice">
       <template is="dom-repeat" items="{{chartdata}}">
         <div class="keuzeoptie" key="{{item.key}}">
-          <poes-kleurbolleke kleur="{{item.color}}"></poes-kleurbolleke>
+          <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
           <div class="label flex">{{item.label}}</div>
           <div>{{item.value}}</div>
         </div>
@@ -94,6 +101,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           observer: 'renderchart'
         }
+      },
+
+      topussybase: function(){
+        var app = document.getElementById("stage");
+        console.log(app);
+        app.topussybase();
       },
 
       renderchart: function(){
