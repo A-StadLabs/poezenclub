@@ -2,6 +2,7 @@
   "name": "polymer-starter-kit",
   "private": true,
   "dependencies": {
+    "i18n-msg": "ebidel/i18n-msg#~1.0.4",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "mqtt-elements": "~0.0.6-beta",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",

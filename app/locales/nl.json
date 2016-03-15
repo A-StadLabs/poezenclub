@@ -1,0 +1,111 @@
+{
+  "kieskat": {
+    "description": "...",
+    "message": "Kies een kat!"
+  },
+  "naamkat1": {
+    "description": "...",
+    "message": "Hoe heet"
+  },
+  "naamkat2": {
+    "description": "...",
+    "message": " jouw poes?"
+  },
+  "jouwpin": {
+    "description": "...",
+    "message": "Jouw pincode"
+  }, 
+  "saldo1": {
+    "description": "...",
+    "message": "Je kan nog "
+  },  
+  "saldo2": {
+    "description": "...",
+    "message": " validaties doen."
+  },
+  "backbtn": {
+    "description": "...",
+    "message": "terug"
+  },       
+  "enoughmsg": {
+    "description": "...",
+    "message": "Je hebt genoeg poezen gevalideerd."
+  },
+  "morevalids": {
+    "description": "...",
+    "message": "Je kan pas iemand valideren als je zelf gevalideerd bent."
+  },
+  "cancelbtn": {
+    "description": "...",
+    "message": "Annuleren"
+  },
+  "validatebtn": {
+    "description": "...",
+    "message": "Valideren"
+  },
+  "checkpoezendoos": {
+    "description": "...",
+    "message": "Check de code op de poezendoos"
+  },
+  "wachtmsg": {
+    "description": "...",
+    "message": "Wacht tot de doos opengaat en neem uw koekje"
+  },
+  "sluitmsg": {
+    "description": "...",
+    "message": "Sluit de doos"
+  },
+  "resetmsg": {
+    "description": "...",
+    "message": "Wil je helemaal opnieuw beginnen?"
+  },
+  "resetbtn": {
+    "description": "...",
+    "message": "Opnieuw beginnen"
+  },
+  "openbtn": {
+    "description": "...",
+    "message": "Open de Poezendoos"
+  },
+  "validatesomeone": {
+    "description": "...",
+    "message": "Valideer iemand anders"
+  },
+  "ethersaldo": {
+    "description": "...",
+    "message": "Mijn Ether-saldo"
+  },
+  "kittycontract": {
+    "description": "...",
+    "message": "Mijn poezenclubcontract"
+  },
+  "valcontract": {
+    "description": "...",
+    "message": "Mijn validatiecontract"
+  },
+  "valhash": {
+    "description": "...",
+    "message": "Mijn validatie tx hash"
+  },
+  "valbtn": {
+    "description": "...",
+    "message": "Een validatie toevoegen"
+  },
+  "kitty": {
+    "description": "...",
+    "message": "Poezenclub"
+  },
+  "valdescribe": {
+    "description": "...",
+    "message": "Vraag de pincode van een gevalideerde poes"
+  },
+  "valby": {
+    "description": "...",
+    "message": "Gevalideerd door"
+  }
+}
+
+
+
+
+

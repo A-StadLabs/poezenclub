@@ -147,7 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <button on-tap="toPin" class="main">
             <div class="addbtn">
             <img src="../../images/poezen/paw3-01.png">
-            Validatie toevoegen
+          <i18n-msg msgid="valbtn"></i18n-msg>  
             </div>
           </button>
         </div>  
@@ -158,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="tovalidate">
           <div class="width">
             <paper-input-container no-label-float>
-              <label class="centertexting">Vraag een pincode aan een gevalideerde poes</label>
+              <label class="centertexting"><i18n-msg msgid="valdescribe">Ask the pincode of a validated kitty</i18n-msg></label>
               <input autofocus class="centertexting"
             is="iron-input" 
             type="number"
@@ -177,7 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- spinner  -->
         <neon-animatable currentvalidstate="spinner">
         <div class="tovalidate">
-          <poezenclub-loader small loadmsg="Je validatie is in aanvraag"></poezenclub-loader>
+          <poezenclub-loader small loadmsg="{{valloadmsg}}"></poezenclub-loader>
         </div>
         </neon-animatable>
 
@@ -186,7 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="valide">
             <div class="validpic"><img src="{{poesimage}}" /></div>
             <div class="layout vertical start">
-              <p>Gevalideerd door</p> 
+              <p><i18n-msg msgid="valby">Validated by</i18n-msg></p> 
               <h2>{{poesnaam}}</h2>
             </div>
           </div>

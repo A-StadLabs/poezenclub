@@ -1,0 +1,109 @@
+{
+  "kieskat": {
+    "description": "...",
+    "message": "Choose a cat!"
+  },
+  "naamkat1": {
+    "description": "...",
+    "message": "What's the name"
+  },
+  "naamkat2": {
+    "description": "...",
+    "message": " of your cat?"
+  },
+  "jouwpin": {
+    "description": "...",
+    "message": "Your pincode"
+  },     
+  "saldo1": {
+    "description": "...",
+    "message": "You can do"
+  },  
+  "saldo2": {
+    "description": "...",
+    "message": "more validations."
+  },  
+  "backbtn": {
+    "description": "...",
+    "message": "back"
+  }, 
+  "enoughmsg": {
+    "description": "...",
+    "message": "You have validated enough kitties."
+  },   
+  "morevalids": {
+    "description": "...",
+    "message": "You can only validate some else if you are validated yourself."
+  },
+  "cancelbtn": {
+    "description": "...",
+    "message": "Cancel"
+  },
+  "validatebtn": {
+    "description": "...",
+    "message": "Validate"
+  },
+  "checkpoezendoos": {
+    "description": "...",
+    "message": "Check the code on the Kittybox"
+  },
+  "wachtmsg": {
+    "description": "...",
+    "message": "Wait for the Kittybox to open and take a cookie!"
+  },
+  "sluitmsg": {
+    "description": "...",
+    "message": "Close the box"
+  },
+  "resetmsg": {
+    "description": "...",
+    "message": "Do you want to start over?"
+  },
+  "resetbtn": {
+    "description": "...",
+    "message": "Start over"
+  },
+  "openbtn": {
+    "description": "...",
+    "message": "Open the Kittybox"
+  },
+  "validatesomeone": {
+    "description": "...",
+    "message": "Validate someone"
+  },
+  "ethersaldo": {
+    "description": "...",
+    "message": "My Ether-saldo"
+  },
+  "kittycontract": {
+    "description": "...",
+    "message": "My KittyClubcontract"
+  },
+  "valcontract": {
+    "description": "...",
+    "message": "My validationcontract"
+  },
+  "valhash": {
+    "description": "...",
+    "message": "My validation tx hash"
+  },
+  "valbtn": {
+    "description": "...",
+    "message": "Add validation"
+  },
+  "kitty": {
+    "description": "...",
+    "message": "KittyClub"
+  },
+  "valdescribe": {
+    "description": "...",
+    "message": "Ask the pincode of a validated kitty"
+  },
+  "valby": {
+    "description": "...",
+    "message": "Validated by"
+  }
+}
+
+
+
