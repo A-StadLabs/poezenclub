@@ -47,6 +47,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: white;
       }
 
+      
+
+      .choice {
+        width: 100%;
+      }
+
 
       h1 {
         @apply(--theme-font-title);
@@ -242,7 +248,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-size: 22px;
     }
 
-      .version p  {
+    .version p  {
       font-size: 26px;
     }
 
@@ -285,7 +291,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     font-size: 16px;
   }
 
+
     </style>
+
+
 
     <iron-localstorage name="poezenimage" value="{{poezenimage}}"
        on-iron-localstorage-load="poes_loaded"></iron-localstorage>
@@ -499,7 +508,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <div class="canvaspink">
-      <div class="whitespace"></div>
+    <div class="whitespace" on-tap="tohomescreen">X</div>
       <div class="whitespace"></div>
       <div class="whitespace"></div>
       <div class="eighty middle">
@@ -544,6 +553,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    <div on-tap="toVersion" class="version"><h2><i18n-msg msgid="kitty">KittyClub</i18n-msg><span>{{version}}</span></h2></div>
 
     </div>
+  </neon-animatable>
+
+  <neon-animatable data-route="homescreen">
+    <poes-voting votekey="{{account}}"></poes-voting>
   </neon-animatable>
 
   <neon-animatable data-route="version">
@@ -624,11 +637,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Boolean,
           value: false
         },
-
         version: {
           type: String,
           value: ' v0.0.1'
-        },
+        }
       },
 
       ready: function(){
@@ -638,12 +650,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.state = "selectpussy";
       },
 
+
+
       makepincode: function(){
             this.pincode = (Math.floor(Math.random()*90000) + 10000).toString();
       },
 
       saldochanged: function(){
         console.log('saldo is nu ',this.saldo);
+
         if (this.saldo > 1){
           this.hasenoughcredits = true;
         }else{
@@ -651,23 +666,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         this.cleansaldo = Math.floor(this.saldo);
       },
+
       _statechanged: function(){
         console.log('state changed to',this.state);
       },
+
       _ismemberchanged: function(){
         if (this.ismember){
           this.$.poesvalidatie.createContract();
         }
       },
+
       topussybase: function(){
         this.boxpin = "";
         this.go('pussybase');
       },
 
+      tohomescreen: function(){
+        this.go('homescreen');
+        
+      },
+
       poes_loaded: function(){
         if (this.poezenimage && this.poezennaam){
           if (this.state == 'selectpussy'){
-            this.go('pussybase');
+            this.go('homescreen');
           }
         }
       },
