@@ -251,6 +251,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       border: 1px solid black;
     }
 
+    .square-chart {
+      
+    }
+
 
 
     </style>
@@ -503,11 +507,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
       </paper-toolbar>
       <div class="canvasblank">
-      <h2>Wat moet er vanaf maandag in de poezendoos zitten?</h2>
-      <google-chart
-        type='pie'
-        data='[["Item", "Votes"], ["M&Ms", 12], ["Koekjes", 28], ["Drop", 60]]'>
-      </google-chart>
+      <h2 on-tap="testmichael">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
+      <chart-pie data="{{chartdata}}" class="square-chart"></chart-pie>
+      <template is="dom-repeat" items="{{labels}}">
+        <div class="horizontal layout">
+          <poes-kleurbolleke kleur="{{item.color}}"></poes-kleurbolleke>
+          <div class="label">{{item.label}}</div>
+        </div>
+      </template>
       <h1>Jouw stem:</h1>
      <!--  Als je nog niet gestemd hebt -->
       <p><b>Je kan nog x uur stemmen.</b></p>
@@ -515,7 +522,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p><b>Je hebt nog x uur om je stem te veranderen.</b></p>
       <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
       <iron-selector attr-for-selected="name" selected="Koekjes" class="horizontal layout">
-        <div name="M&Ms">M&Ms</div>
+      <div name="M&Ms">M&Ms</div>
         <div name="Koekjes">Koekjes</div>
         <div name="Drop">Drop</div>
       </iron-selector> 
@@ -602,11 +609,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Boolean,
           value: false
         },
-
         version: {
           type: String,
           value: 'Poezenclub v0.0.1'
-        },
+        }
       },
 
       ready: function(){
@@ -616,12 +622,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.state = "selectpussy";
       },
 
+
+      loadchart: function(){
+        this.chartdata = [{
+            value: 300,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "Red"
+          },
+          {
+            value: 50,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Green"
+          },
+          {
+            value: 100,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Yellow"
+        }];
+        // Sponnet, we moeten het object hierboven ook als array hebben voor de labels + kleuren
+        this.labels = [{"label": "M&Ms", "color": "#F7464A"}, 
+                      {"label": "Koekjes", "color": "#46BFBD"}, 
+                      {"label": "Drop", "color": "#FDB45C"}];
+      },
+
       makepincode: function(){
             this.pincode = (Math.floor(Math.random()*90000) + 10000).toString();
       },
 
       saldochanged: function(){
         console.log('saldo is nu ',this.saldo);
+
+        //Da zit hier niet op zijn plaats maar werkt wel.
+        this.loadchart();
+
         if (this.saldo > 1){
           this.hasenoughcredits = true;
         }else{
@@ -644,6 +680,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       tohomescreen: function(){
         this.go('homescreen');
+        
       },
 
       poes_loaded: function(){
