@@ -47,6 +47,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: white;
       }
 
+      
+
+      .choice {
+        width: 100%;
+      }
+
 
       h1 {
         @apply(--theme-font-title);
@@ -242,22 +248,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-size: 22px;
     }
 
-      .version p  {
+    .version p  {
       font-size: 26px;
     }
 
-    .iron-selected {
-      background: #ccc;
-      border: 1px solid black;
-    }
-
-    .square-chart {
-      
-    }
+    
 
 
 
     </style>
+
+
 
     <iron-localstorage name="poezenimage" value="{{poezenimage}}"
        on-iron-localstorage-load="poes_loaded"></iron-localstorage>
@@ -501,34 +502,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </neon-animatable>
 
   <neon-animatable data-route="homescreen">
-    <div>
-      <paper-toolbar>
-        <div class="flex"></div>
-        <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
-      </paper-toolbar>
-      <div class="canvasblank">
-      <h2 on-tap="testmichael">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
-      <chart-pie data="{{chartdata}}" class="square-chart"></chart-pie>
-      <template is="dom-repeat" items="{{labels}}">
-        <div class="horizontal layout">
-          <poes-kleurbolleke kleur="{{item.color}}"></poes-kleurbolleke>
-          <div class="label">{{item.label}}</div>
-        </div>
-      </template>
-      <h1>Jouw stem:</h1>
-     <!--  Als je nog niet gestemd hebt -->
-      <p><b>Je kan nog x uur stemmen.</b></p>
-      <!-- als je wel al gestemd hebt -->
-      <p><b>Je hebt nog x uur om je stem te veranderen.</b></p>
-      <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
-      <iron-selector attr-for-selected="name" selected="Koekjes" class="horizontal layout">
-      <div name="M&Ms">M&Ms</div>
-        <div name="Koekjes">Koekjes</div>
-        <div name="Drop">Drop</div>
-      </iron-selector> 
-      <paper-button raised>Bevestig</paper-button>     
-      </div>
-    </div>
+    <poes-voting votekey="{{account}}"></poes-voting>
   </neon-animatable>
 
   <neon-animatable data-route="version">
@@ -623,30 +597,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
 
-      loadchart: function(){
-        this.chartdata = [{
-            value: 300,
-            color:"#F7464A",
-            highlight: "#FF5A5E",
-            label: "Red"
-          },
-          {
-            value: 50,
-            color: "#46BFBD",
-            highlight: "#5AD3D1",
-            label: "Green"
-          },
-          {
-            value: 100,
-            color: "#FDB45C",
-            highlight: "#FFC870",
-            label: "Yellow"
-        }];
-        // Sponnet, we moeten het object hierboven ook als array hebben voor de labels + kleuren
-        this.labels = [{"label": "M&Ms", "color": "#F7464A"}, 
-                      {"label": "Koekjes", "color": "#46BFBD"}, 
-                      {"label": "Drop", "color": "#FDB45C"}];
-      },
 
       makepincode: function(){
             this.pincode = (Math.floor(Math.random()*90000) + 10000).toString();
@@ -655,9 +605,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       saldochanged: function(){
         console.log('saldo is nu ',this.saldo);
 
-        //Da zit hier niet op zijn plaats maar werkt wel.
-        this.loadchart();
-
         if (this.saldo > 1){
           this.hasenoughcredits = true;
         }else{
@@ -665,14 +612,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         this.cleansaldo = Math.floor(this.saldo);
       },
+
       _statechanged: function(){
         console.log('state changed to',this.state);
       },
+
       _ismemberchanged: function(){
         if (this.ismember){
           this.$.poesvalidatie.createContract();
         }
       },
+
       topussybase: function(){
         this.boxpin = "";
         this.go('pussybase');
