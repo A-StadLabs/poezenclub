@@ -246,6 +246,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-size: 26px;
     }
 
+    .iron-selected {
+      background: #ccc;
+      border: 1px solid black;
+    }
+
 
 
     </style>
@@ -444,7 +449,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template> -->
 
     <div class="canvaspink">
-      <div class="whitespace"></div>
+    <div class="whitespace" on-tap="tohomescreen">X</div>
       <div class="whitespace"></div>
       <div class="whitespace"></div>
       <div class="eighty middle">
@@ -488,6 +493,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
    <div on-tap="toVersion" class="version"><h2>{{version}}</h2></div>
 
+    </div>
+  </neon-animatable>
+
+  <neon-animatable data-route="homescreen">
+    <div>
+      <paper-toolbar>
+        <div class="flex"></div>
+        <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
+      </paper-toolbar>
+      <div class="canvasblank">
+      <h2>Wat moet er vanaf maandag in de poezendoos zitten?</h2>
+      <google-chart
+        type='pie'
+        data='[["Item", "Votes"], ["M&Ms", 12], ["Koekjes", 28], ["Drop", 60]]'>
+      </google-chart>
+      <h1>Jouw stem:</h1>
+     <!--  Als je nog niet gestemd hebt -->
+      <p><b>Je kan nog x uur stemmen.</b></p>
+      <!-- als je wel al gestemd hebt -->
+      <p><b>Je hebt nog x uur om je stem te veranderen.</b></p>
+      <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
+      <iron-selector attr-for-selected="name" selected="Koekjes" class="horizontal layout">
+        <div name="M&Ms">M&Ms</div>
+        <div name="Koekjes">Koekjes</div>
+        <div name="Drop">Drop</div>
+      </iron-selector> 
+      <paper-button raised>Bevestig</paper-button>     
+      </div>
     </div>
   </neon-animatable>
 
@@ -609,10 +642,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.go('pussybase');
       },
 
+      tohomescreen: function(){
+        this.go('homescreen');
+      },
+
       poes_loaded: function(){
         if (this.poezenimage && this.poezennaam){
           if (this.state == 'selectpussy'){
-            this.go('pussybase');
+            this.go('homescreen');
           }
         }
       },
