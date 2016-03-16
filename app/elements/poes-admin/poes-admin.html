@@ -107,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-icon-button icon="save" on-tap="save">Opslaan</paper-icon-button>
 
       
-      <paper-toast id="toast0" duration="0"></paper-toast>
+      <paper-toast on-tap="closetoast" id="toast0" duration="0"></paper-toast>
 
     </div>
   </template>
@@ -137,7 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       showtoast: function(msg){
-        this.$.toast0.text = msg;
+        this.$.toast0.text = this.$.toast0.text+'\n\n'+msg;
         this.$.toast0.open();
       },
 
@@ -159,7 +159,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         jsonobject.optie3 = this.optie3;
         jsonobject.kleur3 = this.kleur3;
 
-
         var startunix = this.startdate+"T"+this.starttime+":00+01:00";
         startunix = Date.parse(startunix)/1000;
 
@@ -178,6 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           self.savetoipfs(jsonobject, function(e){
             console.log("IPFS saved ", e);
             self.showtoast("IPFS saved: " + e);
+            self.showtoast("All done! Click to close.");
           });
         });
         
@@ -201,7 +201,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if (err || !res) return console.error(err)
           console.log('added to IPFS');
           console.log(res[0].Hash);
-          fn();
+          fn(res[0].Hash);
         });
       },
 
@@ -262,6 +262,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('ERROR!');
         });
 
+      },
+
+      closetoast: function(){
+        this.$.toast0.close();
       }
 
     });
