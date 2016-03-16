@@ -11,9 +11,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/chart-elements/chart-elements.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
 
 <dom-module id="poes-voting">
   <template>
+  <script src="../../bower_components/moment/moment.js"></script>
       <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
       </ipfs-upload>
     <style>
@@ -70,20 +73,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
         </paper-toolbar>
         <div class="canvaskf">
-        <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
+        <h2 on-tap="renderchart">{{vraag}}</h2>
         <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
         <iron-selector attr-for-selected="key" selected="0" class="choice">
-        <template is="dom-repeat" items="{{chartdata}}">
-          <div class="keuzeoptie" key="{{item.key}}">
-            <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
-            <div class="label flex">{{item.label}}</div>
-            <div>{{item.value}}</div>
+         <div class="keuzeoptie" key="0">
+            <poes-kleurbolleke class="bolleke" kleur="{{kleur1}}"></poes-kleurbolleke>
+            <div class="label flex">{{optie1}}</div>
+            <div>{{optie1votes}}</div>
           </div>
-        </template>
+          <div class="keuzeoptie" key="1">
+            <poes-kleurbolleke class="bolleke" kleur="{{kleur2}}"></poes-kleurbolleke>
+            <div class="label flex">{{optie2}}</div>
+            <div>{{optie2votes}}</div>
+          </div>
+          <div class="keuzeoptie" key="2">
+            <poes-kleurbolleke class="bolleke" kleur="{{kleur3}}"></poes-kleurbolleke>
+            <div class="label flex">{{optie3}}</div>
+            <div>{{optie3votes}}</div>
+          </div>
         </iron-selector>
         
 
-        <p>Einde van deze stemronde in <b>12:11:03</b></p>
+        <p>Einde van deze stemronde: <b>{{resttijd}}</b></p>
 
         <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
         
@@ -100,13 +111,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <p>Het stemmen is afgelopen.</p>
         <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
         <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
-        <template is="dom-repeat" items="{{chartdata}}">
-          <div class="keuzeoptie" key="{{item.key}}">
-            <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
-            <div class="label flex">{{item.label}}</div>
-            <div>{{item.value}}</div>
+          <div class="keuzeoptie">
+            <poes-kleurbolleke class="bolleke" kleur="{{kleur1}}"></poes-kleurbolleke>
+            <div class="label flex">{{optie1}}</div>
+            <div>{{optie1votes}}</div>
           </div>
-        </template>
+          <div class="keuzeoptie">
+            <poes-kleurbolleke class="bolleke" kleur="{{kleur2}}"></poes-kleurbolleke>
+            <div class="label flex">{{optie2}}</div>
+            <div>{{optie2votes}}</div>
+          </div>
+          <div class="keuzeoptie">
+            <poes-kleurbolleke class="bolleke" kleur="{{kleur3}}"></poes-kleurbolleke>
+            <div class="label flex">{{optie3}}</div>
+            <div>{{optie3votes}}</div>
+          </div>
 
         <template is="dom-if" if="{{winner}}">
           <p>Jij stemde voor de winnende keuze!</p>
@@ -122,6 +141,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
     </template>
+
+         
+ <paper-toast on-tap="closetoast" id="toast1" duration="0"></paper-toast>
   </template>
   <script>
   (function() {
@@ -156,6 +178,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      showtoast: function(msg){
+        this.$.toast1.text = this.$.toast1.text+'\n\n'+msg;
+        this.$.toast1.open();
+      },
+
+
       attached: function(){
       },
 
@@ -177,6 +205,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           .on('end', () => {
 //            console.log('buffer',buf);
             self.vote = JSON.parse(buf);
+            console.log(self.vote);
+            var votedata = self.vote;
+            self.vraag = votedata.vraag;
+            self.optie1 = votedata.optie1;
+            self.optie2 = votedata.optie2;
+            self.optie3 = votedata.optie3;
+            self.kleur1 = votedata.kleur1;
+            self.kleur2 = votedata.kleur2;
+            self.kleur3 = votedata.kleur3;
+
+            var eindtijd = votedata.enddate +" "+votedata.endtime;
+
+            self.resttijd = moment(eindtijd).fromNow();
+            console.log(self.resttijd);
+
+            self.chartdata = [{
+            key: 0,
+            value: 300,
+            color:votedata.kleur1,
+            highlight: "#FF5A5E",
+            label: votedata.optie1
+          },
+
+          {
+            key: 1,
+            value: 50,
+            color: votedata.kleur2,
+            highlight: "#5AD3D1",
+            label: votedata.optie2
+          },
+
+          {
+            key: 2,
+            value: 100,
+            color: votedata.kleur3,
+            highlight: "#FFC870",
+            label: votedata.optie3
+        }];
+
+            //self.chartdata = chartdata;
+            self.$.chart.updateChart();
+
+            self.showtoast("Chart updated. Click to close.");
+
+            console.log(votedata.vraag)
             self.contractaddress = self.vote.contractaddress;
             // de rest gaat via de observer van contractaddress
           });
@@ -194,37 +267,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       renderchart: function(){
-            this.chartdata = [{
-            key: 0,
-            value: 300,
-            color:"#F7464A",
-            highlight: "#FF5A5E",
-            label: "M&Ms"
-          },
-
-          {
-            key: 1,
-            value: 50,
-            color: "#46BFBD",
-            highlight: "#5AD3D1",
-            label: "Koekjes"
-          },
-
-          {
-            key: 2,
-            value: 100,
-            color: "#FDB45C",
-            highlight: "#FFC870",
-            label: "Fruit"
-        }];
+   
       },
+
       _hascontractaddress: function() {
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/PoezenVoting.json');
         this.importHref(this.contracturl, function(e) {
           // console.log(e.target.import.body.innerText);
           self.contractjson = JSON.parse(e.target.import.body.innerText);
-
           // TODO verwijder mij !!! ASAP !
           self.castVote();
 
@@ -271,6 +322,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         });
+      },
+
+      closetoast: function(){
+        this.$.toast1.close();
       }
 
     });
