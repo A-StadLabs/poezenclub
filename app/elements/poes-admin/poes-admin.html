@@ -39,23 +39,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div>
       <h2>Nieuwe vraag stellen</h2>
+
+      <h3>Start</h3>
       
       <paper-input-container>
-        <label>Startdate</label>
-        <input is="iron-input">
+        <input type="date" name="t1" is="iron-input" bind-value="{{startdate}}">
       </paper-input-container>
 
       <paper-input-container>
-        <label>Einddate</label>
-        <input is="iron-input">
+        <input type="time" name="t2" is="iron-input" bind-value="{{starttime}}">
       </paper-input-container>
+
+      <h3>Eind</h3>
+      
+      <paper-input-container>
+        <input type="date" name="t3" is="iron-input" bind-value="{{enddate}}">
+      </paper-input-container>
+
+      <paper-input-container>
+        <input type="time" name="t4" is="iron-input" bind-value="{{endtime}}">
+      </paper-input-container>
+
+      <h3>De vraag</h3>
+
 
       <paper-input-container>
         <label>Vraag</label>
-        <input is="iron-input">
+        <input is="iron-input" bind-value="{{vraag}}">
       </paper-input-container>
 
-      <h3>Antwoorden</h3>
+      <h3>De antwoorden</h3>
 
       <div class="antwoord" id="0">
 
@@ -90,7 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       </div>
 
-      <paper-icon-button icon="save">Opslaan</paper-icon-button>
+      <paper-icon-button icon="save" on-tap="save">Opslaan</paper-icon-button>
 
     
 
@@ -121,21 +134,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
       },
 
+      save: function(){
+        var jsonobject = {};
+        jsonobject.starttime = this.starttime;
+        jsonobject.startdate = this.startdate;
+        jsonobject.endtime = this.endtime;
+        jsonobject.enddate = this.enddate;
+
+        jsonobject.vraag = this.vraag;
+
+        var startunix = this.startdate+"T"+this.starttime+":00+01:00";
+        startunix = Date.parse(startunix)/1000;
+
+        var endunix = this.enddate+"T"+this.endtime+":00+01:00";
+        endunix = Date.parse(endunix)/1000;
+
+        jsonobject.startunix = startunix;
+        jsonobject.endunix = endunix;
+        
+        //console.log(jsonobject);
+        var ipfsbuffer = JSON.stringify(jsonobject);
+        console.log(ipfsbuffer);
+        this.ipfs.add([new this.ipfs.Buffer(ipfsbuffer)], function(err, res) {
+          if (err || !res) return console.error(err)
+          console.log('added to IPFS');
+          console.log(res[0].Hash);
+        });
+      },
 
       attached: function(){
-
-        //ipfs = this.ipfs;
-
         this.ipfs.add([new this.ipfs.Buffer("wjepfwehjwuefhwpiuefh")], function(err, res) {
           if (err || !res) return console.error(err)
-
           console.log('added to IPFS');
           console.log(res);
-
-        })
-
-
-
+        });
       },
 
       _web3: function(){
@@ -183,8 +215,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               }
             });
           });
-
-
 
         }, function(e) {
           console.log('ERROR!');
