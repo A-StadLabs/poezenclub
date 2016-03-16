@@ -12,7 +12,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
 <link rel="import" href="../../bower_components/paper-color-picker/paper-color-input.html">
-<link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
 <dom-module id="poes-admin">
@@ -30,18 +29,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: #D18E7D;
       }
 
-      .antwoord {
-        padding: 20px;
-        border: 1px solid grey;
-        background-color: #eee;
-        margin-bottom: 10px;
-      }
-
     </style>
     <div>
       <h2>Nieuwe vraag stellen</h2>
-
-      <paper-date-picker></paper-date-picker>
       
       <paper-input-container>
         <label>Startdate</label>
@@ -60,6 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <h3>Antwoorden</h3>
 
+<<<<<<< HEAD
 
       <div class="antwoord" id="0">
 
@@ -96,6 +87,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <paper-icon-button icon="save">Opslaan</paper-icon-button>
 
+=======
+      <paper-input-container>
+        <label>Antwoord</label>
+        <input is="iron-input">
+      </paper-input-container>
+
+      <paper-color-input></paper-color-input>
+
+      <paper-fab mini icon="add" class="fab">add antwoord</paper-fab>
+>>>>>>> origin/master
 
 
     </div>
@@ -110,10 +111,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'poes-admin',
 
       properties: {
-       
+
+        foo: {
+          type: String,
+          value: 'poes-admin',
+          notify: true
+        },
+        web3: {
+          type: Object,
+          observer: "_web3"
+        },
+        webready: {
+          observer: "_web3"
+        },
       },
 
-   
+
       attached: function(){
 
         //ipfs = this.ipfs;
@@ -122,10 +135,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if (err || !res) return console.error(err)
 
           console.log('added to IPFS');
-          consolel.log(res);
+          console.log(res);
 
         })
 
+
+
+      },
+
+      _web3: function(){
+        console.log('admin has web3');
+        this._createNewVotingContract();
+      },
+
+      _createNewVotingContract: function() {
+        var self = this;
+        this.contracturl = this.resolveUrl('../../contracts/PoezenVoting.json');
+        this.importHref(this.contracturl, function(e) {
+          self.contractjson = JSON.parse(e.target.import.body.innerText);
+
+          console.log('Creating new contract!');
+
+          this.web3.eth.getGasPrice(function(err, result) {
+            var gasPrice = result.toNumber(10);
+
+            var MyContract = self.web3.eth.contract(self.contractjson.abi);
+            var contractInstance = MyContract.new(123,345,{
+              from: self.account,
+              gasPrice: gasPrice,
+              gasLimit: 3000000,
+              gas: 2000000,
+              nonce: 4,
+              data: self.contractjson.bytecode
+            }, function(err, myContract) {
+              if (!err) {
+                // NOTE: The callback will fire twice!
+                // Once the contract has the transactionHash property set and once its deployed on an address.
+
+                // e.g. check tx hash on the first call (transaction send)
+                if (!myContract.address) {
+                  console.log("Your validation contract has been deployed to the Ethereum network. Transaction hash is", myContract.transactionHash);
+                  self.txhash = myContract.transactionHash;
+                  console.log("Wait a new moments while we mine it. You will receive your address when it is mined.");
+                  // check address on the second call (contract deployed)
+                } else {
+                  console.log("Your validation contract has been deployed. Your contract address is", myContract.address);
+                  self.contractaddress = myContract.address;
+
+                }
+              } else {
+                console.log('error:', err);
+              }
+            });
+          });
+
+
+
+        }, function(e) {
+          console.log('ERROR!');
+        });
 
       }
 
