@@ -13,10 +13,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
 <link rel="import" href="../../bower_components/paper-color-picker/paper-color-input.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 
 <dom-module id="poes-admin">
   <template>
-    <ipfs-upload id="ipfsupload" host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}"></ipfs-upload>
+    <ipfs-upload hidefileinput id="ipfsupload" host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}"></ipfs-upload>
     <style>
       :host {
         display: block;
@@ -41,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h2>Nieuwe vraag stellen</h2>
 
       <h3>Start</h3>
-      
+
       <paper-input-container>
         <input type="date" name="t1" is="iron-input" bind-value="{{startdate}}">
       </paper-input-container>
@@ -74,10 +75,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <paper-input-container>
           <label>Antwoord</label>
-          <input is="iron-input">
+          <input is="iron-input" bind-value="{{optie1}}">
         </paper-input-container>
 
-        <paper-color-input></paper-color-input>
+        <paper-color-input value-as-hex="{{kleur1}}" no-full-names></paper-color-input>
 
       </div>
 
@@ -85,10 +86,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <paper-input-container>
           <label>Antwoord</label>
-          <input is="iron-input">
+          <input is="iron-input" bind-value="{{optie2}}">
         </paper-input-container>
 
-        <paper-color-input></paper-color-input>
+        <paper-color-input value-as-hex="{{kleur2}}" no-full-names></paper-color-input>
 
       </div>
 
@@ -96,16 +97,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <paper-input-container>
           <label>Antwoord</label>
-          <input is="iron-input">
+          <input is="iron-input" bind-value="{{optie3}}">
         </paper-input-container>
 
-        <paper-color-input></paper-color-input>
+        <paper-color-input value-as-hex="{{kleur3}}" no-full-names></paper-color-input>
 
       </div>
 
       <paper-icon-button icon="save" on-tap="save">Opslaan</paper-icon-button>
 
-    
+      
+      <paper-toast id="toast0" duration="0"></paper-toast>
 
     </div>
   </template>
@@ -131,7 +133,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         webready: {
           observer: "_web3"
-        },
+        }
+      },
+
+      showtoast: function(msg){
+        this.$.toast0.text = msg;
+        this.$.toast0.open();
       },
 
       save: function(){
@@ -143,6 +150,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         jsonobject.vraag = this.vraag;
 
+        jsonobject.optie1 = this.optie1;
+        jsonobject.kleur1 = this.kleur1;
+
+        jsonobject.optie2 = this.optie2;
+        jsonobject.kleur2 = this.kleur2;
+
+        jsonobject.optie3 = this.optie3;
+        jsonobject.kleur3 = this.kleur3;
+
+
         var startunix = this.startdate+"T"+this.starttime+":00+01:00";
         startunix = Date.parse(startunix)/1000;
 
@@ -151,31 +168,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         jsonobject.startunix = startunix;
         jsonobject.endunix = endunix;
+
+        var self = this;
+
+        console.log(jsonobject);
+
+        this._createNewVotingContract(startunix, endunix, function(e){
+          jsonobject.contractaddress = e;
+          self.savetoipfs(jsonobject, function(e){
+            console.log("IPFS saved ", e);
+            self.showtoast("IPFS saved: " + e);
+          });
+        });
         
         //console.log(jsonobject);
-        var ipfsbuffer = JSON.stringify(jsonobject);
+        
+      },
+
+      attached: function(){
+        // this.ipfs.add([new this.ipfs.Buffer("wjepfwehjwuefhwpiuefh")], function(err, res) {
+        //   if (err || !res) return console.error(err)
+        //   console.log('added to IPFS');
+        //   console.log(res);
+        // });
+      },
+
+      savetoipfs: function(ipfsbuffer, fn){
+        this.showtoast("Saving to IPFS");
+        var ipfsbuffer = JSON.stringify(ipfsbuffer);
         console.log(ipfsbuffer);
         this.ipfs.add([new this.ipfs.Buffer(ipfsbuffer)], function(err, res) {
           if (err || !res) return console.error(err)
           console.log('added to IPFS');
           console.log(res[0].Hash);
-        });
-      },
-
-      attached: function(){
-        this.ipfs.add([new this.ipfs.Buffer("wjepfwehjwuefhwpiuefh")], function(err, res) {
-          if (err || !res) return console.error(err)
-          console.log('added to IPFS');
-          console.log(res);
+          fn();
         });
       },
 
       _web3: function(){
         console.log('admin has web3');
-        this._createNewVotingContract();
+        //this._createNewVotingContract();
       },
 
-      _createNewVotingContract: function() {
+      _createNewVotingContract: function(startdate, enddate, fn) {
+        this.showtoast("Creating votingcontract");
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/PoezenVoting.json');
         this.importHref(this.contracturl, function(e) {
@@ -187,7 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var gasPrice = result.toNumber(10);
 
             var MyContract = self.web3.eth.contract(self.contractjson.abi);
-            var contractInstance = MyContract.new(123,345,{
+            var contractInstance = MyContract.new(startdate,enddate,{
               from: self.account,
               gasPrice: gasPrice,
               gasLimit: 3000000,
@@ -204,14 +240,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   console.log("Your validation contract has been deployed to the Ethereum network. Transaction hash is", myContract.transactionHash);
                   self.txhash = myContract.transactionHash;
                   console.log("Wait a new moments while we mine it. You will receive your address when it is mined.");
+                  self.showtoast("Here's the TX hash: " + self.txhash);
+
                   // check address on the second call (contract deployed)
                 } else {
                   console.log("Your validation contract has been deployed. Your contract address is", myContract.address);
                   self.contractaddress = myContract.address;
+                  self.showtoast("Contract deployed: " + self.contractaddress);
+                  fn(self.contractaddress);
+
 
                 }
               } else {
                 console.log('error:', err);
+                self.showtoast("Error: " + err);
               }
             });
           });

@@ -14,7 +14,7 @@
     "google-chart": "GoogleWebComponents/google-chart#~1.0.4",
     "chart-elements": "robdodson/chart-elements#~2.0.2",
     "paper-color-picker": "~0.9.2",
-    "ipfs-upload": "~0.0.7"
+    "ipfs-upload": "~0.0.8"
   },
   "devDependencies": {},
   "ignore": []
