@@ -25,9 +25,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div>
       <h2>Nieuwe vraag stellen</h2>
-      <paper-input label="Startdatum"></paper-input>
-      <paper-input label="Einddatum"></paper-input>
-      <paper-input label="Vraag"></paper-input>
+      
+      <paper-input-container>
+        <label>Startdate</label>
+        <input is="iron-input">
+      </paper-input-container>
+
+      <paper-input-container>
+        <label>Einddate</label>
+        <input is="iron-input">
+      </paper-input-container>
+
+      <paper-input-container>
+        <label>Vraag</label>
+        <input is="iron-input">
+      </paper-input-container>
+
+      <h3>Antwoorden</h3>
+
+      <paper-input-container>
+        <label>Antwoord</label>
+        <input is="iron-input">
+      </paper-input-container>
+
+      <paper-input-container>
+        <label>Kleur</label>
+        <input is="iron-input">
+      </paper-input-container>
+
+      <paper-icon-button icon="add">add antwoord</paper-icon-button>
+
+
     </div>
   </template>
   <script>
