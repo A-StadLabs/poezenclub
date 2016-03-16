@@ -576,6 +576,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
   </neon-animatable>
 
+  <neon-animatable data-route="admin">
+    <poes-admin></poes-admin>
+  </neon-animatable>
+
 </neon-animated-pages>
 </div>
 </template>
@@ -648,6 +652,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.exitAnimation = 'slide-left-animation';
         this.entryAnimation = 'slide-from-right-animation';
         this.state = "selectpussy";
+
+        var hash = window.location.hash;
+        if(hash=="#!/admin"){
+          this.state = "admin";
+        };
+
+
       },
 
 

@@ -62,32 +62,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     </style>
-    <div>
-      <paper-toolbar>
-        <div class="flex"></div>
-        <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
-      </paper-toolbar>
-      <div class="canvaskf">
-      <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
-      <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
-      <iron-selector attr-for-selected="key" selected="0" class="choice">
-      <template is="dom-repeat" items="{{chartdata}}">
-        <div class="keuzeoptie" key="{{item.key}}">
-          <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
-          <div class="label flex">{{item.label}}</div>
-          <div>{{item.value}}</div>
+    <template is="dom-if" if="{{voteactive}}">
+      <div>
+        <paper-toolbar>
+          <div class="flex"></div>
+          <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
+        </paper-toolbar>
+        <div class="canvaskf">
+        <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
+        <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
+        <iron-selector attr-for-selected="key" selected="0" class="choice">
+        <template is="dom-repeat" items="{{chartdata}}">
+          <div class="keuzeoptie" key="{{item.key}}">
+            <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
+            <div class="label flex">{{item.label}}</div>
+            <div>{{item.value}}</div>
+          </div>
+        </template>
+        </iron-selector>
+        
+
+        <p>Einde van deze stemronde in <b>12:11:03</b></p>
+
+        <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
+        
         </div>
-      </template>
-      </iron-selector>
-      
-     <!--  Als je nog niet gestemd hebt -->
-      <p><b>Je kan nog x uur stemmen.</b></p>
-      <!-- als je wel al gestemd hebt -->
-      <p><b>Je hebt nog x uur om je stem te veranderen.</b></p>
-      <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
-      
       </div>
-    </div>
+    </template>
+    <template is="dom-if" if="{{!voteactive}}">
+      <div>
+        <paper-toolbar>
+          <div class="flex"></div>
+          <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
+        </paper-toolbar>
+        <div class="canvaskf">
+        <p>Het stemmen is afgelopen.</p>
+        <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
+        <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
+        <template is="dom-repeat" items="{{chartdata}}">
+          <div class="keuzeoptie" key="{{item.key}}">
+            <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
+            <div class="label flex">{{item.label}}</div>
+            <div>{{item.value}}</div>
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{winner}}">
+          <p>Jij stemde voor de winnende keuze!</p>
+          <paper-button raised>OPEN DE DOOS</paper-button>
+        </template>
+
+        <template is="dom-if" if="{{!winner}}">
+          <p>Helaas, je hoort niet bij de winnaars.</p>
+          <p>Probeer het volgende week nog eens!</p>
+        </template>
+
+
+        </div>
+      </div>
+    </template>
   </template>
   <script>
   (function() {
@@ -100,6 +133,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         votekey: {
           type: String,
           observer: 'renderchart'
+        },
+        voteactive: {
+          type: Boolean,
+          value: true
+        },
+        winner: {
+          type: Boolean,
+          value: true
         }
       },
 
