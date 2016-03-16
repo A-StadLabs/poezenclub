@@ -12,7 +12,8 @@
     "polymer": "Polymer/polymer#^1.2.0",
     "web3": "~0.15.2",
     "google-chart": "GoogleWebComponents/google-chart#~1.0.4",
-    "chart-elements": "robdodson/chart-elements#~2.0.2"
+    "chart-elements": "robdodson/chart-elements#~2.0.2",
+    "ipfs-upload": "^0.0.5"
   },
   "devDependencies": {},
   "ignore": []
