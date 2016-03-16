@@ -11,6 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../../bower_components/paper-color-picker/paper-color-input.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
 <dom-module id="poes-admin">
   <template>
@@ -20,6 +22,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: white;
         height: 100vh;
         padding: 20px;
+      }
+
+      .fab {
+        background-color: #D18E7D;
       }
 
     </style>
@@ -48,12 +54,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <input is="iron-input">
       </paper-input-container>
 
-      <paper-input-container>
-        <label>Kleur</label>
-        <input is="iron-input">
-      </paper-input-container>
+      <paper-color-input></paper-color-input>
 
-      <paper-icon-button icon="add">add antwoord</paper-icon-button>
+      <paper-fab mini icon="add" class="fab">add antwoord</paper-fab>
 
 
     </div>
