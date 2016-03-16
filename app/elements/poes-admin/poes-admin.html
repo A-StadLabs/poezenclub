@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
 <link rel="import" href="../../bower_components/paper-color-picker/paper-color-input.html">
+<link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
 <dom-module id="poes-admin">
@@ -28,9 +29,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: #D18E7D;
       }
 
+      .antwoord {
+        padding: 20px;
+        border: 1px solid grey;
+        background-color: #eee;
+        margin-bottom: 10px;
+      }
+
     </style>
     <div>
       <h2>Nieuwe vraag stellen</h2>
+
+      <paper-date-picker></paper-date-picker>
       
       <paper-input-container>
         <label>Startdate</label>
@@ -49,14 +59,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <h3>Antwoorden</h3>
 
-      <paper-input-container>
-        <label>Antwoord</label>
-        <input is="iron-input">
-      </paper-input-container>
+      <template is="dom-repeat" items="{{answers}}">
 
-      <paper-color-input></paper-color-input>
+      <div class="antwoord">
 
-      <paper-fab mini icon="add" class="fab">add antwoord</paper-fab>
+        <paper-input-container>
+          <label>Antwoord</label>
+          <input is="iron-input">
+        </paper-input-container>
+
+        <paper-color-input></paper-color-input>
+
+        <paper-icon-button icon="close"></paper-icon-button>
+
+      </div>
+
+      </template>
+
+      <paper-fab mini icon="add" class="fab" on-tap="addanswer">add antwoord</paper-fab>
 
 
     </div>
@@ -69,11 +89,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'poes-admin',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'poes-admin',
+        answers: {
+          type: Array,
+          value: [{'0': 'antwoord'}],
           notify: true
         }
+      },
+
+      addanswer: function(){
+        this.push('answers', {'0': 'antwoord'});
       }
     });
   })();
