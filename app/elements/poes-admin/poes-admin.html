@@ -60,9 +60,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <h3>Antwoorden</h3>
 
-      <template is="dom-repeat" items="{{answers}}">
 
-      <div class="antwoord">
+      <div class="antwoord" id="0">
 
         <paper-input-container>
           <label>Antwoord</label>
@@ -71,13 +70,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <paper-color-input></paper-color-input>
 
-        <paper-icon-button icon="close"></paper-icon-button>
+      </div>
+
+      <div class="antwoord" id="1">
+
+        <paper-input-container>
+          <label>Antwoord</label>
+          <input is="iron-input">
+        </paper-input-container>
+
+        <paper-color-input></paper-color-input>
 
       </div>
 
-      </template>
+      <div class="antwoord" id="2">
 
-      <paper-fab mini icon="add" class="fab" on-tap="addanswer">add antwoord</paper-fab>
+        <paper-input-container>
+          <label>Antwoord</label>
+          <input is="iron-input">
+        </paper-input-container>
+
+        <paper-color-input></paper-color-input>
+
+      </div>
+
+      <paper-icon-button icon="save">Opslaan</paper-icon-button>
+
 
 
     </div>
@@ -92,17 +110,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'poes-admin',
 
       properties: {
-        answers: {
-          type: Array,
-          value: [{'0': 'antwoord'}],
-          notify: true
-        }
+       
       },
 
-<<<<<<< HEAD
-      addanswer: function(){
-        this.push('answers', {'0': 'antwoord'});
-=======
+   
       attached: function(){
 
         //ipfs = this.ipfs;
@@ -116,7 +127,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         })
 
 
->>>>>>> origin/master
       }
 
     });
