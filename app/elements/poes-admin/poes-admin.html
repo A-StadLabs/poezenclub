@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="poes-admin">
   <template>
+    <ipfs-upload id="ipfsupload" host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}"></ipfs-upload>
     <style>
       :host {
         display: block;
@@ -85,6 +86,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
 
+    //var ipfs;
+
     Polymer({
       is: 'poes-admin',
 
@@ -96,9 +99,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+<<<<<<< HEAD
       addanswer: function(){
         this.push('answers', {'0': 'antwoord'});
+=======
+      attached: function(){
+
+        //ipfs = this.ipfs;
+
+        this.ipfs.add([new this.ipfs.Buffer("wjepfwehjwuefhwpiuefh")], function(err, res) {
+          if (err || !res) return console.error(err)
+
+          console.log('added to IPFS');
+          consolel.log(res);
+
+        })
+
+
+>>>>>>> origin/master
       }
+
     });
   })();
   </script>
