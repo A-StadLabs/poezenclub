@@ -160,9 +160,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _ipfschanged: function(){
+        var self =this;
+
         if (this.ipfs){
-        this.ipfs.block.get(this.voteipfs, function(err, res) {
-          console.log('hash', file.Hash, 'block received', res);
+        this.ipfs.cat(this.voteipfs, function(err, res) {
+
+
+        var buf = '';
+        res
+          .on('error', (err) => {
+            throw err
+          })
+          .on('data', (data) => {
+            buf += data
+          })
+          .on('end', () => {
+//            console.log('buffer',buf);
+            self.vote = JSON.parse(buf);
+            self.contractaddress = self.vote.contractaddress;
+            // de rest gaat via de observer van contractaddress
+          });
         });
 
         }else{
@@ -201,21 +218,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             label: "Fruit"
         }];
       },
-         _hascontractaddress: function(){
+      _hascontractaddress: function() {
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/PoezenVoting.json');
-        this.importHref(this.contracturl, function(e) { 
+        this.importHref(this.contracturl, function(e) {
           // console.log(e.target.import.body.innerText);
           self.contractjson = JSON.parse(e.target.import.body.innerText);
-          this.hascontractaddress = true;
-          self._initcontract();
+
+          // TODO verwijder mij !!! ASAP !
+          self.castVote();
+
+
         }, function(e) {
           console.log('ERROR!');
         });
-
-
-
       },
+
+
+      castVote: function() {
+        var self = this;
+
+        //dees binden aan de 
+        self.vote = 2;
+
+        self.web3.eth.getGasPrice(function(err, result) {
+
+          var MyContract = self.web3.eth.contract(self.contractjson.abi);
+          var myContractInstance = MyContract.at(self.contractaddress);
+
+
+          var gasPrice = result.toNumber(10);
+
+          var options = {
+            from: self.account,
+            //value: 1 * 1e18,
+            gas: 3141590,
+            gasPrice: gasPrice,
+            nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
+          };
+
+          var result = myContractInstance.vote.sendTransaction(self.vote, options,
+            function(err, result) {
+              if (err != null) {
+                console.log(err);
+                console.log("ERROR: Transaction didn't go through. See console.");
+              } else {
+                console.log("Transaction Successful!");
+                console.log(result);
+              }
+            }
+          );
+
+
+        });
+      }
 
     });
   })();
