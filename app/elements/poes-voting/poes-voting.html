@@ -14,7 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="poes-voting">
   <template>
-
+      <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
+      </ipfs-upload>
     <style>
       :host {
         display: block;
@@ -141,6 +142,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         winner: {
           type: Boolean,
           value: true
+        },
+        contractaddress: {
+          type: String,
+          observer: "_hascontractaddress"
+        },
+        voteipfs: {
+          type:String
+        },
+        ipfs: {
+          type: String,
+          observer: "_ipfschanged"
+        }
+      },
+
+      attached: function(){
+      },
+
+      _ipfschanged: function(){
+        if (this.ipfs){
+        this.ipfs.block.get(this.voteipfs, function(err, res) {
+          console.log('hash', file.Hash, 'block received', res);
+        });
+
+        }else{
+          console.log('failed to read IPFS object : not available');
         }
       },
 
@@ -174,7 +200,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             highlight: "#FFC870",
             label: "Fruit"
         }];
-      }
+      },
+         _hascontractaddress: function(){
+        var self = this;
+        this.contracturl = this.resolveUrl('../../contracts/PoezenVoting.json');
+        this.importHref(this.contracturl, function(e) { 
+          // console.log(e.target.import.body.innerText);
+          self.contractjson = JSON.parse(e.target.import.body.innerText);
+          this.hascontractaddress = true;
+          self._initcontract();
+        }, function(e) {
+          console.log('ERROR!');
+        });
+
+
+
+      },
 
     });
   })();
