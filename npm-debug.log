@@ -1,0 +1,157 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'ebidel/i18n-msg',
+1 verbose cli   '--save' ]
+2 info using npm@3.5.2
+3 info using node@v4.2.3
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData ebidel/i18n-msg
+8 silly fetchOtherPackageData ebidel/i18n-msg
+9 silly cache add args [ 'ebidel/i18n-msg', null ]
+10 verbose cache add spec ebidel/i18n-msg
+11 silly cache add parsed spec Result {
+11 silly cache add   raw: 'ebidel/i18n-msg',
+11 silly cache add   scope: null,
+11 silly cache add   name: null,
+11 silly cache add   rawSpec: 'ebidel/i18n-msg',
+11 silly cache add   spec: 'github:ebidel/i18n-msg',
+11 silly cache add   type: 'hosted',
+11 silly cache add   hosted:
+11 silly cache add    { type: 'github',
+11 silly cache add      ssh: 'git@github.com:ebidel/i18n-msg.git',
+11 silly cache add      sshUrl: 'git+ssh://git@github.com/ebidel/i18n-msg.git',
+11 silly cache add      httpsUrl: 'git+https://github.com/ebidel/i18n-msg.git',
+11 silly cache add      gitUrl: 'git://github.com/ebidel/i18n-msg.git',
+11 silly cache add      shortcut: 'github:ebidel/i18n-msg',
+11 silly cache add      directUrl: 'https://raw.githubusercontent.com/ebidel/i18n-msg/master/package.json' } }
+12 verbose addRemoteGit caching ebidel/i18n-msg
+13 verbose addRemoteGit ebidel/i18n-msg is a repository hosted by github
+14 silly tryGitProto attempting to clone git://github.com/ebidel/i18n-msg.git
+15 silly tryClone cloning ebidel/i18n-msg via git://github.com/ebidel/i18n-msg.git
+16 verbose tryClone git-github-com-ebidel-i18n-msg-git-24cdaf01 not in flight; caching
+17 info git [ 'clone',
+17 info git   '--template=/Users/benadriaenssen/.npm/_git-remotes/_templates',
+17 info git   '--mirror',
+17 info git   'git://github.com/ebidel/i18n-msg.git',
+17 info git   '/Users/benadriaenssen/.npm/_git-remotes/git-github-com-ebidel-i18n-msg-git-24cdaf01' ]
+18 verbose mirrorRemote ebidel/i18n-msg git clone git://github.com/ebidel/i18n-msg.git
+19 verbose setPermissions ebidel/i18n-msg set permissions on /Users/benadriaenssen/.npm/_git-remotes/git-github-com-ebidel-i18n-msg-git-24cdaf01
+20 verbose resolveHead ebidel/i18n-msg original treeish: master
+21 info git [ 'rev-list', '-n1', 'master' ]
+22 silly resolveHead ebidel/i18n-msg resolved treeish: 6ca29c913fb0fae898dbb16f4ddab2603c84c996
+23 verbose resolveHead ebidel/i18n-msg resolved Git URL: git://github.com/ebidel/i18n-msg.git#6ca29c913fb0fae898dbb16f4ddab2603c84c996
+24 silly resolveHead Git working directory: /var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-55420485/6ca29c913fb0fae898dbb16f4ddab2603c84c996
+25 info git [ 'clone',
+25 info git   '/Users/benadriaenssen/.npm/_git-remotes/git-github-com-ebidel-i18n-msg-git-24cdaf01',
+25 info git   '/var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-55420485/6ca29c913fb0fae898dbb16f4ddab2603c84c996' ]
+26 verbose cloneResolved ebidel/i18n-msg clone Cloning into '/var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-55420485/6ca29c913fb0fae898dbb16f4ddab2603c84c996'...
+26 verbose cloneResolved done.
+27 info git [ 'checkout', '6ca29c913fb0fae898dbb16f4ddab2603c84c996' ]
+28 verbose checkoutTreeish ebidel/i18n-msg checkout Note: checking out '6ca29c913fb0fae898dbb16f4ddab2603c84c996'.
+28 verbose checkoutTreeish
+28 verbose checkoutTreeish You are in 'detached HEAD' state. You can look around, make experimental
+28 verbose checkoutTreeish changes and commit them, and you can discard any commits you make in this
+28 verbose checkoutTreeish state without impacting any branches by performing another checkout.
+28 verbose checkoutTreeish
+28 verbose checkoutTreeish If you want to create a new branch to retain commits you create, you may
+28 verbose checkoutTreeish do so (now or later) by using -b with the checkout command again. Example:
+28 verbose checkoutTreeish
+28 verbose checkoutTreeish   git checkout -b <new-branch-name>
+28 verbose checkoutTreeish
+28 verbose checkoutTreeish HEAD is now at 6ca29c9... Merge pull request #28 from RoXuS/addMsgProperty
+29 error addLocal Could not install /var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-55420485/6ca29c913fb0fae898dbb16f4ddab2603c84c996
+30 silly tryHTTPS attempting to clone git+https://github.com/ebidel/i18n-msg.git
+31 silly tryClone cloning ebidel/i18n-msg via git+https://github.com/ebidel/i18n-msg.git
+32 verbose tryClone git-https-github-com-ebidel-i18n-msg-git-d82973e2 not in flight; caching
+33 info git [ 'clone',
+33 info git   '--template=/Users/benadriaenssen/.npm/_git-remotes/_templates',
+33 info git   '--mirror',
+33 info git   'https://github.com/ebidel/i18n-msg.git',
+33 info git   '/Users/benadriaenssen/.npm/_git-remotes/git-https-github-com-ebidel-i18n-msg-git-d82973e2' ]
+34 verbose mirrorRemote ebidel/i18n-msg git clone https://github.com/ebidel/i18n-msg.git
+35 verbose setPermissions ebidel/i18n-msg set permissions on /Users/benadriaenssen/.npm/_git-remotes/git-https-github-com-ebidel-i18n-msg-git-d82973e2
+36 verbose resolveHead ebidel/i18n-msg original treeish: master
+37 info git [ 'rev-list', '-n1', 'master' ]
+38 silly resolveHead ebidel/i18n-msg resolved treeish: 6ca29c913fb0fae898dbb16f4ddab2603c84c996
+39 verbose resolveHead ebidel/i18n-msg resolved Git URL: git+https://github.com/ebidel/i18n-msg.git#6ca29c913fb0fae898dbb16f4ddab2603c84c996
+40 silly resolveHead Git working directory: /var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-36cd3355/6ca29c913fb0fae898dbb16f4ddab2603c84c996
+41 info git [ 'clone',
+41 info git   '/Users/benadriaenssen/.npm/_git-remotes/git-https-github-com-ebidel-i18n-msg-git-d82973e2',
+41 info git   '/var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-36cd3355/6ca29c913fb0fae898dbb16f4ddab2603c84c996' ]
+42 verbose cloneResolved ebidel/i18n-msg clone Cloning into '/var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-36cd3355/6ca29c913fb0fae898dbb16f4ddab2603c84c996'...
+42 verbose cloneResolved done.
+43 info git [ 'checkout', '6ca29c913fb0fae898dbb16f4ddab2603c84c996' ]
+44 verbose checkoutTreeish ebidel/i18n-msg checkout Note: checking out '6ca29c913fb0fae898dbb16f4ddab2603c84c996'.
+44 verbose checkoutTreeish
+44 verbose checkoutTreeish You are in 'detached HEAD' state. You can look around, make experimental
+44 verbose checkoutTreeish changes and commit them, and you can discard any commits you make in this
+44 verbose checkoutTreeish state without impacting any branches by performing another checkout.
+44 verbose checkoutTreeish
+44 verbose checkoutTreeish If you want to create a new branch to retain commits you create, you may
+44 verbose checkoutTreeish do so (now or later) by using -b with the checkout command again. Example:
+44 verbose checkoutTreeish
+44 verbose checkoutTreeish   git checkout -b <new-branch-name>
+44 verbose checkoutTreeish
+44 verbose checkoutTreeish HEAD is now at 6ca29c9... Merge pull request #28 from RoXuS/addMsgProperty
+45 error addLocal Could not install /var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-36cd3355/6ca29c913fb0fae898dbb16f4ddab2603c84c996
+46 silly trySSH attempting to clone git@github.com:ebidel/i18n-msg.git
+47 silly tryClone cloning ebidel/i18n-msg via git@github.com:ebidel/i18n-msg.git
+48 verbose tryClone git-github-com-ebidel-i18n-msg-git-e17b60db not in flight; caching
+49 info git [ 'clone',
+49 info git   '--template=/Users/benadriaenssen/.npm/_git-remotes/_templates',
+49 info git   '--mirror',
+49 info git   'git@github.com:ebidel/i18n-msg.git',
+49 info git   '/Users/benadriaenssen/.npm/_git-remotes/git-github-com-ebidel-i18n-msg-git-e17b60db' ]
+50 verbose mirrorRemote ebidel/i18n-msg git clone git@github.com:ebidel/i18n-msg.git
+51 verbose setPermissions ebidel/i18n-msg set permissions on /Users/benadriaenssen/.npm/_git-remotes/git-github-com-ebidel-i18n-msg-git-e17b60db
+52 verbose resolveHead ebidel/i18n-msg original treeish: master
+53 info git [ 'rev-list', '-n1', 'master' ]
+54 silly resolveHead ebidel/i18n-msg resolved treeish: 6ca29c913fb0fae898dbb16f4ddab2603c84c996
+55 verbose resolveHead ebidel/i18n-msg resolved Git URL: git+ssh://git@github.com/ebidel/i18n-msg.git#6ca29c913fb0fae898dbb16f4ddab2603c84c996
+56 silly resolveHead Git working directory: /var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-5b07007e/6ca29c913fb0fae898dbb16f4ddab2603c84c996
+57 info git [ 'clone',
+57 info git   '/Users/benadriaenssen/.npm/_git-remotes/git-github-com-ebidel-i18n-msg-git-e17b60db',
+57 info git   '/var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-5b07007e/6ca29c913fb0fae898dbb16f4ddab2603c84c996' ]
+58 verbose cloneResolved ebidel/i18n-msg clone Cloning into '/var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-5b07007e/6ca29c913fb0fae898dbb16f4ddab2603c84c996'...
+58 verbose cloneResolved done.
+59 info git [ 'checkout', '6ca29c913fb0fae898dbb16f4ddab2603c84c996' ]
+60 verbose checkoutTreeish ebidel/i18n-msg checkout Note: checking out '6ca29c913fb0fae898dbb16f4ddab2603c84c996'.
+60 verbose checkoutTreeish
+60 verbose checkoutTreeish You are in 'detached HEAD' state. You can look around, make experimental
+60 verbose checkoutTreeish changes and commit them, and you can discard any commits you make in this
+60 verbose checkoutTreeish state without impacting any branches by performing another checkout.
+60 verbose checkoutTreeish
+60 verbose checkoutTreeish If you want to create a new branch to retain commits you create, you may
+60 verbose checkoutTreeish do so (now or later) by using -b with the checkout command again. Example:
+60 verbose checkoutTreeish
+60 verbose checkoutTreeish   git checkout -b <new-branch-name>
+60 verbose checkoutTreeish
+60 verbose checkoutTreeish HEAD is now at 6ca29c9... Merge pull request #28 from RoXuS/addMsgProperty
+61 error addLocal Could not install /var/folders/pv/wt0dt1x51wz2vxm5zd8yzzy80000gs/T/npm-10683-c21f2e20/git-cache-5b07007e/6ca29c913fb0fae898dbb16f4ddab2603c84c996
+62 silly fetchPackageMetaData Error: EISDIR: illegal operation on a directory, read
+62 silly fetchPackageMetaData     at Error (native)
+62 silly fetchPackageMetaData  error for ebidel/i18n-msg { [Error: EISDIR: illegal operation on a directory, read] errno: -21, code: 'EISDIR', syscall: 'read' }
+63 silly rollbackFailedOptional Starting
+64 silly rollbackFailedOptional Finishing
+65 silly runTopLevelLifecycles Starting
+66 silly runTopLevelLifecycles Finishing
+67 silly install printInstalled
+68 verbose stack Error: EISDIR: illegal operation on a directory, read
+68 verbose stack     at Error (native)
+69 verbose cwd /Users/benadriaenssen/Sites/poezenclub
+70 error Darwin 15.3.0
+71 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "ebidel/i18n-msg" "--save"
+72 error node v4.2.3
+73 error npm  v3.5.2
+74 error code EISDIR
+75 error errno -21
+76 error syscall read
+77 error eisdir EISDIR: illegal operation on a directory, read
+78 error eisdir This is most likely not a problem with npm itself
+78 error eisdir and is related to npm not being able to find a package.json in
+78 error eisdir a package you are trying to install.
+79 verbose exit [ -21, true ]

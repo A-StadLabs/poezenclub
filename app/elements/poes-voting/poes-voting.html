@@ -1,0 +1,141 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/chart-elements/chart-elements.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<dom-module id="poes-voting">
+  <template>
+
+    <style>
+      :host {
+        display: block;
+        background-color: white;
+        height: 100vh;
+      }
+
+      .canvaskf {
+        @apply(--layout-start);
+        box-sizing:border-box;
+        padding: 30px;
+        background-color: white;
+      }
+
+      iron-selector {
+        @apply(--layout-vertical);
+      }
+
+    .iron-selected {
+      background: #ccc;
+    }
+
+    .iron-selected::after {
+      content: 'momenteel uw stem';
+    }
+
+    .square-chart {
+      margin-bottom: 20px;
+    }
+
+    paper-toolbar {
+      background-color: #D18E7D;
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+      @apply(--layout-center-center);
+    }
+
+    .keuzeoptie {
+      @apply(--layout-horizontal);
+      margin-bottom: 10px;
+    }
+
+    .bolleke {
+      margin-right: 10px;
+    }
+
+    </style>
+    <div>
+      <paper-toolbar>
+        <div class="flex"></div>
+        <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
+      </paper-toolbar>
+      <div class="canvaskf">
+      <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
+      <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
+      <iron-selector attr-for-selected="key" selected="0" class="choice">
+      <template is="dom-repeat" items="{{chartdata}}">
+        <div class="keuzeoptie" key="{{item.key}}">
+          <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
+          <div class="label flex">{{item.label}}</div>
+          <div>{{item.value}}</div>
+        </div>
+      </template>
+      </iron-selector>
+      
+     <!--  Als je nog niet gestemd hebt -->
+      <p><b>Je kan nog x uur stemmen.</b></p>
+      <!-- als je wel al gestemd hebt -->
+      <p><b>Je hebt nog x uur om je stem te veranderen.</b></p>
+      <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
+      
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'poes-voting',
+
+      properties: {
+        votekey: {
+          type: String,
+          observer: 'renderchart'
+        }
+      },
+
+      topussybase: function(){
+        var app = document.getElementById("stage");
+        console.log(app);
+        app.topussybase();
+      },
+
+      renderchart: function(){
+            this.chartdata = [{
+            key: 0,
+            value: 300,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "M&Ms"
+          },
+
+          {
+            key: 1,
+            value: 50,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Koekjes"
+          },
+
+          {
+            key: 2,
+            value: 100,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Fruit"
+        }];
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

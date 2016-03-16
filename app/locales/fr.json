@@ -1,0 +1,44 @@
+{
+  "sitetitle": {
+    "description": "...",
+    "message": "FR Welcome to the Kittyclub"
+  },
+  "subtitle": {
+    "description": "...",
+    "message": "A social blockchain experiment"
+  },
+  "intro": {
+    "description": "...",
+    "message": "Kom bij de poezenclub, laat je valideren door twee andere leden en ontdek alle voordelen van een gevalideerde poes."
+  },
+  "actionbutton": {
+  	"description": "...",
+  	"message": "Ik wil meedoen!"
+  },
+  "intro2": {
+  	"description": "...",
+  	"message": "De Poezenclub is een sociaal experiment."
+  },
+  "watis": {
+  	"description": "...",
+  	"message": "De poezenclub is een beta toepassing, opgezet door A-Labs, om op kleine schaal te experimenteren met gedecentraliseerde sociale tools. Door de Poezenclub leren we hoe mensen omgaan met deze nieuwe tools, hoe mensen interageren met elkaar d.m.v. de app. De onschuldigheid van de content en de beperkte functionaliteiten van de app zorgen ervoor dat we  snel leren en verbeteren. "
+  },
+  "watis2": {
+  	"description": "...",
+  	"message": "De Poezenclub is gedecentraliseerd."
+  },
+  "watis3": {
+  	"description": "...",
+  	"message": "Gedecentraliseerd is het ontbreken van een centrale instantie, van centrale opslag … dit maakt de Poezenclub een autonome toepassing, die in handen is van iedereen en van niemand. Het gebruik van blockchain-technologie (specifiek het"
+  },
+  "watis4": {
+  	"description": "...",
+  	"message": ") maakt dit mogelijk. Als digitaal innovatielab wil A-Labs uitproberen hoe deze technologie een stedelijke gemeenschap kan verbeteren."
+  },
+  "whitepaper": {
+  	"description": "...",
+  	"message": "Lees de volledige whitepaper"
+  }
+}
+
+

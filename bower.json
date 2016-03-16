@@ -2,6 +2,7 @@
   "name": "polymer-starter-kit",
   "private": true,
   "dependencies": {
+    "i18n-msg": "ebidel/i18n-msg#~1.0.4",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "mqtt-elements": "~0.0.6-beta",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
@@ -9,7 +10,9 @@
     "paper-elements": "PolymerElements/paper-elements#^1.0.1",
     "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
     "polymer": "Polymer/polymer#^1.2.0",
-    "web3": "~0.15.2"
+    "web3": "~0.15.2",
+    "google-chart": "GoogleWebComponents/google-chart#~1.0.4",
+    "chart-elements": "robdodson/chart-elements#~2.0.2"
   },
   "devDependencies": {},
   "ignore": []

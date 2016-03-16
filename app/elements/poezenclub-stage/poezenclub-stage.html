@@ -47,6 +47,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: white;
       }
 
+      
+
+      .choice {
+        width: 100%;
+      }
+
 
       h1 {
         @apply(--theme-font-title);
@@ -242,13 +248,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-size: 22px;
     }
 
-      .version p  {
+    .version p  {
       font-size: 26px;
     }
 
+ .languagepicker {
+    width: 100vw;
+    background: var(--pink-theme-color);
+    box-sizing:border-box;
+    padding: 0px 40px 0px 0px;
+    @apply(--layout-horizontal);
+    @apply(--layout-end-justified);
+  }
+
+  .languagepickersel {
+    height: 100%;
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+  }
+
+  .languagepickersel .iron-selected {
+    background-color: rgba(0,0,0,1);
+    text-decoration: underline;
+    color: var(--pink-theme-color);
+  }
+
+  .language {
+    @apply(--layout-horizontal);
+    @apply(--layout-center-center);
+    color: black;
+    width: 50px;
+    height: 40px;
+    border-radius: 0px 0px 10px 10px;
+    padding: 0px;
+    cursor: pointer;
+
+  }
+
+
+
+  .language h2 {
+    font-size: 16px;
+  }
 
 
     </style>
+
+
 
     <iron-localstorage name="poezenimage" value="{{poezenimage}}"
        on-iron-localstorage-load="poes_loaded"></iron-localstorage>
@@ -267,12 +313,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
 
+                <div class="languagepicker">
+                  <iron-selector 
+                  attr-for-selected="lang" 
+                  selected="{{language}}" 
+                  on-iron-select="langpick"  
+                  class="languagepickersel">
+                    <div lang="en" class="language"><h2>EN</h2></div>
+                    <div lang="nl" class="language"><h2>NL</h2></div>
+                  </iron-selector>
+                </div>
 
+<div class="ninety">
 
     <neon-animated-pages selected="{{state}}" 
             entry-animation="{{entryAnimation}}"
             exit-animation="{{exitAnimation}}"
             attr-for-selected="data-route">
+
+
       <neon-animatable data-route="selectpussy">
         <div class="canvaspink">
 <!--           <div class="errormsg">
@@ -281,7 +340,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="{{mqttconnected}}">mqtt connected</template>
           </div> -->
 
-          <h2>Kies een kat!</h2>
+
+          <h2><i18n-msg msgid="kieskat">Choose a cat!</i18n-msg></h2>
           <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="poezenimage_selected" selected="{{poezenimage}}">
             <div class="poesitem" poes="1">
               <img src="../../images/poezen/poes1.png"></div>
@@ -311,6 +371,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <img src="../../images/poezen/poes13.png"></div>
             <div class="poesitem" poes="14">
               <img src="../../images/poezen/poes14.png"></div>
+            <div class="poesitem" poes="15">
+              <img src="../../images/poezen/poes15.png"></div>
+            <div class="poesitem" poes="16">
+              <img src="../../images/poezen/poes16.png"></div>
           </iron-selector>
           <button on-tap="toNamepussy" class="main">OK</button>
         </div>
@@ -318,7 +382,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <neon-animatable data-route="namepussy">
         <div class="canvaspink">
-          <h1>Hoe heet<br> jouw poes?</h1>
+          <h1><i18n-msg msgid="naamkat1">What's the name</i18n-msg><br><i18n-msg msgid="naamkat2"> of your cat?</i18n-msg></h1>
           <div class="whitespace"></div>
           <paper-input-container no-label-float>
             <input autofocus class="centertexting"
@@ -352,10 +416,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <template is="dom-if" if="{{hasenoughcredits}}">
 
           <div class="canvaspink layout center center">
-            <p>Jouw pincode</p>
+            <p><i18n-msg msgid="jouwpin">Your pincode</i18n-msg></p>
             <h1>{{pincode}}</h1>
-            <small>Je kan nog <span>{{cleansaldo}}</span> validaties doen.</small>
-            <button class="medium" on-tap="topussybase">Terug</button>
+            <small><i18n-msg msgid="saldo1">You can do</i18n-msg><span>{{cleansaldo}}</span><i18n-msg msgid="saldo2"> more validations</i18n-msg></small>
+            <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
           </div>
 
           </template>
@@ -363,8 +427,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            <template is="dom-if" if="{{!hasenoughcredits}}">
 
           <div class="canvaspink">
-            <h1>Je hebt genoeg poezen gevalideerd.</h1>
-            <button class="medium" on-tap="topussybase">Terug</button>
+            <h1><i18n-msg msgid="enoughmsg">You have validated enough kitties.</i18n-msg></h1>
+            <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
           </div>
 
           </template>
@@ -373,8 +437,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <template is="dom-if" if="{{!validated}}">
           <div class="canvaspink">
-            <p>Je kan pas iemand valideren als je zelf gevalideerd bent.</p>
-            <button class="medium" on-tap="topussybase">Terug</button>
+            <p><i18n-msg msgid="morevalids">You can only validate some else if you are validated yourself.</i18n-msg></p>
+            <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
           </div>
         </template>
       </neon-animatable>
@@ -387,8 +451,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!--             <p>{{contractaddresstowrite}}</p> -->
           </div>
           <div class="layout horizontal center">
-            <button class="medium" on-tap="topussybase">Annuleren</button>
-            <button class="main" on-tap="validateRequest">Valideren</button>
+            <button class="medium" on-tap="topussybase"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
+            <button class="main" on-tap="validateRequest"><i18n-msg msgid="validatebtn">Validate</i18n-msg></button>
           </div>
         </div>
       </neon-animatable>
@@ -396,7 +460,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <neon-animatable data-route="openbox">
         <div class="canvaspink">
           <div class="eighty">
-            <h2>Check de code op de poezendoos</h2>
+            <h2><i18n-msg msgid="checkpoezendoos">Check the code on the Kittybox</i18n-msg></h2>
           </div>
           <paper-input-container no-label-float>
             <label class="centertexting">pincode</label>
@@ -406,16 +470,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type="number"
             bind-value="{{boxpin}}"></paper-input-container>
         <button on-tap="submitboxpin" class="main">OK</button>
-        <button on-tap="toPussybase" class="main">Niet nu</button>
+        <button on-tap="toPussybase" class="main"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
       </div>
     </neon-animatable>
     <neon-animatable data-route="boxisopen">
       <div class="canvaspink">
         <div class="eighty">
-          <h2>Wacht tot de doos opengaat</h2>
-          <h2>en neem uw koekje</h2>
+          <h2><i18n-msg msgid="wachtmsg">Wait for the Kittybox to open and take a cookie!</i18n-msg></h2>
         </div>
-      <button on-tap="closebox" class="main">Sluit de doos</button>
+      <button on-tap="closebox" class="main"><i18n-msg msgid="sluitmsg">Close the box</i18n-msg></button>
     </div>
   </neon-animatable>
 
@@ -424,11 +487,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <neon-animatable data-route="clearconfirm">
       <div class="canvaspink">
         <div class="eighty">
-          <h2>Wil je volledig opnieuw beginnen?</h2>
+          <h2><i18n-msg msgid="resetmsg">Do you want to start over?</i18n-msg></h2>
         </div>
           <div class="layout horizontal center">
-            <button class="medium" on-tap="topussybase">Annuleren</button>
-            <button class="medium" on-tap="opnieuw">Opnieuw beginnen</button>
+            <button class="medium" on-tap="topussybase"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
+            <button class="medium" on-tap="opnieuw"><i18n-msg msgid="resetbtn">Start over</i18n-msg></button>
           </div>
     </div>
   </neon-animatable>
@@ -443,8 +506,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </template> -->
 
+
     <div class="canvaspink">
-      <div class="whitespace"></div>
+    <div class="whitespace" on-tap="tohomescreen">X</div>
       <div class="whitespace"></div>
       <div class="whitespace"></div>
       <div class="eighty middle">
@@ -454,18 +518,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="whitespace"></div>
 
       <template is="dom-if" if="{{!ismember}}">
-        <poezenclub-loader small id="memberloader" loadmsg="Je lidmaatschap wordt aangemaakt"></poezenclub-loader>
+        <poezenclub-loader small id="memberloader" loadmsg="{{memberloadermsg}}"></poezenclub-loader>
       </template>
 
       <template is="dom-if" if="{{!contractaddress}}">
-        <poezenclub-loader small id="memberloader" loadmsg="Je poescontract wordt aangemaakt"></poezenclub-loader>
+        <poezenclub-loader small id="contractloader" loadmsg="{{contractloadermsg}}"></poezenclub-loader>
       </template>
 
       <template is="dom-if" if="{{contractaddress}}">
         <template is="dom-if" if="{{validated}}">
-          <button on-tap="openbox" class="main">Open de poezendoos</button>
+          <button on-tap="openbox" class="main"><i18n-msg msgid="openbtn">Open the Kittybox</i18n-msg></button>
           <template is="dom-if" if="{{hasenoughcredits}}">
-            <button on-tap="tooncode" class="valideerbtn">Valideer iemand anders</button>
+            <button on-tap="tooncode" class="valideerbtn"><i18n-msg msgid="validatesomeone">Validate someone</i18n-msg></button>
           </template>
         </template>
 
@@ -476,8 +540,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    
 
       <div class="validatorz vertical layout">
-        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
-        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate"></poes-validatordetail>
+        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}"></poes-validatordetail>
+        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}"></poes-validatordetail>
         <div class="whitespace"></div>
               
         <div class="whitespace"></div>
@@ -486,30 +550,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
    </template>
 
-   <div on-tap="toVersion" class="version"><h2>{{version}}</h2></div>
+   <div on-tap="toVersion" class="version"><h2><i18n-msg msgid="kitty">KittyClub</i18n-msg><span>{{version}}</span></h2></div>
 
     </div>
+  </neon-animatable>
+
+  <neon-animatable data-route="homescreen">
+    <poes-voting votekey="{{account}}"></poes-voting>
   </neon-animatable>
 
   <neon-animatable data-route="version">
     <div class="canvasblank">
     <h1>{{version}}</h1>
     <div class="whitespace"></div>
-    <p>Mijn Ether-saldo</p>
+    <p><i18n-msg msgid="ethersaldo">My Ether-saldo</i18n-msg></p>
     <p class="clipper">{{saldo}}</p>
     <div class="whitespace"></div>
-    <p>Mijn poezenclubcontract</p>
+    <p><i18n-msg msgid="kittycontract">My KittyClubcontract</i18n-msg></p>
     <p class="clipper">{{membershipcontract}}</p>
-    <p>Mijn validatiecontract</p>
+    <p><i18n-msg msgid="valcontract">My validationcontract</i18n-msg></p>
     <p class="clipper">{{contractaddress}}</p>
-    <p>Mijn validatie tx hash</p>
+    <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
     <p class="clipper">{{txhash}}</p>
-    <button class="medium" on-tap="topussybase">Terug</button>
+    <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
     </div>
   </neon-animatable>
 
 </neon-animated-pages>
-
+</div>
 </template>
 <script>
   (function() {
@@ -569,11 +637,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Boolean,
           value: false
         },
-
         version: {
           type: String,
-          value: 'Poezenclub v0.0.1'
-        },
+          value: ' v0.0.1'
+        }
       },
 
       ready: function(){
@@ -583,12 +650,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.state = "selectpussy";
       },
 
+
+
       makepincode: function(){
             this.pincode = (Math.floor(Math.random()*90000) + 10000).toString();
       },
 
       saldochanged: function(){
         console.log('saldo is nu ',this.saldo);
+
         if (this.saldo > 1){
           this.hasenoughcredits = true;
         }else{
@@ -596,23 +666,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         this.cleansaldo = Math.floor(this.saldo);
       },
+
       _statechanged: function(){
         console.log('state changed to',this.state);
       },
+
       _ismemberchanged: function(){
         if (this.ismember){
           this.$.poesvalidatie.createContract();
         }
       },
+
       topussybase: function(){
         this.boxpin = "";
         this.go('pussybase');
       },
 
+      tohomescreen: function(){
+        this.go('homescreen');
+        
+      },
+
       poes_loaded: function(){
         if (this.poezenimage && this.poezennaam){
           if (this.state == 'selectpussy'){
-            this.go('pussybase');
+            this.go('homescreen');
           }
         }
       },
@@ -627,7 +705,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       attached: function(){
         //this.go('selectpussy');
-        console.log('attached');
+      this.language = 'nl';
+      I18nMsg.lang = 'nl';
+      I18nMsg.url = 'locales'; // optionally use custom folder for locales.
+      Platform.performMicrotaskCheckpoint();
+      this.memberloadermsg = "Je lidmaatschap wordt aangemaakt";
+      this.contractloadermsg = "Je contract wordt aangemaakt";
+      this.valloadmsg = "Je validatie is in aanvraag";
+      console.log('attached');
       },
 
       checkvalidationstate: function(){
@@ -830,7 +915,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       tooncode: function(){
         this.$.poescontract._updateBalance();
         this.go("pin");
-      }
+      },
+
+
+
+
+  langpick: function(){
+    I18nMsg.lang = this.language;
+
+        if(this.language == 'en'){
+        this.memberloadermsg = "Your membership is being created";
+        this.contractloadermsg = "Your contract is being created";
+        this.valloadmsg = "Your validation is being processed";
+        };
+
+        if(this.language == 'nl'){
+        this.memberloadermsg = "Je lidmaatschap wordt aangemaakt";
+        this.contractloadermsg = "Je contract wordt aangemaakt";
+        this.valloadmsg = "Je validatie is in aanvraag";
+        };  
+
+
+    Platform.performMicrotaskCheckpoint();
+
+  }
+
+  // document.addEventListener('HTMLImportsLoaded', function() {
+  //   I18nMsg.lang = 'en';
+  //   app.language = 'en';
+  //   I18nMsg.url = 'locales'; // optionally use custom folder for locales.
+  //   Platform.performMicrotaskCheckpoint();
+  // });
+
+
+
+
 
 
     });
