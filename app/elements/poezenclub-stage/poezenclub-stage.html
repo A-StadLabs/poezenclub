@@ -805,6 +805,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       mqttconnectedfire: function(){
         console.log("MQTT connected");
+        this.fire('add-toast', { msg: 'MQTT connected.'});
         // this.subscribetoPin();
       },
 
@@ -910,6 +911,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _contractaddress:function(){
         console.log('Hemme me hiete een contractaddresske' , this.contractaddress);
+        this.fire('add-toast', { msg: 'Contract: ' + this.contractaddress});
         if (!this.contractaddress){
           this.hasadress = false;
         } else {
