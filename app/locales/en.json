@@ -102,6 +102,22 @@
   "valby": {
     "description": "...",
     "message": "Validated by"
+  },
+  "evengeduld": {
+    "description": "...",
+    "message": "A moment please..."
+  },
+  "controleert": {
+    "description": "...",
+    "message": "The box is checking your kitty status."
+  },
+  "dedoosis": {
+    "description": "...",
+    "message": "The box closes in"
+  },
+  "seconden": {
+    "description": "...",
+    "message": "seconds"
   }
 }
 
