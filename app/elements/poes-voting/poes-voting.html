@@ -72,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="canvaskf">
         <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
         <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
-        <iron-selector attr-for-selected="key" selected="0" class="choice">
+        <iron-selector attr-for-selected="key" selected="{{currentchoice}}" on-iron-select="castVote" class="choice">
         <template is="dom-repeat" items="{{chartdata}}">
           <div class="keuzeoptie" key="{{item.key}}">
             <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
@@ -194,35 +194,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       renderchart: function(){
-            this.chartdata = [{
-            key: 0,
-            value: 300,
-            color:"#F7464A",
-            highlight: "#FF5A5E",
-            label: "M&Ms"
-          },
+         
+      },
 
-          {
+      readVoteResults: function() {
+        var self = this;
+        var MyContract = self.web3.eth.contract(self.contractjson.abi);
+        var myContractInstance = MyContract.at(self.contractaddress);
+        this.voteresults = {};
+        this.votekeys = [1, 2, 3];
+        this.votekeys.forEach(function(element, index, array) {
+          self.voteresults[element] = myContractInstance.voteresults(element).toNumber();
+          console.log('votes for ', element, 'count=', self.voteresults[element]);
+        });
+        console.log(this.voteresults);
+
+        this.chartdata = [{
             key: 1,
-            value: 50,
-            color: "#46BFBD",
-            highlight: "#5AD3D1",
-            label: "Koekjes"
+            value: this.voteresults[1],
+            color: this.vote.kleur1,
+            highlight: "#FF5A5E",
+            label: this.vote.optie1
           },
 
           {
             key: 2,
-            value: 100,
-            color: "#FDB45C",
-            highlight: "#FFC870",
-            label: "Fruit"
-        }];
-      },
+            value: this.voteresults[2],
+            color: this.vote.kleur2,
+            highlight: "#5AD3D1",
+            label: this.vote.optie2
+          },
 
-      readVoteResults: function(){
-        var self = this;
-         var MyContract = self.web3.eth.contract(self.contractjson.abi);
-          var myContractInstance = MyContract.at(self.contractaddress);
+          {
+            key: 3,
+            value: this.voteresults[3],
+            color: this.vote.kleur3,
+            highlight: "#FFC870",
+            label: this.vote.optie3
+          }
+        ];
 
       },
 
@@ -248,8 +258,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       castVote: function() {
         var self = this;
 
-        //dees binden aan de 
-        self.vote = 2;
+        self.vote = this.currentchoice;
+
+        console.log(self.account,'casts a vote for option',self.vote,'to contract ',self.contractaddress);
 
         self.web3.eth.getGasPrice(function(err, result) {
 
