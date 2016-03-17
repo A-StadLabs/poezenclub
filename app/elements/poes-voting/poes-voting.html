@@ -218,6 +218,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             label: "Fruit"
         }];
       },
+
+      readVoteResults: function(){
+        var self = this;
+         var MyContract = self.web3.eth.contract(self.contractjson.abi);
+          var myContractInstance = MyContract.at(self.contractaddress);
+
+      },
+
       _hascontractaddress: function() {
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/PoezenVoting.json');
@@ -226,7 +234,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           self.contractjson = JSON.parse(e.target.import.body.innerText);
 
           // TODO verwijder mij !!! ASAP !
-          self.castVote();
+//          self.castVote();
+
+          self.readVoteResults();
 
 
         }, function(e) {
