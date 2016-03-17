@@ -14,6 +14,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="poes-voting">
   <template>
+
+    <script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
+
+
       <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
       </ipfs-upload>
     <style>
@@ -81,15 +85,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </template>
         </iron-selector>
-        
-
-        <p>Einde van deze stemronde in <b>12:11:03</b></p>
-
+        <p>Bgin van deze stemronde <b>{{starttijd}}</b></p>
+        <p>Einde van deze stemronde <b>{{resttijd}}</b></p>
         <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
         
         </div>
       </div>
     </template>
+
+    <!-- als de voting niet meer actief is -->
+
     <template is="dom-if" if="{{!voteactive}}">
       <div>
         <paper-toolbar>
@@ -179,6 +184,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             self.vote = JSON.parse(buf);
             self.contractaddress = self.vote.contractaddress;
             // de rest gaat via de observer van contractaddress
+            var eindtijd = self.vote.enddate + " " + self.vote.endtime;
+            var starttijd = self.vote.enddate + " " + self.vote.endtime;
+            //console.log(self.vote);
+            //console.log(moment(einddtijd).locale('nl').fromNow());
+            self.resttijd = moment(eindtijd).locale('nl').fromNow();
+            self.starttijd = moment(starttijd).locale('nl').fromNow();
           });
         });
 
@@ -201,6 +212,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var self = this;
         var MyContract = self.web3.eth.contract(self.contractjson.abi);
         var myContractInstance = MyContract.at(self.contractaddress);
+
+        self.startDate
+
         this.voteresults = {};
         this.votekeys = [1, 2, 3];
         this.votekeys.forEach(function(element, index, array) {

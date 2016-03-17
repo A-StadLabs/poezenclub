@@ -102,7 +102,25 @@
   "valby": {
     "description": "...",
     "message": "Gevalideerd door"
+  },
+  "evengeduld": {
+    "description": "...",
+    "message": "Even geduld..."
+  },
+  "controleert": {
+    "description": "...",
+    "message": "De poezendoos controleert momenteel of je poes toegang heeft."
+  },
+  "dedoosis": {
+    "description": "...",
+    "message": "De doos sluit binnen"
+  },
+  "seconden": {
+    "description": "...",
+    "message": "seconden"
   }
+
+
 }
 
 

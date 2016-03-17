@@ -195,6 +195,7 @@ function openDoor() {
 };
 
 function closeDoor() {
+  client.publish(pincode, 'doosisdicht');
   client.unsubscribe('poezendoos/' + code);
   beweeglid('close', function() {
     schrijflcd('de doos is terug toe');
