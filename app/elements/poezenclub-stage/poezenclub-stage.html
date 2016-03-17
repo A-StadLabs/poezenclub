@@ -324,6 +324,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </iron-selector>
                 </div>
 
+
 <div class="ninety">
 
     <neon-animated-pages selected="{{state}}" 
@@ -581,6 +582,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </neon-animatable>
 
 </neon-animated-pages>
+
 </div>
 </template>
 <script>
@@ -658,6 +660,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.state = "admin";
         };
 
+        this.addEventListener('add-toast', function(e){
+          var toastmanager = document.getElementById("toastManager");
+          console.log(e);
+          toastmanager.add(e.detail.msg);
+        });
 
       },
 
@@ -798,6 +805,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       mqttconnectedfire: function(){
         console.log("MQTT connected");
+        this.fire('add-toast', { msg: 'MQTT connected.'});
         // this.subscribetoPin();
       },
 
@@ -903,6 +911,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _contractaddress:function(){
         console.log('Hemme me hiete een contractaddresske' , this.contractaddress);
+        this.fire('add-toast', { msg: 'Contract: ' + this.contractaddress});
         if (!this.contractaddress){
           this.hasadress = false;
         } else {
