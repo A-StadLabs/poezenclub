@@ -18,5 +18,8 @@
     "moment": "momentjs#~2.12.0"
   },
   "devDependencies": {},
-  "ignore": []
+  "ignore": [],
+  "resolutions": {
+    "paper-styles": "^1.1.0"
+  }
 }
