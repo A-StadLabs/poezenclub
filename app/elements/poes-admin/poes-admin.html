@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <div>
-      <h2>Nieuwe vraag stellen</h2>
+      <h2 on-tap="newtoast">Nieuwe vraag stellen</h2>
 
       <h3>Start</h3>
 
@@ -136,6 +136,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      newtoast: function(){
+        console.log('testing..');
+        this.fire('add-toast', { msg: 'testing!'});
+      },
+
       showtoast: function(msg){
         this.$.toast0.text = this.$.toast0.text+'\n\n'+msg;
         this.$.toast0.open();
@@ -176,8 +181,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           jsonobject.contractaddress = e;
           self.savetoipfs(jsonobject, function(e){
             console.log("IPFS saved ", e);
-            self.showtoast("IPFS saved: " + e);
-            self.showtoast("All done! Click to close.");
+            self.fire('add-toast', { msg: 'IPFS saved: ' + e });
+            //self.showtoast("IPFS saved: " + e);
+            self.fire('add-toast', { msg: 'All done!' });
           });
         });
         
@@ -194,7 +200,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       savetoipfs: function(ipfsbuffer, fn){
-        this.showtoast("Saving to IPFS");
+        this.fire('add-toast', { msg: 'Saving to IPFS' });
         var ipfsbuffer = JSON.stringify(ipfsbuffer);
         console.log(ipfsbuffer);
         this.ipfs.add([new this.ipfs.Buffer(ipfsbuffer)], function(err, res) {
@@ -211,7 +217,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _createNewVotingContract: function(startdate, enddate, fn) {
-        this.showtoast("Creating votingcontract");
+        this.fire('add-toast', { msg: 'Creating votingcontract...' });
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/PoezenVoting.json');
         this.importHref(this.contracturl, function(e) {
@@ -240,18 +246,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   console.log("Your validation contract has been deployed to the Ethereum network. Transaction hash is", myContract.transactionHash);
                   self.txhash = myContract.transactionHash;
                   console.log("Wait a new moments while we mine it. You will receive your address when it is mined.");
-                  self.showtoast("Here's the TX hash: " + self.txhash);
+                  //self.showtoast("Here's the TX hash: " + self.txhash);
+                  self.fire('add-toast', { msg: "Here's the TX hash: " + self.txhash });
 
                   // check address on the second call (contract deployed)
                 } else {
                   console.log("Your validation contract has been deployed. Your contract address is", myContract.address);
                   self.contractaddress = myContract.address;
-                  self.showtoast("Contract deployed: " + self.contractaddress);
+                  //self.showtoast("Contract deployed: " + self.contractaddress);
+                  self.fire('add-toast', { msg: "Contract deployed: " + self.contractaddress });
                   fn(self.contractaddress);
                 }
               } else {
                 console.log('error:', err);
-                self.showtoast("Error: " + err);
+                //self.showtoast("Error: " + err);
+                self.fire('add-toast', { msg: "Error." });
               }
             });
           });
