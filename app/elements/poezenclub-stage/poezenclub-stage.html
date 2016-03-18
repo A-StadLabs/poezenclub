@@ -25,19 +25,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-drawer-panel {
         width: 100vw;
         height: 100vh;
-        overflow-y: scroll;
       }
 
       #main {
         min-height: 100vh;
       }
 
+
       .drawer {
-        height: 100%;
         width: 100%;
+        min-height: 100%;
+
         background-color: var(--pink-theme-color);
         @apply(--layout-vertical);
         @apply(--layout-center);
+        overflow-y: scroll;
+        overflow-x: hidden;
       }
 
 
@@ -243,7 +246,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border: 1px solid black; 
       padding: 15px 15px 15px 15px;
       font-size: 22px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
     }
+
+
 
     .incomingpic {
       width: 250px;
@@ -275,9 +282,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     width: 100%;
     background: var(--pink-theme-color);
     box-sizing:border-box;
-    padding: 0px 40px 0px 0px;
-    @apply(--layout-horizontal);
-    @apply(--layout-end-justified);
+    padding: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+
+/*    @apply(--layout-horizontal);
+    @apply(--layout-start-justified);*/
   }
 
   .languagepickersel {
@@ -298,10 +307,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     color: black;
     width: 50px;
     height: 40px;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 10px;
     padding: 0px;
     cursor: pointer;
-
+    @apply(--theme-alt-general);
   }
 
 
@@ -314,7 +323,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  .topbar {
     width: 100%;
     background: var(--pink-theme-color);
-    height: 150px;
+    height: 15vh;
+    max-height: 150px;
     box-sizing:border-box;
     padding: 20px;
     @apply(--layout-horizontal);  
@@ -323,7 +333,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     border-bottom: 1px solid rgba(0,0,0,0.25);
   }
 
-  .settingsicon {
+/*  .settingsicon {
     height: 40px;
     width: 45px;
     border-left: 1px solid rgba(0,0,0,0.5);
@@ -333,12 +343,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   .settingsicon img {
     height: 30px;
     width: 30px;
-  }
+  }*/
 
   .poesprofile {
     height: 100%;
 /*    background-color: rgba(0,0,0,0.05);*/
-
     @apply(--layout-horizontal);  
     @apply(--layout-center);    
     @apply(--layout-end-justified); 
@@ -353,38 +362,93 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
 
-      poes-aai {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background-color: rgba(0,0,0,0.05);
-        overflow: hidden;
-        margin: 0px 0px 0px 10px;
-      }
+  poes-aai {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.05);
+    overflow: hidden;
+    margin: 0px 0px 0px 10px;
+  }
 
-      .grande {
-        width: 260px;
-        height: 260px;
-        background-color: transparent;
-        overflow: hidden;
-        margin: 0px;
-      }
+  .grande {
+    width: 260px;
+    height: 260px;
+    background-color: transparent;
+    overflow: hidden;
+    margin: 0px;
+  }
 
-      .alert {
-        width: 40px;
-        height: 40px;
-        margin: 0px 15px 0px 0px;
-      }
+  .alert {
+    width: 35px;
+    height: 35px;
+    margin: 0px 10px 0px 0px;
+  }
 
-      .alerttxt h3 {
+  .alerttxt {
+    text-align: center;
+    @apply(--theme-font-subhead);
+    margin: 0px;
+    color:#feec46;
+    font-size: 22px;
+  }
 
-        color:#feec46;
-        font-size: 22px;
-      }
+  .accountinfo {
+    width: 100%;
+    background-color: var(--pink-theme-color);
+    box-sizing:border-box;
+    padding: 20px;
+    @apply(--theme-alt-general);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+  }
+  .accountinfo p {
+    @apply(--theme-alt-general);
+    font-size: 12px;
+  }
+  .drawer h1 {
+    @apply(--theme-font-general);
+    font-size: 28px;
+    line-height: 30px;
+  }
 
+  #drawerpages {
+    width: 100%;
+  }
 
+  .btnimg {
+    width: 25px;
+    height: 25px;
+    margin: 0px 0px 0px 6px;
+  }
 
+  .settingsbtn {
+    outline: 0; 
+    margin: 5px 5px 5px 0px;
+    box-sizing:border-box;
+    border-radius: 8px;
+    cursor: pointer;
+    @apply(--theme-font-button);
+    background-color: var(--pinktwee-theme-color);
+    border:none;
+/*        border: 1px solid rgba(0,0,0,0.5); */
+    padding: 12px;
+    font-size: 18px;
+    @apply(--layout-horizontal);
+    @apply(--layout-center-center);  
+  }
 
+  .poestitel {
+    width: 100%;
+    @apply(--layout-horizontal);
+    @apply(--layout-center-center); 
+  }
+  .poestitel h2 {
+    font-size: 28px;
+  }
+  .poestitel img {
+    width: 28px;
+    margin-left: 5px;
+  }
     </style>
 
 
@@ -407,31 +471,67 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
 
 
-<paper-drawer-panel right-drawer force-narrow id="drawer" drawer-width="300px">
-  <div drawer class="drawer">
-
-  <div class="languagepicker">
-    <iron-selector 
-    attr-for-selected="lang" 
-    selected="{{language}}" 
-    on-iron-select="langpick"  
-    class="languagepickersel">
-      <div lang="en" class="language"><h2>EN</h2></div>
-      <div lang="nl" class="language"><h2>NL</h2></div>
-    </iron-selector>
-  </div>
-
+<paper-drawer-panel right-drawer force-narrow id="drawer" drawer-width="330px">
+  <div drawer>
+    <neon-animated-pages id="drawerpages" selected="{{selected}}" 
+            entry-animation="fade-in-animation"
+            exit-animation="fade-out-animation">
+      <neon-animatable>
+      <div class="drawer">
         <poes-aai class="grande" catnumber="{{poezenimage}}"></poes-aai>
-        <h1 on-tap="goClear">{{poezennaam}}</h1>
-      <template is="dom-if" if="{{validated}}">
-        <img class="alert" src="../../images/alert.svg">
-<!--         <h3 class="alerttxt">Je bent nog niet gevalideerd</h3> -->
-      </template>
-
-      <div class="validatorz vertical layout">
-        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
-        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+        <div class="poestitel">
+          <h2>{{poezennaam}}</h2>
+          <img class="alert" src="../../images/valid.svg">
+        </div>
+        <div class="whitespace"></div>
+        <template is="dom-if" if="{{!validated}}">
+          <img class="alert" src="../../images/alert.svg">
+          <h3 class="alerttxt">Je bent nog niet gevalideerd</h3>
+        </template>
+        <div class="validatorz vertical layout">
+          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+        </div>
+        <div class="whitespace"></div>
+        <div class="whitespace"></div>
+        <button class="settingsbtn" on-tap="gotosettings">instellingen<img class="btnimg" src="../../images/cogwheel.svg"></button>
       </div>
+    </neon-animatable>
+    <neon-animatable>
+      <div class="drawer">
+        <div class="whitespace"></div>
+        <div class="languagepicker">
+          <h1><i18n-msg msgid="lang">Your language</i18n-msg></h1>
+          <iron-selector 
+          attr-for-selected="lang" 
+          selected="{{language}}" 
+          on-iron-select="langpick"  
+          class="languagepickersel">
+            <div lang="en" class="language"><h2>EN</h2></div>
+            <div lang="nl" class="language"><h2>NL</h2></div>
+          </iron-selector>
+        </div>        
+        <div class="accountinfo">
+          <h1><i18n-msg msgid="kitty">KittyClub</i18n-msg><span>{{version}}</span></h1>
+          <p><i18n-msg msgid="ethersaldo">My Ether-saldo</i18n-msg></p>
+          <p class="clipper">{{saldo}}</p>
+          <p><i18n-msg msgid="kittycontract">My KittyClubcontract</i18n-msg></p>
+          <p class="clipper">{{membershipcontract}}</p>
+          <p><i18n-msg msgid="valcontract">My validationcontract</i18n-msg></p>
+          <p class="clipper">{{contractaddress}}</p>
+          <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
+          <p class="clipper">{{txhash}}</p>
+        </div>
+        <div class="whitespace"></div>
+        <button class="settingsbtn" on-tap="gobackdrawer">OK</button>
+      </div>
+    </neon-animatable>
+
+
+
+
+
+</neon-animated-pages>
 
   </div>
 
@@ -439,8 +539,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <div class="topbar">
   <div class="poesprofile" on-tap="openDrawer">
-      <template is="dom-if" if="{{validated}}"><img class="alert" src="../../images/alert.svg"></template>
-      <h1 on-tap="goClear">{{poezennaam}}</h1>
+      <template is="dom-if" if="{{!validated}}">
+        <img class="alert" src="../../images/alert.svg">
+      </template>
+      <template is="dom-if" if="{{validated}}">
+        <img class="alert" src="../../images/valid.svg">
+      </template>
+
+      <h1>{{poezennaam}}</h1>
       <poes-aai catnumber="{{poezenimage}}"></poes-aai>
 
 
@@ -680,7 +786,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
    </template>
 
-   <div on-tap="toVersion" class="version"><h2><i18n-msg msgid="kitty">KittyClub</i18n-msg><span>{{version}}</span></h2></div>
 
     </div>
   </neon-animatable>
@@ -692,7 +797,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </neon-animatable>
 
   <neon-animatable data-route="version">
-    <div class="canvasblank">
+<!--     <div class="accountinfo">
     <h1>{{version}}</h1>
     <div class="whitespace"></div>
     <p><i18n-msg msgid="ethersaldo">My Ether-saldo</i18n-msg></p>
@@ -705,7 +810,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
     <p class="clipper">{{txhash}}</p>
     <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
-    </div>
+    </div> -->
   </neon-animatable>
 
   <neon-animatable data-route="admin">
@@ -799,6 +904,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log(e);
           toastmanager.add(e.detail.msg);
         });
+
+        this.$.drawerpages.selected = 0;
 
       },
 
@@ -922,7 +1029,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       openDrawer: function(){
         this.$.drawer.togglePanel();
-        console.log('hmmmmmmmkeeeeeeeeyyyy');
+    this.$.drawerpages.selected = 0;
       },
 
       toNamepussy: function() {
@@ -1120,6 +1227,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Platform.performMicrotaskCheckpoint();
 
+  },
+
+
+  gotosettings: function(){
+    this.$.drawerpages.selected = 1;
+  },
+
+  gobackdrawer: function(){
+    this.$.drawerpages.selected = 0;
   }
 
   // document.addEventListener('HTMLImportsLoaded', function() {

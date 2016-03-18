@@ -95,6 +95,10 @@
     "description": "...",
     "message": "Poezenclub"
   },
+  "lang": {
+    "description": "...",
+    "message": "Taalkeuze:"
+  },
   "valdescribe": {
     "description": "...",
     "message": "Vraag de pincode van een gevalideerde poes"

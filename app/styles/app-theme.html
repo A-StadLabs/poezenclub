@@ -30,7 +30,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         src: url(../fonts/IndieFlower.ttf);
     }
 
+    @font-face {
+        font-family: Lato;
+        src: url(../fonts/Lato-Regular.ttf);
+    }
 
+    @font-face {
+        font-family: Latolight;
+        src: url(../fonts/Lato-Light.ttf);
+    }
 
  :root {
 
@@ -163,6 +171,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       -webkit-font-smoothing: antialiased;
     };
 
+    --theme-alt-general: {
+      font-family: Lato;
+      -webkit-font-smoothing: antialiased;
+    };
+
+
 /*    --theme-font-nowrap: {
       white-space: nowrap;
       overflow: hidden;
@@ -222,7 +236,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     /* GENERAL */
     --total-canvas: {
       width: 100%;
-      min-height: 94vh;
+      min-height: 85vh;
       overflow-y: scroll;
     };
 

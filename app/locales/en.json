@@ -95,6 +95,10 @@
     "description": "...",
     "message": "KittyClub"
   },
+  "lang": {
+    "description": "...",
+    "message": "Language:"
+  },
   "valdescribe": {
     "description": "...",
     "message": "Ask the pincode of a validated kitty"
