@@ -22,6 +22,12 @@
   "devDependencies": {},
   "ignore": [],
   "resolutions": {
-    "paper-styles": "^1.1.0"
+    "paper-styles": "^1.1.0",
+    "polymer": "^1.2.4",
+    "paper-button": "^1.0.0",
+    "paper-dialog": "~1.0.3",
+    "paper-ripple": "^1.0.0",
+    "web-animations-js": "2.1.4",
+    "font-roboto": "^1.0.1"
   }
 }
