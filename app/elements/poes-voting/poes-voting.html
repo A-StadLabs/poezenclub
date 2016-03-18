@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       .canvaspink {
-        @apply(--canvas-pink);
+        width: 100%;
         @apply(--layout-vertical);
         @apply(--layout-start);
         @apply(--layout-center);
@@ -364,10 +364,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <neon-animatable vote-route="votecounts">
           <div class="canvaspink">
           <div class="voteheader">
-            <h2 on-tap="renderchart">Huidige resultaten Poezendoos</h2>
-            <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1>
-            <h1>Het stemmen eindigt <span>{{resttijd}}</span></h1>
-            <h2>{{vraag}}</h2>
+            <!-- <h1 on-tap="renderchart">Huidige resultaten Poezendoos</h1> -->
+            <!-- <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1> -->
+            <h2>Het stemmen eindigt <span>{{resttijd}}</span></h2>
+            <h2>Voting: <span>{{vraag}}</span></h2>
           </div>
 
           <div class="voteitem winner">
