@@ -474,12 +474,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <button on-tap="toPussybase" class="main"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
       </div>
     </neon-animatable>
-    <neon-animatable data-route="boxisopen">
+    <neon-animatable data-route="boxchecks">
       <div class="canvaspink">
         <div class="eighty">
-          <h2><i18n-msg msgid="wachtmsg">Wait for the Kittybox to open and take a cookie!</i18n-msg></h2>
+          <h2><i18n-msg msgid="evengeduld">Even geduld...</i18n-msg></h2>
+          <p><i18n-msg msgid="controleert">De poezendoos controleert momenteel of je poes gevalideerd is.</i18n-msg></p>
         </div>
-      <button on-tap="closebox" class="main"><i18n-msg msgid="sluitmsg">Close the box</i18n-msg></button>
+    </div>
+  </neon-animatable>
+
+  <neon-animatable data-route="boxisopen">
+      <div class="canvaspink">
+        <div class="eighty">
+        <h2><i18n-msg msgid="dedoosis">De doos sluit binnen</i18n-msg> <span>{{countdown}}</span> <i18n-msg msgid="seconden">seconden</i18n-msg>.</h2>
+        </div>
+      
+      
     </div>
   </neon-animatable>
 
@@ -538,13 +548,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <div class="whitespace"></div>
 
-   
-
       <div class="validatorz vertical layout">
         <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}"></poes-validatordetail>
         <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}"></poes-validatordetail>
-        <div class="whitespace"></div>
-              
+        <div class="whitespace"></div> 
         <div class="whitespace"></div>
         <div class="whitespace"></div>
       </div>
@@ -557,7 +564,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </neon-animatable>
 
   <neon-animatable data-route="homescreen">
-    <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmbB5cGcfkbk6oJHFWWdXfpieRGR3zyUa6ar48NTTu7aqC" votekey="{{account}}"></poes-voting>
+
+    <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmSFUroMATgUKmNRjMZGiBuKvt3bnonNBLEaKa2ZtFJorY" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting>
+
   </neon-animatable>
 
   <neon-animatable data-route="version">
@@ -698,17 +707,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       topussybase: function(){
         this.boxpin = "";
         this.go('pussybase');
+        this.makepincode();
       },
 
       tohomescreen: function(){
         this.go('homescreen');
-        
       },
 
       poes_loaded: function(){
         if (this.poezenimage && this.poezennaam){
           if (this.state == 'selectpussy'){
-            this.go('homescreen');
+            //this.go('homescreen');
+            this.go('pussybase');
           }
         }
       },
@@ -805,6 +815,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       mqttconnectedfire: function(){
         console.log("MQTT connected");
+        this.fire('add-toast', { msg: 'MQTT connected.'});
         // this.subscribetoPin();
       },
 
@@ -873,6 +884,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       msgreceived: function(e){
         console.log("MSG received: ",e.detail);
 
+
+
         // Split the motherfucking string!
         var commandarray = e.detail.msg.split("|");
         console.log(commandarray);
@@ -902,14 +915,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           case "doosisopen":
             console.log("De doos is open");
             //this.$.poezenpages.selected = 12;
-            //this.go("boxisopen");
+            this.go("boxisopen");
+            //this.$.countdown.start();
+            this.startcountdown();
+            this.boxpin = null;
             break;
+
         };
 
       },
 
+      startcountdown: function(){
+        this.countdown = 14;
+        //window.setInterval(this.substr(), 250);
+        this.set('interval', setInterval(this.substr.bind(this), 1000));
+      },
+
+      substr: function(){
+        this.countdown = Math.floor(this.countdown-1);
+        //console.log("countdown ", this.countdown);
+        if(this.countdown==0){
+          clearInterval(this.get('interval'));
+          this.go('pussybase');
+        }
+      },
+
       _contractaddress:function(){
         console.log('Hemme me hiete een contractaddresske' , this.contractaddress);
+        this.fire('add-toast', { msg: 'Contract: ' + this.contractaddress});
         if (!this.contractaddress){
           this.hasadress = false;
         } else {
@@ -921,7 +954,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log(this.boxpin);
         var pin = this.boxpin;
         this.$.lomqtt.send("poezendoos/"+pin,"checkContract"+"|"+this.contractaddress+"|"+this.pincode, 2);
-        this.go("boxisopen");
+        this.go("boxchecks");
       },
 
       closebox: function(){
