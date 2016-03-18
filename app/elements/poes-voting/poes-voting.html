@@ -364,6 +364,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <div class="graph">
             <!-- ZULLE ME DAN HIE DA GRAFIEKSKEN ZETTEN??! -->
+<chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
           </div>
           <div class="ownvote">
             <template is="dom-if" if="{{!voted}}">
@@ -461,7 +462,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </template>
 
-    <!-- als de voting niet meer actief is -->
+    
+
+    als de voting niet meer actief is
 
     <template is="dom-if" if="{{!voteactive}}">
       <div>
