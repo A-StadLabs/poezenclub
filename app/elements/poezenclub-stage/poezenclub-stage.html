@@ -22,6 +22,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
+      paper-drawer-panel {
+        width: 100vw;
+        height: 100vh;
+        overflow-y: scroll;
+      }
+
+      #main {
+        min-height: 100vh;
+      }
+
+      .drawer {
+        height: 100%;
+        width: 100%;
+        background-color: var(--pink-theme-color);
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+      }
+
+
       .eighty {
         width: 80%;
       }
@@ -29,6 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .middle {
         text-align: center;
       }
+
 
 
       .canvaspink {
@@ -176,8 +196,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .validatorz {
-        width: 92vw;
-        max-width: 600px;
+        width: 100%;
       }
 
       poes-validatordetail {
@@ -253,7 +272,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
  .languagepicker {
-    width: 100vw;
+    width: 100%;
     background: var(--pink-theme-color);
     box-sizing:border-box;
     padding: 0px 40px 0px 0px;
@@ -292,6 +311,80 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
 
+ .topbar {
+    width: 100%;
+    background: var(--pink-theme-color);
+    height: 150px;
+    box-sizing:border-box;
+    padding: 20px;
+    @apply(--layout-horizontal);  
+    @apply(--layout-center);    
+    @apply(--layout-end-justified);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+  }
+
+  .settingsicon {
+    height: 40px;
+    width: 45px;
+    border-left: 1px solid rgba(0,0,0,0.5);
+    box-sizing:border-box;
+    padding: 5px 0px 5px 15px;
+  }
+  .settingsicon img {
+    height: 30px;
+    width: 30px;
+  }
+
+  .poesprofile {
+    height: 100%;
+/*    background-color: rgba(0,0,0,0.05);*/
+
+    @apply(--layout-horizontal);  
+    @apply(--layout-center);    
+    @apply(--layout-end-justified); 
+/*        box-sizing:border-box;
+    padding: 20px;*/
+    border-radius: 5px;
+  }
+
+  .smalldetail {
+    width: 40px;
+    height: 40px;
+  }
+
+
+      poes-aai {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.05);
+        overflow: hidden;
+        margin: 0px 0px 0px 10px;
+      }
+
+      .grande {
+        width: 260px;
+        height: 260px;
+        background-color: transparent;
+        overflow: hidden;
+        margin: 0px;
+      }
+
+      .alert {
+        width: 40px;
+        height: 40px;
+        margin: 0px 15px 0px 0px;
+      }
+
+      .alerttxt h3 {
+
+        color:#feec46;
+        font-size: 22px;
+      }
+
+
+
+
     </style>
 
 
@@ -313,16 +406,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
 
-                <div class="languagepicker">
-                  <iron-selector 
-                  attr-for-selected="lang" 
-                  selected="{{language}}" 
-                  on-iron-select="langpick"  
-                  class="languagepickersel">
-                    <div lang="en" class="language"><h2>EN</h2></div>
-                    <div lang="nl" class="language"><h2>NL</h2></div>
-                  </iron-selector>
-                </div>
+
+<paper-drawer-panel right-drawer force-narrow id="drawer" drawer-width="300px">
+  <div drawer class="drawer">
+
+  <div class="languagepicker">
+    <iron-selector 
+    attr-for-selected="lang" 
+    selected="{{language}}" 
+    on-iron-select="langpick"  
+    class="languagepickersel">
+      <div lang="en" class="language"><h2>EN</h2></div>
+      <div lang="nl" class="language"><h2>NL</h2></div>
+    </iron-selector>
+  </div>
+
+        <poes-aai class="grande" catnumber="{{poezenimage}}"></poes-aai>
+        <h1 on-tap="goClear">{{poezennaam}}</h1>
+      <template is="dom-if" if="{{validated}}">
+        <img class="alert" src="../../images/alert.svg">
+<!--         <h3 class="alerttxt">Je bent nog niet gevalideerd</h3> -->
+      </template>
+
+      <div class="validatorz vertical layout">
+        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+      </div>
+
+  </div>
+
+  <div main>
+
+<div class="topbar">
+  <div class="poesprofile" on-tap="openDrawer">
+      <template is="dom-if" if="{{validated}}"><img class="alert" src="../../images/alert.svg"></template>
+      <h1 on-tap="goClear">{{poezennaam}}</h1>
+      <poes-aai catnumber="{{poezenimage}}"></poes-aai>
+
+
+
+
+<!--     <div class="smalldetail">
+        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small></poes-validatordetail>
+      </div>
+    <div class="smalldetail">
+        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small></poes-validatordetail>
+      </div> -->
+
+  </div>
+<!--   <div class="settingsicon" on-tap="openDrawer"><img src="../../images/cogwheel.svg"></div> -->
+</div>
+
+
 
 
 <div class="ninety">
@@ -519,14 +654,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <div class="canvaspink">
-    <div class="whitespace" on-tap="tohomescreen">X</div>
-      <div class="whitespace"></div>
-      <div class="whitespace"></div>
-      <div class="eighty middle">
-      <h1 on-tap="goClear">{{poezennaam}}</h1>
-      </div>
-      <poes-aai catnumber="{{poezenimage}}"></poes-aai>
-      <div class="whitespace"></div>
+<!--     <div class="whitespace" on-tap="tohomescreen" >X</div> -->
 
       <template is="dom-if" if="{{!ismember}}">
         <poezenclub-loader small id="memberloader" loadmsg="{{memberloadermsg}}"></poezenclub-loader>
@@ -548,13 +676,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <div class="whitespace"></div>
 
-      <div class="validatorz vertical layout">
-        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}"></poes-validatordetail>
-        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}"></poes-validatordetail>
-        <div class="whitespace"></div> 
-        <div class="whitespace"></div>
-        <div class="whitespace"></div>
-      </div>
+
 
    </template>
 
@@ -593,6 +715,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </neon-animated-pages>
 
 </div>
+</div>
+</paper-drawer-panel>
+
 </template>
 <script>
   (function() {
@@ -795,6 +920,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         */
       },
 
+      openDrawer: function(){
+        this.$.drawer.togglePanel();
+        console.log('hmmmmmmmkeeeeeeeeyyyy');
+      },
+
       toNamepussy: function() {
         this.go('namepussy');
       },
@@ -972,6 +1102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   langpick: function(){
+
     I18nMsg.lang = this.language;
 
         if(this.language == 'en'){
