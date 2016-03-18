@@ -24,13 +24,25 @@ contract PoezenVoting {
 
     function vote(uint vote) {
 
+        // check if voting is active
         if (now < votingStart || now > votingEnd){
-            return;
+            return 1;
         }
-        voteresults[vote]++;
-        voters[msg.sender] = Voter(vote,now);
-        VoteAdded();
-        
+
+        if (voters[msg.sender].vote == 0){
+            // case : user did not vote yet
+            voteresults[vote]++;
+            voters[msg.sender] = Voter(vote,now);
+            VoteAdded();
+            return 2;
+        }else{
+            // user already voted - and changes his vote
+            voteresults[voters[msg.sender].vote]--;
+            voteresults[vote]++;
+            voters[msg.sender] = Voter(vote,now);
+            VoteAdded();
+            return 3;
+        }        
     }
 
 }           
