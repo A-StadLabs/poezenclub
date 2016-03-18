@@ -9,9 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/chart-elements/chart-elements.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../poes-aai/poes-aai.html">
+<link rel="import" href="../../bower_components/chart-elements/chart-elements.html">
+
 
 <dom-module id="poes-voting">
   <template>
@@ -32,7 +33,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
-
+      .square-chart {
+        width: 200px;
+        height: 200px;
+      }
 
       h1 {
         @apply(--theme-font-title);
@@ -68,9 +72,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       .graph {
-        width: 100%;
+        width: 100px;
+        height: 100px;
         min-height: 100px;
         background-color: rgba(0,0,0,0.05);
+      }
+
+      .square-chart {
+        width: 100px;
+        height: 100px;
       }
 
       .ownvote {
@@ -359,12 +369,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <neon-animatable vote-route="votecounts">
           <div class="canvaspink">
           <div class="voteheader">
-            <h2>stemming Poezendoos</h2>
+            <h2 on-tap="renderchart">Huidige resultaten Poezendoos</h2>
             <h1>21 tot 26 maart</h1>
           </div>
-          <div class="graph">
-            <!-- ZULLE ME DAN HIE DA GRAFIEKSKEN ZETTEN??! -->
-<chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
+          <div class="voteitem">
+            <div><img src="http://www.snickers.com/Resources/images/share/snickers.jpg" /></div>
+            <div>Snickers</div>
+            <div>300</div>
+          </div>
+          <div class="voteitem">
+            <div><img src="http://www.snickers.com/Resources/images/share/snickers.jpg" /></div>
+            <div>Koekskes</div>
+            <div>20</div>
+          </div>
+          <div class="voteitem">
+            <div><img src="http://www.snickers.com/Resources/images/share/snickers.jpg" /></div>
+            <div>Fruit</div>
+            <div>10</div>
           </div>
           <div class="ownvote">
             <template is="dom-if" if="{{!voted}}">
@@ -508,8 +529,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         votekey: {
-          type: String,
-          observer: 'renderchart'
+          type: String
         },
         voteactive: {
           type: Boolean,
@@ -538,12 +558,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Boolean,
           value: true,
           observer: '_votedchanged'          
+        },
+        chartisthere: {
+          type: Boolean,
+          value: false
         }
       },
 
       attached: function(){
         this.votestate = "votecounts";
-
+        this.chartisthere = false;
       },
 
       _votestatechanged: function(){
@@ -599,7 +623,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       renderchart: function(){
-         
+         // create an instance with createElement:
+      
+
       },
 
       readVoteResults: function() {
