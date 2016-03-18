@@ -24,17 +24,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       paper-drawer-panel {
         width: 100vw;
-        height: 100vh;
+        overflow-y: scroll;
+
       }
 
-      #main {
+/*      #main {
         min-height: 100vh;
+        width: 100vw;
       }
-
+*/
 
       .drawer {
-        width: 100%;
-        min-height: 100%;
+/*        width: 100%;
+        min-height: 100%;*/
 
         background-color: var(--pink-theme-color);
         @apply(--layout-vertical);
@@ -58,7 +60,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--canvas-pink);
         @apply(--layout-vertical);
         @apply(--layout-center-center);
+        min-height: 100vh;
       }
+
+      .canvas2pink {
+      width: 100vw;
+      overflow-y: scroll;
+      background-color: var(--pink-theme-color);
+        @apply(--layout-vertical);
+        @apply(--layout-start);
+        @apply(--layout-center);
+        min-height: 85vh;
+      }
+
 
       .canvasblank {
         @apply(--total-canvas);
@@ -199,7 +213,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .validatorz {
-        width: 100%;
+        width: 84vw;
+        max-width: 600px
       }
 
       poes-validatordetail {
@@ -488,10 +503,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <img class="alert" src="../../images/alert.svg">
           <h3 class="alerttxt">Je bent nog niet gevalideerd</h3>
         </template>
+
+
+
+      <template is="dom-if" if="{{validated}}">
+
         <div class="validatorz vertical layout">
+          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small></poes-validatordetail>
+          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small></poes-validatordetail>
+        </div>
+
+   </template>
+
+
+<!--         <div class="validatorz vertical layout">
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
-        </div>
+        </div> -->
         <div class="whitespace"></div>
         <div class="whitespace"></div>
         <button class="settingsbtn" on-tap="gotosettings">instellingen<img class="btnimg" src="../../images/cogwheel.svg"></button>
@@ -526,48 +554,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <button class="settingsbtn" on-tap="gobackdrawer">OK</button>
       </div>
     </neon-animatable>
-
-
-
-
-
-</neon-animated-pages>
-
+  </neon-animated-pages>
   </div>
 
   <div main>
-
-<div class="topbar">
-  <div class="poesprofile" on-tap="openDrawer">
-      <template is="dom-if" if="{{!validated}}">
-        <img class="alert" src="../../images/alert.svg">
-      </template>
-      <template is="dom-if" if="{{validated}}">
-        <img class="alert" src="../../images/valid.svg">
-      </template>
-
-      <h1>{{poezennaam}}</h1>
-      <poes-aai catnumber="{{poezenimage}}"></poes-aai>
-
-
-
-
-<!--     <div class="smalldetail">
-        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small></poes-validatordetail>
-      </div>
-    <div class="smalldetail">
-        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small></poes-validatordetail>
-      </div> -->
-
-  </div>
-<!--   <div class="settingsicon" on-tap="openDrawer"><img src="../../images/cogwheel.svg"></div> -->
-</div>
-
-
-
-
-<div class="ninety">
-
     <neon-animated-pages selected="{{state}}" 
             entry-animation="{{entryAnimation}}"
             exit-animation="{{exitAnimation}}"
@@ -758,8 +748,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </template> -->
 
+<div class="topbar">
+  <div class="poesprofile" on-tap="openDrawer">
+      <template is="dom-if" if="{{!validated}}">
+        <img class="alert" src="../../images/alert.svg">
+      </template>
+      <template is="dom-if" if="{{validated}}">
+        <img class="alert" src="../../images/valid.svg">
+      </template>
 
-    <div class="canvaspink">
+      <h1>{{poezennaam}}</h1>
+      <poes-aai catnumber="{{poezenimage}}"></poes-aai>
+  </div>
+</div>
+    <div class="canvas2pink">
 <!--     <div class="whitespace" on-tap="tohomescreen" >X</div> -->
 
       <template is="dom-if" if="{{!ismember}}">
@@ -772,7 +774,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <template is="dom-if" if="{{contractaddress}}">
         <template is="dom-if" if="{{validated}}">
-          <button on-tap="openbox" class="main"><i18n-msg msgid="openbtn">Open the Kittybox</i18n-msg></button>
+<!--           <button on-tap="openbox" class="main"><i18n-msg msgid="openbtn">Open the Kittybox</i18n-msg></button> -->
+          
+    <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmYetjPDKdtj6dbxg5jB4Cq5qoJ28JWVg2M9Qkp5braocF" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting>
           <template is="dom-if" if="{{hasenoughcredits}}">
             <button on-tap="tooncode" class="valideerbtn"><i18n-msg msgid="validatesomeone">Validate someone</i18n-msg></button>
           </template>
@@ -781,8 +785,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="whitespace"></div>
 
       <div class="whitespace"></div>
+        <template is="dom-if" if="{{!validated}}">
 
+        <div class="validatorz vertical layout">
+        <h2><i18n-msg msgid="getvalidated"></i18n-msg></h2>
 
+          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+        </div>
+        </template>
 
    </template>
 
@@ -792,7 +803,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <neon-animatable data-route="homescreen">
 
-    <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmYetjPDKdtj6dbxg5jB4Cq5qoJ28JWVg2M9Qkp5braocF" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting>
+<!--     <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmYetjPDKdtj6dbxg5jB4Cq5qoJ28JWVg2M9Qkp5braocF" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting> -->
 
   </neon-animatable>
 
@@ -819,7 +830,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 </neon-animated-pages>
 
-</div>
 </div>
 </paper-drawer-panel>
 
@@ -890,8 +900,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function(){
         this.makepincode();
-        this.exitAnimation = 'slide-left-animation';
-        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-down-animation';
+        this.entryAnimation = 'slide-down-animation';
         this.state = "selectpussy";
 
         var hash = window.location.hash;

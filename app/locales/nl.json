@@ -122,6 +122,10 @@
   "seconden": {
     "description": "...",
     "message": "seconden"
+  },
+  "getvalidated": {
+    "description": "...",
+    "message": "Zoek 2 gevalideerde leden om je te valideren."
   }
 
 
