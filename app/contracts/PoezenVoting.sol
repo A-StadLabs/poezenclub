@@ -22,7 +22,7 @@ contract PoezenVoting {
     }
     mapping(address => Voter) public voters;
 
-    function vote(uint vote) {
+    function vote(uint vote) returns (uint returnCode){
 
         // check if voting is active
         if (now < votingStart || now > votingEnd){
