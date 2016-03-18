@@ -1,6 +1,7 @@
 contract PoezenVoting {
     uint public votingStart;
     uint public votingEnd;
+    address owner;
 
  function PoezenVoting(uint _votingStart,
                             uint _votingEnd
@@ -8,6 +9,7 @@ contract PoezenVoting {
     {
         votingStart = _votingStart;
         votingEnd = _votingEnd;
+        owner = msg.sender;
     }
 
     event VoteAdded();
@@ -21,6 +23,13 @@ contract PoezenVoting {
         uint voteTime;   // timestamp of vote
     }
     mapping(address => Voter) public voters;
+
+    function setinterval(uint start,uint end){
+        if (msg.sender == owner){
+            votingStart = start;
+            votingEnd = end;        
+        }
+    }
 
     function vote(uint vote) returns (uint returnCode){
 
