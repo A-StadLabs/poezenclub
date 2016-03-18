@@ -242,6 +242,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
+.winner {
+        border: 4px solid red;
+      }
 
 
       /*.canvaskf {
@@ -353,8 +356,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         max-width: 400px;
         height: 200px;
-
       }
+
 
   }
 
@@ -371,22 +374,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="voteheader">
             <h2 on-tap="renderchart">Huidige resultaten Poezendoos</h2>
             <h1>21 tot 26 maart</h1>
+            <h2>{{vraag}}</h2>
           </div>
 
-          <div class="voteitem">
+          <div class="voteitem winner">
             <div><img class="voteitemimg" src="http://www.snickers.com/Resources/images/share/snickers.jpg" /></div>
-            <div>Snickers</div>
-            <div>300</div>
+            <div>{{optie1}}</div>
+            <div>{{votes1}}</div>
           </div>
           <div class="voteitem">
             <div><img class="voteitemimg" src="http://1000awesomethings.com/wp-content/uploads/2008/09/cookies.jpg" /></div>
-            <div>Koekskes</div>
-            <div>20</div>
+            <div>{{optie2}}</div>
+            <div>{{votes2}}</div>
           </div>
           <div class="voteitem">
             <div><img class="voteitemimg" src="http://saltmarshrunning.com/wp-content/uploads/2014/09/bananasf.jpg" /></div>
-            <div>Fruit</div>
-            <div>10</div>
+            <div>{{optie3}}</div>
+            <div>{{votes3}}</div>
           </div>
 
           <div class="ownvote">
@@ -602,10 +606,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             // de rest gaat via de observer van contractaddress
             var eindtijd = self.vote.enddate + " " + self.vote.endtime;
             var starttijd = self.vote.enddate + " " + self.vote.endtime;
-            //console.log(self.vote);
+            console.log(self.vote);
+            self.vraag = self.vote.vraag;
+            self.optie1 = self.vote.optie1;
+            self.optie2 = self.vote.optie2;
+            self.optie3 = self.vote.optie3;
+            self.img1 = self.vote.img1;
+            self.img2 = self.vote.img2;
+            self.img3 = self.vote.img3;
             //console.log(moment(einddtijd).locale('nl').fromNow());
             self.resttijd = moment(eindtijd).locale('nl').fromNow();
             self.starttijd = moment(starttijd).locale('nl').fromNow();
+
+
+
+
           });
         });
 
@@ -644,6 +659,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('votes for ', element, 'count=', self.voteresults[element]);
         });
         console.log(this.voteresults);
+
+        this.votes1 = this.voteresults[1];
+        this.votes2 = this.voteresults[2];
+        this.votes3 = this.voteresults[3];
 
         this.chartdata = [{
             key: 1,
