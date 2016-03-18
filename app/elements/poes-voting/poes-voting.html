@@ -365,22 +365,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="canvaspink">
           <div class="voteheader">
             <h2 on-tap="renderchart">Huidige resultaten Poezendoos</h2>
-            <h1>21 tot 26 maart</h1>
+            <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1>
+            <h1>Het stemmen eindigt <span>{{resttijd}}</span></h1>
             <h2>{{vraag}}</h2>
           </div>
 
           <div class="voteitem winner">
-            <div><img class="voteitemimg" src="http://www.snickers.com/Resources/images/share/snickers.jpg" /></div>
+            <div><img id="img1" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img1}}" /></div>
             <div>{{optie1}}</div>
             <div>{{votes1}}</div>
           </div>
           <div class="voteitem">
-            <div><img class="voteitemimg" src="http://1000awesomethings.com/wp-content/uploads/2008/09/cookies.jpg" /></div>
+            <div><img id="img2" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img2}}" /></div>
             <div>{{optie2}}</div>
             <div>{{votes2}}</div>
           </div>
           <div class="voteitem">
-            <div><img class="voteitemimg" src="http://saltmarshrunning.com/wp-content/uploads/2014/09/bananasf.jpg" /></div>
+            <div><img id="img3" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img3}}" /></div>
             <div>{{optie3}}</div>
             <div>{{votes3}}</div>
           </div>
@@ -403,7 +404,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </neon-animatable>
 
 
-
         <neon-animatable vote-route="castvote">
           <div class="canvaspink">
 
@@ -419,7 +419,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <img src="../../images/voteitems/TrosBananen2.jpg">
               </div>
               <div class="voteitemtxt">
-                <h1>Bananen</h1>
+                <h1>{{optie1}}</h1>
                 <p>88% koos deze optie</p>
               </div>
             </div>
@@ -428,7 +428,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <img src="../../images/voteitems/mm.jpg">
               </div>
               <div class="voteitemtxt">
-                <h1>M&M's</h1>
+                <h1>{{optie2}}</h1>
                 <p>2% koos deze optie</p>
               </div>
             </div>
@@ -437,7 +437,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <img src="../../images/voteitems/snickers.jpg">
               </div>
               <div class="voteitemtxt">
-                <h1>Snickers</h1>
+                <h1>{{optie3}}</h1>
                 <p>10% koos deze optie</p>
               </div>
             </div>
@@ -554,7 +554,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         voted: {
           type: Boolean,
-          value: true,
+          value: false,
           observer: '_votedchanged'          
         },
         chartisthere: {
@@ -574,6 +574,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _votedchanged: function(){
         console.log('I have voted?',this.voted);
+      },
+
+      getIPFS: function(hash, fn){
+        this.ipfs.cat(hash, function(err, res) {
+          var buf = '';
+          res.on('data', (data) => {
+            buf += data
+          })
+          .on('end', () => {
+            //console.log(buf);
+            fn(buf);
+          });
+        });
       },
 
       _ipfschanged: function(){
@@ -596,23 +609,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             self.vote = JSON.parse(buf);
             self.contractaddress = self.vote.contractaddress;
             // de rest gaat via de observer van contractaddress
-            var eindtijd = self.vote.enddate + " " + self.vote.endtime;
-            var starttijd = self.vote.enddate + " " + self.vote.endtime;
             console.log(self.vote);
             self.vraag = self.vote.vraag;
             self.optie1 = self.vote.optie1;
             self.optie2 = self.vote.optie2;
             self.optie3 = self.vote.optie3;
+
             self.img1 = self.vote.img1;
             self.img2 = self.vote.img2;
             self.img3 = self.vote.img3;
-            //console.log(moment(einddtijd).locale('nl').fromNow());
-            self.resttijd = moment(eindtijd).locale('nl').fromNow();
-            self.starttijd = moment(starttijd).locale('nl').fromNow();
 
-
-
-
+            self.resttijd = moment.unix(self.vote.endunix).locale('nl').fromNow();
+            self.starttijd = moment.unix(self.vote.startunix).locale('nl').fromNow();
           });
         });
 

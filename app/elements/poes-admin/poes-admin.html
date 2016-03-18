@@ -142,6 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+    
       newtoast: function(){
         console.log('testing..');
         this.fire('add-toast', { msg: 'testing!'});
@@ -153,6 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       save: function(){
+        console.log(this.ipfs1);
         var jsonobject = {};
         jsonobject.starttime = this.starttime;
         jsonobject.startdate = this.startdate;
@@ -167,11 +169,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         jsonobject.optie2 = this.optie2;
         jsonobject.kleur2 = this.kleur2;
-        jsonobject.img2 = this.ipfs2[0].hash;
+        jsonobject.img2 = this.ipfs1[1].hash;
 
         jsonobject.optie3 = this.optie3;
         jsonobject.kleur3 = this.kleur3;
-        jsonobject.img3 = this.ipfs3[0].hash;
+        jsonobject.img3 = this.ipfs1[2].hash;
 
         var startunix = this.startdate+"T"+this.starttime+":00+01:00";
         startunix = Date.parse(startunix)/1000;
