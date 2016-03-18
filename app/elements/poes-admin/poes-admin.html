@@ -80,6 +80,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <paper-color-input value-as-hex="{{kleur1}}" no-full-names></paper-color-input>
 
+        <ipfs-upload id="ipfsupload1" host="/ip4/109.123.70.141/tcp/5001" hashes="{{ipfs1}}"></ipfs-upload>
+
       </div>
 
       <div class="antwoord" id="1">
@@ -91,6 +93,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <paper-color-input value-as-hex="{{kleur2}}" no-full-names></paper-color-input>
 
+        <ipfs-upload id="ipfsupload2" host="/ip4/109.123.70.141/tcp/5001" hashes="{{ipfs2}}"></ipfs-upload>
+
       </div>
 
       <div class="antwoord" id="2">
@@ -101,6 +105,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-input-container>
 
         <paper-color-input value-as-hex="{{kleur3}}" no-full-names></paper-color-input>
+
+        <ipfs-upload id="ipfsupload3" host="/ip4/109.123.70.141/tcp/5001" hashes="{{ipfs3}}"></ipfs-upload>
 
       </div>
 
@@ -136,6 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+    
       newtoast: function(){
         console.log('testing..');
         this.fire('add-toast', { msg: 'testing!'});
@@ -147,6 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       save: function(){
+        console.log(this.ipfs1);
         var jsonobject = {};
         jsonobject.starttime = this.starttime;
         jsonobject.startdate = this.startdate;
@@ -157,12 +165,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         jsonobject.optie1 = this.optie1;
         jsonobject.kleur1 = this.kleur1;
+        jsonobject.img1 = this.ipfs1[0].hash;
 
         jsonobject.optie2 = this.optie2;
         jsonobject.kleur2 = this.kleur2;
+        jsonobject.img2 = this.ipfs1[1].hash;
 
         jsonobject.optie3 = this.optie3;
         jsonobject.kleur3 = this.kleur3;
+        jsonobject.img3 = this.ipfs1[2].hash;
 
         var startunix = this.startdate+"T"+this.starttime+":00+01:00";
         startunix = Date.parse(startunix)/1000;

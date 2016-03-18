@@ -46,6 +46,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
+      .validpicsmall {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0px 10px 0px 0px;
+      }
+      .validpicsmall img {
+        width: 100%;
+        height: 100%;
+      }
+
 
       h2 {
         @apply(--theme-font-subhead);
@@ -183,6 +196,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- validepoes  -->
         <neon-animatable currentvalidstate="validepoes">
+
+        <template is="dom-if" if="{{small}}">
+            <div class="validpicsmall"><img src="{{poesimage}}" /></div>
+        </template>
+
+        <template is="dom-if" if="{{normal}}">
           <div class="valide">
             <div class="validpic"><img src="{{poesimage}}" /></div>
             <div class="layout vertical start">
@@ -190,6 +209,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <h2>{{poesnaam}}</h2>
             </div>
           </div>
+        </template>
+
         </neon-animatable>
 
     </neon-animated-pages>
@@ -228,7 +249,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         showOKbutton: {
           type: Boolean,
           value: false
+        },
+        small: {
+          type: Boolean,
+          notify: true
+        },
+
+        normal: {
+          type: Boolean,
+          notify: true
         }
+
       },
 
       ready: function() {

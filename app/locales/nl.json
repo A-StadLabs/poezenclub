@@ -95,6 +95,10 @@
     "description": "...",
     "message": "Poezenclub"
   },
+  "lang": {
+    "description": "...",
+    "message": "Taalkeuze:"
+  },
   "valdescribe": {
     "description": "...",
     "message": "Vraag de pincode van een gevalideerde poes"
@@ -118,6 +122,10 @@
   "seconden": {
     "description": "...",
     "message": "seconden"
+  },
+  "getvalidated": {
+    "description": "...",
+    "message": "Zoek 2 gevalideerde leden om je te valideren."
   }
 
 
