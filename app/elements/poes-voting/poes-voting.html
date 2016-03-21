@@ -27,6 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
 /*        background-color: white;
         height: 100vh;*/
+        width: 100%;
     height: 600px;
 
       }
@@ -35,13 +36,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
-      .square-chart {
+/*      .square-chart {
         width: 200px;
         height: 200px;
-      }
+      }*/
 
       h1 {
         @apply(--theme-font-title);
+        text-align: center;
       }
 
       h2 {
@@ -51,25 +53,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-      .canvaspink {
-        width: 100%;
+      p {
+        margin: 0px;        
+        padding: 0px;
+      }
+
+      .bigp {
+        font-size: 22px;            
+      }
+
+      .voteheader {
+        padding: 50px;
         @apply(--layout-vertical);
-        @apply(--layout-start);
         @apply(--layout-center);
       }
 
-
-      .voteheader {
-        width: 80%;
-        padding: 50px;
-        @apply(--layout-vertical);
-        @apply(--layout-center-center);
-        text-align: center;
-      }
-
-
-      .voteheader h2 {
-        font-size: 20px;      
+      .votebody {
+        background-color: green;
       }
 
 
@@ -84,6 +84,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100px;
         height: 100px;
       }
+
+      .themefont {
+        @apply(--theme-font-general);
+      }
+
+      .winner {
+        border: 4px solid red;
+      }
+
+      .timestamp {
+        margin-top: 10px;
+        box-sizing:border-box;
+        padding: 5px 10px 5px 10px;
+        background-color: rgba(0,0,0,0.05);
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+      .timestamp img {
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+      }
+
+
+
+
+
+
+
+
+
+
+
 
       .ownvote {
         width: 100%;
@@ -226,59 +259,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
 
-/*      .poesvatar {
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
-        background-color: rgba(0,0,0,0.025);
-        overflow: hidden;
-      }*/
-
-
-
-.winner {
-        border: 4px solid red;
-      }
-
-
-      /*.canvaskf {
-        @apply(--layout-start);
-        box-sizing:border-box;
-        padding: 30px;
-        background-color: white;
-      }
-
-      iron-selector {
-        @apply(--layout-vertical);
-      }
-
-    .iron-selected {
-      background: #ccc;
-    }
-
-    .iron-selected::after {
-      content: 'momenteel uw stem';
-    }
-
-    .square-chart {
-      margin-bottom: 20px;
-    }
-
-    paper-toolbar {
-      background-color: #D18E7D;
-      @apply(--layout-horizontal);
-      @apply(--layout-wrap);
-      @apply(--layout-center-center);
-    }
-
-    .keuzeoptie {
-      @apply(--layout-horizontal);
-      margin-bottom: 10px;
-    }
-
-    .bolleke {
-      margin-right: 10px;
-    }*/
 
  @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { 
       .voteitem {
@@ -353,19 +333,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-  }
+}
 
 
     </style>
 
+
+<!--           <div class="canvaspink"> -->
+          <div class="voteheader">
+
+            <!-- <h1 on-tap="renderchart">Huidige resultaten Poezendoos</h1> -->
+            <!-- <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1> -->
+            <p class="themefont bigp">Poezenvoting:</p>
+
+            <h1>{{vraag}}</h1>
+
+            <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>  
+
+          </div>
+
+
+<div class="votebody">
     <neon-animated-pages selected="{{votestate}}" 
-            entry-animation="{{entryAnimation}}"
-            exit-animation="{{exitAnimation}}"
+            entry-animation="slide-from-right-animation"
+            exit-animation="slide-from-right-animation"
             attr-for-selected="vote-route">
 
         <neon-animatable vote-route="votecounts">
-          <div class="canvaspink">
-          <div class="voteheader">
+<!--           <div class="voteheader"> -->
 
 
 
@@ -379,9 +374,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <!-- <h1 on-tap="renderchart">Huidige resultaten Poezendoos</h1> -->
             <!-- <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1> -->
-            <h2>Het stemmen eindigt <span>{{resttijd}}</span></h2>
-            <h2>Voting: <span>{{vraag}}</span></h2>
-          </div>
+
+
+<!--             <p class="themefont bigp">Poezenvoting:</p>
+
+            <h1>{{vraag}}</h1>
+
+            <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>  
+
+          </div> -->
 
           <div class="voteitem winner">
             <div><img id="img1" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img1}}" /></div>
@@ -413,7 +414,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
 
 
-        </div>
+<!--         </div> -->
       </neon-animatable>
 
 
@@ -468,6 +469,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </neon-animatable>
 
 </neon-animated-pages>
+</div>
 <!--     <template is="dom-if" if="{{voteactive}}">
       <div>
         <paper-toolbar>
@@ -642,14 +644,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      topussybase: function(){
-        var app = document.getElementById("stage");
-        console.log(app);
-        app.topussybase();
+      govote: function(tostate){
+        console.log('going to state',tostate);
+        this.votestate = tostate;
       },
 
         toCast: function(){
-        this.go('castvote');
+        this.govote('castvote');
       },
 
       renderchart: function(){
