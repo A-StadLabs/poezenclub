@@ -639,7 +639,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <poes-votebutton img="http://gateway.ipfs.io/ipfs/{{img2}}" selectedkey="{{currentchoice}}" optie="{{optie2}}" votes="{{votes2}}" key="2"></poes-votebutton>
             <poes-votebutton img="http://gateway.ipfs.io/ipfs/{{img3}}" selectedkey="{{currentchoice}}" optie="{{optie3}}" votes="{{votes3}}" key="3"></poes-votebutton>
 
-            <button on-tap="castvote">STEM!</button>
+           
 
             <!-- 
               <div class="votething bluecolor" key="1">
@@ -671,8 +671,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div> -->
         </iron-selector>
 
+
+
         <div class="givevote">
-          <button  class="mainbutton">Mijn stem uitbrengen voor optie <span>{{currentchoice}}</span></button>
+          <button on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor optie <span>{{currentchoice}}</span></button>
         </div>
       </div>
       </neon-animatable>
