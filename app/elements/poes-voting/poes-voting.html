@@ -678,19 +678,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         self.startDate;
 
-        // this.voteresults = {};
-        // this.votekeys = [1, 2, 3];
-        // this.votekeys.forEach(function(element, index, array) {
-        //   self.voteresults[element] = myContractInstance.voteresults(element).toNumber();
-        //   console.log('votes for ', element, 'count=', self.voteresults[element]);
-        // });
-        // console.log("Vote results: ", this.voteresults);
+        this.voteresults = {};
+        this.votekeys = [1, 2, 3];
+        this.votekeys.forEach(function(element, index, array) {
+          self.voteresults[element] = myContractInstance.voteresults(element).toNumber();
+          console.log('votes for ', element, 'count=', self.voteresults[element]);
+        });
+        console.log("Vote results: ", this.voteresults);
 
-        // this.votes1 = this.voteresults[1];
-        // this.votes2 = this.voteresults[2];
-        // this.votes3 = this.voteresults[3];
+        this.votes1 = this.voteresults[1];
+        this.votes2 = this.voteresults[2];
+        this.votes3 = this.voteresults[3];
 
-        this.voteresults = {1: 10, 2: 5, 3: 8};
+        //this.voteresults = {1: 10, 2: 5, 3: 8};
         
         this.votearray = this.object2array(this.voteresults);
         this.votearray = _.sortBy(this.votearray, "data");
