@@ -26,21 +26,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
-/*        background-color: white;
-        height: 100vh;*/
         width: 100%;
-    height: 600px;
-
+        height: 600px;
       }
 
       neon-animated-pages {
         height: 100%;
       }
-
-/*      .square-chart {
-        width: 200px;
-        height: 200px;
-      }*/
 
       h1 {
         @apply(--theme-font-title);
@@ -53,11 +45,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 0px;        
       }
 
-
       p {
         margin: 0px;        
         padding: 0px;
       }
+
+      .canvas {
+        width: 100%;
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+        box-sizing:border-box;
+        padding: 0px 30px 30px 30px;
+        background-color: var(--pink-theme-color);
+      }
+
 
       .bigp {
         font-size: 22px;            
@@ -70,7 +71,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .voteheader h1 {
-        background-color: rgba(0,0,0,0.05);
+        font-size: 54px;
+/*        background-color: rgba(0,0,0,0.05);*/
         box-sizing:border-box;
         padding: 10px 20px 10px 20px;
       }
@@ -96,9 +98,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--theme-font-general);
       }
 
-      .winner {
+     .votething {
+        width: 100%;
+        max-width: 300px;
+        @apply(--layout-horizontal);
+        @apply(--layout-start);
+        @apply(--layout-wrap);        
         box-sizing:border-box;
-        border: 4px solid var(--blue-theme-color);
+        margin: 6px;
+        background-color: rgba(0,0,0,0.05);
+      }
+
+      .votethingtxt {
+        box-sizing:border-box;
+        padding: 20px;
+        @apply(--layout-vertical);
+        @apply(--layout-start); 
+      }
+
+      .votethingimg {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        min-width: 100%;
+        min-height: 100%;
+      }
+
+
+
+      .winner {
+
+      }
+
+
+      .winnerlabel {
+        background-color: var(--oranje-theme-color);
+        width: 100%;
+        color: white;
+        box-sizing:border-box;
+        padding: 5px;
+        margin: 0px;
+        text-align: center;
       }
 
       .timestamp {
@@ -113,59 +156,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-      .voteresults {
+      .votethings {
+        width: 100%;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        @apply(--layout-start);
+        @apply(--layout-wrap);
+      }
+
+      .otherresults {
         width: 100%;
         box-sizing:border-box;
-        padding: 20px 50px 0px 50px;
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-        @apply(--layout-wrap);
-      }
-
-      .votething {
-        width: 100%;
-        max-width: 300px;
-        height: 300px;
+        padding: 20px;
+        max-width: 500px;
         @apply(--layout-horizontal);
         @apply(--layout-center);
-        @apply(--layout-wrap);
-
-        background-color: rgba(0,0,0,0.05);
-        margin: 10px;
       }
-
-      .votethingimg {
-        width: 300px;
-        height: 200px;
-        overflow: hidden;
-      }
-
-      .votethingimg img {
-        min-width: 100%;
-        min-height: 100%;
-      }
-
-
-
-
-
-
-
-
 
 
       .ownvote {
         width: 100%;
         min-height: 100px;
-        @apply(--layout-vertical);
+        @apply(--layout-horizontal);
         @apply(--layout-center-center);
+        @apply(--layout-wrap);
         box-sizing:border-box;
-        padding: 20px 0px 20px 0px;
+        padding: 20px 0px 50px 0px;
       }
 
-      .ownvote button {
+      .mainbutton {
         outline: 0; 
-        margin: 5px 5px 5px 0px;
+        margin: 30px;
         box-sizing:border-box;
         border-radius: 8px;
         cursor: pointer;
@@ -178,8 +199,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: black;
       }
 
-      .ownvote button:hover {
+      .mainbutton:hover {
         background-color: var(--pinktwee-theme-color);
+      }
+
+
+      .mediumbutton {
+        outline: 0; 
+        margin: 20px;
+        box-sizing:border-box;
+        border-radius: 8px;
+        cursor: pointer;
+        @apply(--theme-font-button);
+        background-color: var(--pinktwee-theme-color);
+        border:none;
+    /*        border: 1px solid rgba(0,0,0,0.5); */
+        padding: 16px;
+        font-size: 22px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);  
       }
 
 
@@ -221,6 +259,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
+
+
+      .givevote {
+        width: 100%;
+        min-height: 100px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        @apply(--layout-wrap);
+        box-sizing:border-box;
+        padding: 20px 0px 50px 0px;
+      }
+
+
+       .bolleke {
+        visibility: hidden;
+       }
+
+
       #voteselector .iron-selected {
         background-color: var(--blue-theme-color);
         color: white;
@@ -229,12 +285,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         box-shadow:         3px 3px 3px 3px rgba(0,0,0,0.05);
       }
 
+       #voteselector .iron-selected h1  {
+       color: white;
+      }
+
+       #voteselector .iron-selected .bolleke  {
+        visibility: visible;
+      }
+
       #voteselector .iron-selected img {
         opacity: 1;
         box-sizing: border-box;
       }
 
-      .voteitem {
+/*      .voteitem {
         width: 80%;
         background-color: rgba(0,0,0,0.05);
         border-bottom: 1px solid var(--pinktwee-theme-color);
@@ -284,7 +348,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       font-weight: 300;
       margin: 0px;
       padding: 0px;
-            }
+            }*/
+
+      .small {
+        font-size: 9px;
+      }
 
       iron-selector {
         width: 100%;
@@ -294,6 +362,126 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-center-justified);
 
       }
+
+
+      .whiteback {
+        background-color: rgba(255,255,255,0.35);
+      }
+
+
+      .whiteback img {
+        opacity: 0.9;
+      }
+
+      .blueborder {
+        box-sizing:border-box;
+        border: 2px solid var(--blue-theme-color);
+      }
+      .blueborder img {
+        opacity: 0.9;
+      }
+
+
+      .bluecolor h1 {
+        color: var(--blue-theme-color);
+      }
+
+
+@media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
+
+     .votething {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .votethingimg {
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        min-width: 100%;
+        min-height: 100%;
+      }
+      .votethingtxt {
+        padding: 15px;
+      }
+
+      .votethingtxt h1 {
+        font-size: 24px;
+        line-height: 28px;
+      }
+      .votethingtxt p {
+        font-size: 16px;
+      }
+      .small {
+        font-size: 9px;
+      }
+}
+  /* mobile-large */
+  @media all and (min-width: 361px) and (orientation: portrait) {
+     .votething {
+        width: 100%;
+        max-width: 600px;
+      }
+      .votethingimg {
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        min-width: 100%;
+        min-height: 100%;
+      }
+      .votethingtxt {
+        padding: 15px;
+      }
+      .votethingtxt h1 {
+        font-size: 24px;
+        line-height: 28px;
+      }
+      .votethingtxt p {
+        font-size: 16px;
+      }
+      .small {
+        font-size: 9px;
+      }
+   }
+  /* mobile-small-landscape */
+  @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) {
+     .votething {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .votethingimg {
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        min-width: 100%;
+        min-height: 100%;
+      }
+      .votethingtxt {
+        padding: 15px;
+      }
+
+      .votethingtxt h1 {
+        font-size: 24px;
+        line-height: 28px;
+      }
+      .votethingtxt p {
+        font-size: 16px;
+      }
+      .small {
+        font-size: 9px;
+      }
+   }
+
 
 
  @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { 
@@ -375,159 +563,119 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
 
-<!--           <div class="canvaspink"> -->
-          <div class="voteheader">
-            <!-- <h1 on-tap="renderchart">Huidige resultaten Poezendoos</h1> -->
-            <!-- <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1> -->
-            <p class="themefont bigp">Poezenvoting:</p>
-            <h1>{{vraag}}</h1>
-            <p class="themefont">Huidige stemresultaten:</p>
-          </div>
+    <div class="voteheader">
+      <h1>{{vraag}}</h1>
+    </div>
 
 
-<div class="votebody">
+    <div class="votebody">
     <neon-animated-pages selected="{{votestate}}" 
             entry-animation="slide-from-right-animation"
             exit-animation="slide-from-right-animation"
             attr-for-selected="vote-route">
 
-        <neon-animatable vote-route="votecounts">
-<!--           <div class="voteheader"> -->
+      <neon-animatable vote-route="votecounts">
+        <div class="canvas">
+          <div class="votethings">
 
-
-
-
-
-            <!-- HET WINNENDE DING VOOR KING FLURKEL, HIER KUTTEN -->
-            <div class="voteresults">
               <div class="votething winner">
-                <h2>Winner is optie <span>{{winkey}}</span></h2>
-              <div class="votethingimg"><img id="img1" src="http://gateway.ipfs.io/ipfs/{{winimg}}" /></div>
-              <div>{{winoptie}}</div>
-              <div>{{winvotes}}</div>
+                <div class="votethingimg">
+                  <img id="img1" src="http://gateway.ipfs.io/ipfs/{{winimg}}" />
+                </div>
+                <div class="votethingtxt">
+                  <h1>{{winoptie}}</h1>
+                  <p><span>{{winvotes}}</span> stemmen</p>
+                </div>
+                <div class="winnerlabel">
+                <p class="themefont">Dit is momenteel de winnende optie!</p>
+                </div>
+              </div>
+ 
+              <div class="votething">
+                <div class="votethingimg">
+                  <img id="img1" src="http://gateway.ipfs.io/ipfs/{{img1}}" />
+                </div>
+                <div class="votethingtxt">       
+                  <h1>{{optie1}}</h1>
+                  <p><span>{{votes1}}</span> stemmen</p>
+                </div>  
               </div>
 
               <div class="votething">
-              <div class="votethingimg"><img id="img1" src="http://gateway.ipfs.io/ipfs/{{img1}}" /></div>
-              <div>{{optie1}}</div>
-              <div>{{votes1}}</div>
-              </div>
-
-              <div class="votething">
-              <div class="votethingimg"><img id="img2" src="http://gateway.ipfs.io/ipfs/{{img2}}" /></div>
-              <div>{{optie2}}</div>
-              <div>{{votes2}}</div>
-              </div>
-
-              <div class="votething">
-              <div class="votethingimg"><img id="img3" src="http://gateway.ipfs.io/ipfs/{{img3}}" /></div>
-              <div>{{optie3}}</div>
-              <div>{{votes3}}</div>
+                <div class="votethingimg">
+                  <img id="img3" src="http://gateway.ipfs.io/ipfs/{{img3}}" />
+                </div>
+                <div class="votethingtxt">       
+                  <h1>{{optie3}}</h1>
+                  <p><span>{{votes3}}</span> stemmen</p>
+                </div>  
               </div>
             </div> 
 
-
-
-
-            <!-- <h1 on-tap="renderchart">Huidige resultaten Poezendoos</h1> -->
-            <!-- <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1> -->
-
-
-<!--             <p class="themefont bigp">Poezenvoting:</p>
-
-            <h1>{{vraag}}</h1>
-
-            <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>  
-
-          </div> -->
-
-
-
-<!--           <div class="voteitem winner">
-            <div><img id="img1" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img1}}" /></div>
-            <div>{{optie1}}</div>
-            <div>{{votes1}}</div>
-          </div>
-          <div class="voteitem">
-            <div><img id="img2" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img2}}" /></div>
-            <div>{{optie2}}</div>
-            <div>{{votes2}}</div>
-          </div>
-          <div class="voteitem">
-            <div><img id="img3" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img3}}" /></div>
-            <div>{{optie3}}</div>
-            <div>{{votes3}}</div>
-          </div> -->
-
-
-
-          <div class="ownvote">
-            <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>  
-
-            <template is="dom-if" if="{{!voted}}">
-            <button on-tap="toCast">Breng jouw stem uit</button>
-            </template>
-            <template is="dom-if" if="{{voted}}">
-            <div class="ownvotetxt">
-              <poes-aai catnumber="{{poezenimage}}"></poes-aai>
-              <p>Jij stemde op jouw keuze.</p>
+            <div class="ownvote">
+              <template is="dom-if" if="{{!voted}}">
+              <button class="mainbutton" on-tap="toCast">Stem mee!</button>
+              </template>
+              <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>    
+              <template is="dom-if" if="{{voted}}">
+              <div class="ownvotetxt">
+                <poes-aai catnumber="{{poezenimage}}"></poes-aai>
+                <p>Jij stemde op jouw keuze.</p>
+              </div>
+              <button class="minibtn" on-tap="toCast">Mijn stem veranderen</button>
+              </template>
             </div>
-            <button class="minibtn" on-tap="toCast">Mijn stem veranderen</button>
-            </template>
-          </div>
-
-
-<!--         </div> -->
+        </div> 
       </neon-animatable>
 
-
-        <neon-animatable vote-route="castvote">
-          <!-- <div class="canvaspink"> -->
-
+      <neon-animatable vote-route="castvote">
+        <div class="canvas">
             <iron-selector
             id="voteselector"
             attr-for-selected="key"
             selected="{{currentchoice}}"
             on-iron-select="castVote"
             >
-
-            <div class="voteitem" key="1">
-             <div class="voteitemimg">
-                <img src="../../images/voteitems/TrosBananen2.jpg">
+              <div class="votething bluecolor" key="1">
+                <div class="votethingimg">
+                  <img id="img1" src="http://gateway.ipfs.io/ipfs/{{img1}}" />
+                </div>
+                <div class="votethingtxt">
+                  <h1>{{optie1}}</h1>
+                  <p>(<span>{{votes1}}</span> stemmen)</p>
+                </div>  
               </div>
-              <div class="voteitemtxt">
-                <h1>{{optie1}}</h1>
-                <p>88% koos deze optie</p>
+              <div class="votething bluecolor" key="2">
+                <div class="votethingimg">
+                  <img id="img2" src="http://gateway.ipfs.io/ipfs/{{img2}}" />
+                </div>
+                <div class="votethingtxt">       
+                  <h1>{{optie2}}</h1>
+                  <p>(<span>{{votes2}}</span> stemmen)</p>
+                </div>  
               </div>
-            </div>
-            <div class="voteitem" key="2">
-             <div class="voteitemimg">
-                <img src="../../images/voteitems/mm.jpg">
+              <div class="votething bluecolor" key="3">
+                <div class="votethingimg">
+                  <img id="img3" src="http://gateway.ipfs.io/ipfs/{{img3}}" />
+                </div>
+                <div class="votethingtxt">      
+                  <h1>{{optie3}}</h1>
+                  <p>(<span>{{votes3}}</span> stemmen)</p>
+                </div>  
               </div>
-              <div class="voteitemtxt">
-                <h1>{{optie2}}</h1>
-                <p>2% koos deze optie</p>
-              </div>
-            </div>
-            <div class="voteitem" key="3">
-             <div class="voteitemimg">
-                <img src="../../images/voteitems/snickers.jpg">
-              </div>
-              <div class="voteitemtxt">
-                <h1>{{optie3}}</h1>
-                <p>10% koos deze optie</p>
-              </div>
-            </div>
-
         </iron-selector>
-        <!-- </div> -->
+
+        <div class="givevote">
+          <button  class="mainbutton">Mijn stem uitbrengen voor optie <span>{{currentchoice}}</span></button>
+        </div>
+      </div>
       </neon-animatable>
 
 
 
       <neon-animatable vote-route="vote2">
         <div class="canvaspink">
-          Votestate 2
+
         </div>
       </neon-animatable>
 
@@ -648,6 +796,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       attached: function(){
         this.votestate = "votecounts";
         this.chartisthere = false;
+
       },
 
       _votestatechanged: function(){
@@ -803,6 +952,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       castVote: function() {
         console.log('watwat');
+
         var self = this;
 
         self.vote = this.currentchoice;
