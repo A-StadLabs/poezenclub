@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
 
     <script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
+    <script src="../../bower_components/underscore/underscore-min.js"></script>
 
 
       <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
@@ -367,7 +368,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
             <!-- HET WINNENDE DING VOOR KING FLURKEL, HIER KUTTEN -->
-            <div>King flurkel</div> 
+            <div>
+              <div class="voteitem winner">
+                <h1>Winner is optie <span>{{winkey}}</span></h1>
+              <div><img id="img1" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{winimg}}" /></div>
+              <div>{{winoptie}}</div>
+              <div>{{winvotes}}</div>
+              </div>
+            </div> 
 
 
 
@@ -575,6 +583,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         chartisthere: {
           type: Boolean,
           value: false
+        },
+        winkey: {
+          type: String,
+          observer: '_winkey'
         }
       },
 
@@ -664,19 +676,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var MyContract = self.web3.eth.contract(self.contractjson.abi);
         var myContractInstance = MyContract.at(self.contractaddress);
 
-        self.startDate
+        self.startDate;
 
-        this.voteresults = {};
-        this.votekeys = [1, 2, 3];
-        this.votekeys.forEach(function(element, index, array) {
-          self.voteresults[element] = myContractInstance.voteresults(element).toNumber();
-          console.log('votes for ', element, 'count=', self.voteresults[element]);
-        });
-        console.log(this.voteresults);
+        // this.voteresults = {};
+        // this.votekeys = [1, 2, 3];
+        // this.votekeys.forEach(function(element, index, array) {
+        //   self.voteresults[element] = myContractInstance.voteresults(element).toNumber();
+        //   console.log('votes for ', element, 'count=', self.voteresults[element]);
+        // });
+        // console.log("Vote results: ", this.voteresults);
 
-        this.votes1 = this.voteresults[1];
-        this.votes2 = this.voteresults[2];
-        this.votes3 = this.voteresults[3];
+        // this.votes1 = this.voteresults[1];
+        // this.votes2 = this.voteresults[2];
+        // this.votes3 = this.voteresults[3];
+
+        this.voteresults = {1: 10, 2: 5, 3: 8};
+        this.votearray = this.object2array(this.voteresults);
+        this.votearray = _.sortBy(this.votearray, "data");
+        this.winkey = this.votearray[2].key;
+
+        eval("this.winimg = this.img" + this.winkey);
+        eval("this.winvotes = this.votes" + this.winkey);
+        eval("this.winoptie = this.optie" + this.winkey);
 
         this.chartdata = [{
             key: 1,
@@ -762,7 +783,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         });
-      }
+      },
+
+      _winkey: function(){
+        console.log("NUMMER ", parseInt(this.winkey), " IS WINNAAR");
+        var win = parseInt(this.winkey);
+        //console.log(this.vote.optiewin);
+        //this.winimg = this.voteresults
+      },
+
+      object2array: function(input){
+      var newarray = [];
+      var p = input;
+      for (var key in p) {
+        if (p.hasOwnProperty(key)) {
+          newarray.push({data: p[key], key: key});
+          //console.log(newarray);
+        }
+      };
+      return newarray;
+    }
 
     });
   })();
