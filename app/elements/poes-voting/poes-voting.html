@@ -712,42 +712,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       castVote: function() {
         console.log('watwat');
-        // var self = this;
+        var self = this;
 
-        // self.vote = this.currentchoice;
+        self.vote = this.currentchoice;
 
-        // console.log(self.account,'casts a vote for option',self.vote,'to contract ',self.contractaddress);
+        console.log(self.account,'casts a vote for option',self.vote,'to contract ',self.contractaddress);
 
-        // self.web3.eth.getGasPrice(function(err, result) {
+        self.web3.eth.getGasPrice(function(err, result) {
 
-        //   var MyContract = self.web3.eth.contract(self.contractjson.abi);
-        //   var myContractInstance = MyContract.at(self.contractaddress);
-
-
-        //   var gasPrice = result.toNumber(10);
-
-        //   var options = {
-        //     from: self.account,
-        //     //value: 1 * 1e18,
-        //     gas: 3141590,
-        //     gasPrice: gasPrice,
-        //     nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
-        //   };
-
-        //   var result = myContractInstance.vote.sendTransaction(self.vote, options,
-        //     function(err, result) {
-        //       if (err != null) {
-        //         console.log(err);
-        //         console.log("ERROR: Transaction didn't go through. See console.");
-        //       } else {
-        //         console.log("Transaction Successful!");
-        //         console.log(result);
-        //       }
-        //     }
-        //   );
+          var MyContract = self.web3.eth.contract(self.contractjson.abi);
+          var myContractInstance = MyContract.at(self.contractaddress);
 
 
-        // });
+          var gasPrice = result.toNumber(10);
+
+          var options = {
+            from: self.account,
+            //value: 1 * 1e18,
+            gas: 3141590,
+            gasPrice: gasPrice,
+            nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
+          };
+
+          var result = myContractInstance.vote.sendTransaction(self.vote, options,
+            function(err, result) {
+              if (err != null) {
+                console.log(err);
+                console.log("ERROR: Transaction didn't go through. See console.");
+              } else {
+                console.log("Transaction Successful!");
+                console.log(result);
+              }
+            }
+          );
+
+
+        });
       }
 
     });
