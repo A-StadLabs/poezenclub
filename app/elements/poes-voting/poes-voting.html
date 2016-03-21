@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
 
     <script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
+    <script src="../../bower_components/underscore/underscore-min.js"></script>
 
 
       <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
@@ -27,19 +28,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
 /*        background-color: white;
         height: 100vh;*/
+        width: 100%;
+    height: 600px;
+
       }
 
       neon-animated-pages {
         height: 100%;
       }
 
-      .square-chart {
+/*      .square-chart {
         width: 200px;
         height: 200px;
-      }
+      }*/
 
       h1 {
         @apply(--theme-font-title);
+        text-align: center;
       }
 
       h2 {
@@ -49,25 +54,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-      .canvaspink {
-        @apply(--canvas-pink);
+      p {
+        margin: 0px;        
+        padding: 0px;
+      }
+
+      .bigp {
+        font-size: 22px;            
+      }
+
+      .voteheader {
+        padding: 50px 50px 0px 50px;
         @apply(--layout-vertical);
-        @apply(--layout-start);
         @apply(--layout-center);
       }
 
-
-      .voteheader {
-        width: 80%;
-        padding: 50px;
-        @apply(--layout-vertical);
-        @apply(--layout-center-center);
-        text-align: center;
+      .voteheader h1 {
+        background-color: rgba(0,0,0,0.05);
+        box-sizing:border-box;
+        padding: 10px 20px 10px 20px;
       }
 
-
-      .voteheader h2 {
-        font-size: 20px;      
+      .votebody {
+        background-color: green;
       }
 
 
@@ -82,6 +91,68 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100px;
         height: 100px;
       }
+
+      .themefont {
+        @apply(--theme-font-general);
+      }
+
+      .winner {
+        box-sizing:border-box;
+        border: 4px solid var(--blue-theme-color);
+      }
+
+      .timestamp {
+        margin-bottom: 10px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+      .timestamp img {
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+      }
+
+
+      .voteresults {
+        width: 100%;
+        box-sizing:border-box;
+        padding: 20px 50px 0px 50px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        @apply(--layout-wrap);
+      }
+
+      .votething {
+        width: 100%;
+        max-width: 300px;
+        height: 300px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-wrap);
+
+        background-color: rgba(0,0,0,0.05);
+        margin: 10px;
+      }
+
+      .votethingimg {
+        width: 300px;
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        min-width: 100%;
+        min-height: 100%;
+      }
+
+
+
+
+
+
+
+
+
 
       .ownvote {
         width: 100%;
@@ -100,7 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor: pointer;
         @apply(--theme-font-button);
         text-decoration: none;
-        background-color: var(--pinktwee-theme-color);
+        background-color: var(--pink-theme-color);
         padding: 20px 25px 20px 25px;
         font-size: 28px;
         border: 1px solid black;
@@ -108,7 +179,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .ownvote button:hover {
-        color: white;
+        background-color: var(--pinktwee-theme-color);
       }
 
 
@@ -224,59 +295,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
 
-/*      .poesvatar {
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
-        background-color: rgba(0,0,0,0.025);
-        overflow: hidden;
-      }*/
-
-
-
-.winner {
-        border: 4px solid red;
-      }
-
-
-      /*.canvaskf {
-        @apply(--layout-start);
-        box-sizing:border-box;
-        padding: 30px;
-        background-color: white;
-      }
-
-      iron-selector {
-        @apply(--layout-vertical);
-      }
-
-    .iron-selected {
-      background: #ccc;
-    }
-
-    .iron-selected::after {
-      content: 'momenteel uw stem';
-    }
-
-    .square-chart {
-      margin-bottom: 20px;
-    }
-
-    paper-toolbar {
-      background-color: #D18E7D;
-      @apply(--layout-horizontal);
-      @apply(--layout-wrap);
-      @apply(--layout-center-center);
-    }
-
-    .keuzeoptie {
-      @apply(--layout-horizontal);
-      margin-bottom: 10px;
-    }
-
-    .bolleke {
-      margin-right: 10px;
-    }*/
 
  @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { 
       .voteitem {
@@ -351,26 +369,81 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-  }
+}
 
 
     </style>
 
+
+<!--           <div class="canvaspink"> -->
+          <div class="voteheader">
+            <!-- <h1 on-tap="renderchart">Huidige resultaten Poezendoos</h1> -->
+            <!-- <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1> -->
+            <p class="themefont bigp">Poezenvoting:</p>
+            <h1>{{vraag}}</h1>
+            <p class="themefont">Huidige stemresultaten:</p>
+          </div>
+
+
+<div class="votebody">
     <neon-animated-pages selected="{{votestate}}" 
-            entry-animation="{{entryAnimation}}"
-            exit-animation="{{exitAnimation}}"
+            entry-animation="slide-from-right-animation"
+            exit-animation="slide-from-right-animation"
             attr-for-selected="vote-route">
 
         <neon-animatable vote-route="votecounts">
-          <div class="canvaspink">
-          <div class="voteheader">
-            <h2 on-tap="renderchart">Huidige resultaten Poezendoos</h2>
-            <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1>
-            <h1>Het stemmen eindigt <span>{{resttijd}}</span></h1>
-            <h2>{{vraag}}</h2>
-          </div>
+<!--           <div class="voteheader"> -->
 
-          <div class="voteitem winner">
+
+
+
+
+            <!-- HET WINNENDE DING VOOR KING FLURKEL, HIER KUTTEN -->
+            <div class="voteresults">
+              <div class="votething winner">
+                <h2>Winner is optie <span>{{winkey}}</span></h2>
+              <div class="votethingimg"><img id="img1" src="http://gateway.ipfs.io/ipfs/{{winimg}}" /></div>
+              <div>{{winoptie}}</div>
+              <div>{{winvotes}}</div>
+              </div>
+
+              <div class="votething">
+              <div class="votethingimg"><img id="img1" src="http://gateway.ipfs.io/ipfs/{{img1}}" /></div>
+              <div>{{optie1}}</div>
+              <div>{{votes1}}</div>
+              </div>
+
+              <div class="votething">
+              <div class="votethingimg"><img id="img2" src="http://gateway.ipfs.io/ipfs/{{img2}}" /></div>
+              <div>{{optie2}}</div>
+              <div>{{votes2}}</div>
+              </div>
+
+              <div class="votething">
+              <div class="votethingimg"><img id="img3" src="http://gateway.ipfs.io/ipfs/{{img3}}" /></div>
+              <div>{{optie3}}</div>
+              <div>{{votes3}}</div>
+              </div>
+            </div> 
+
+
+
+
+            <!-- <h1 on-tap="renderchart">Huidige resultaten Poezendoos</h1> -->
+            <!-- <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1> -->
+
+
+<!--             <p class="themefont bigp">Poezenvoting:</p>
+
+            <h1>{{vraag}}</h1>
+
+            <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>  
+
+          </div> -->
+
+
+
+<!--           <div class="voteitem winner">
             <div><img id="img1" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img1}}" /></div>
             <div>{{optie1}}</div>
             <div>{{votes1}}</div>
@@ -384,9 +457,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div><img id="img3" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img3}}" /></div>
             <div>{{optie3}}</div>
             <div>{{votes3}}</div>
-          </div>
+          </div> -->
+
+
 
           <div class="ownvote">
+            <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>  
+
             <template is="dom-if" if="{{!voted}}">
             <button on-tap="toCast">Breng jouw stem uit</button>
             </template>
@@ -400,12 +477,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
 
 
-        </div>
+<!--         </div> -->
       </neon-animatable>
 
 
         <neon-animatable vote-route="castvote">
-          <div class="canvaspink">
+          <!-- <div class="canvaspink"> -->
 
             <iron-selector
             id="voteselector"
@@ -443,7 +520,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
 
         </iron-selector>
-        </div>
+        <!-- </div> -->
       </neon-animatable>
 
 
@@ -455,6 +532,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </neon-animatable>
 
 </neon-animated-pages>
+</div>
 <!--     <template is="dom-if" if="{{voteactive}}">
       <div>
         <paper-toolbar>
@@ -560,6 +638,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         chartisthere: {
           type: Boolean,
           value: false
+        },
+        winkey: {
+          type: String,
+          observer: '_winkey'
         }
       },
 
@@ -629,14 +711,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      topussybase: function(){
-        var app = document.getElementById("stage");
-        console.log(app);
-        app.topussybase();
+      govote: function(tostate){
+        console.log('going to state',tostate);
+        this.votestate = tostate;
       },
 
         toCast: function(){
-        this.go('castvote');
+        this.govote('castvote');
       },
 
       renderchart: function(){
@@ -650,7 +731,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var MyContract = self.web3.eth.contract(self.contractjson.abi);
         var myContractInstance = MyContract.at(self.contractaddress);
 
-        self.startDate
+        self.startDate;
 
         this.voteresults = {};
         this.votekeys = [1, 2, 3];
@@ -658,11 +739,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           self.voteresults[element] = myContractInstance.voteresults(element).toNumber();
           console.log('votes for ', element, 'count=', self.voteresults[element]);
         });
-        console.log(this.voteresults);
+        console.log("Vote results: ", this.voteresults);
 
         this.votes1 = this.voteresults[1];
         this.votes2 = this.voteresults[2];
         this.votes3 = this.voteresults[3];
+
+        //this.voteresults = {1: 10, 2: 5, 3: 8};
+        
+        this.votearray = this.object2array(this.voteresults);
+        this.votearray = _.sortBy(this.votearray, "data");
+        this.winkey = this.votearray[2].key;
+
+        eval("this.winimg = this.img" + this.winkey);
+        eval("this.winvotes = this.votes" + this.winkey);
+        eval("this.winoptie = this.optie" + this.winkey);
 
         this.chartdata = [{
             key: 1,
@@ -712,43 +803,62 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       castVote: function() {
         console.log('watwat');
-        // var self = this;
+        var self = this;
 
-        // self.vote = this.currentchoice;
+        self.vote = this.currentchoice;
 
-        // console.log(self.account,'casts a vote for option',self.vote,'to contract ',self.contractaddress);
+        console.log(self.account,'casts a vote for option',self.vote,'to contract ',self.contractaddress);
 
-        // self.web3.eth.getGasPrice(function(err, result) {
+        self.web3.eth.getGasPrice(function(err, result) {
 
-        //   var MyContract = self.web3.eth.contract(self.contractjson.abi);
-        //   var myContractInstance = MyContract.at(self.contractaddress);
-
-
-        //   var gasPrice = result.toNumber(10);
-
-        //   var options = {
-        //     from: self.account,
-        //     //value: 1 * 1e18,
-        //     gas: 3141590,
-        //     gasPrice: gasPrice,
-        //     nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
-        //   };
-
-        //   var result = myContractInstance.vote.sendTransaction(self.vote, options,
-        //     function(err, result) {
-        //       if (err != null) {
-        //         console.log(err);
-        //         console.log("ERROR: Transaction didn't go through. See console.");
-        //       } else {
-        //         console.log("Transaction Successful!");
-        //         console.log(result);
-        //       }
-        //     }
-        //   );
+          var MyContract = self.web3.eth.contract(self.contractjson.abi);
+          var myContractInstance = MyContract.at(self.contractaddress);
 
 
-        // });
-      }
+          var gasPrice = result.toNumber(10);
+
+          var options = {
+            from: self.account,
+            //value: 1 * 1e18,
+            gas: 3141590,
+            gasPrice: gasPrice,
+            nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
+          };
+
+          var result = myContractInstance.vote.sendTransaction(self.vote, options,
+            function(err, result) {
+              if (err != null) {
+                console.log(err);
+                console.log("ERROR: Transaction didn't go through. See console.");
+              } else {
+                console.log("Transaction Successful!");
+                console.log(result);
+              }
+            }
+          );
+
+
+        });
+      },
+
+      _winkey: function(){
+        console.log("NUMMER ", parseInt(this.winkey), " IS WINNAAR");
+        var win = parseInt(this.winkey);
+        //console.log(this.vote.optiewin);
+        //this.winimg = this.voteresults
+      },
+
+      object2array: function(input){
+      var newarray = [];
+      var p = input;
+      for (var key in p) {
+        if (p.hasOwnProperty(key)) {
+          newarray.push({data: p[key], key: key});
+          //console.log(newarray);
+        }
+      };
+      return newarray;
+    }
 
     });
   })();
