@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="poes-votebutton">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .tekst {
+        color: var(--color);;
+      }
+    </style>
+    <div class="tekst">HALLOOOOO</div>
+    <div></div>
+    <div></div>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'poes-votebutton',
+
+      properties: {
+        img: {
+          type: String,
+          value: ''
+        },
+        optie: {
+          type: String,
+          value: ''
+        },
+        votes: {
+          type: Number
+        },
+        selectedkey: {
+          observer: '_selected'
+        },
+        key: {
+
+        }
+      },
+
+      ready: function(){
+        this.customStyle['--color'] = "blue";
+        this.updateStyles();
+      },
+
+      _selected: function(){
+        console.log("SELECTED: ", this.selectedkey, this.key);
+        if(this.selectedkey == this.key){
+          //console.log("SELECTED: ", this.selectedkey, this.key);
+          this.customStyle['--color'] = "yellow";
+          this.updateStyles();
+        } else {
+          this.customStyle['--color'] = "blue";
+          this.updateStyles();
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

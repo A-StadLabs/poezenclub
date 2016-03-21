@@ -633,9 +633,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-selector
             id="voteselector"
             attr-for-selected="key"
-            selected="{{currentchoice}}"
-            on-iron-select="castVote"
-            >
+            selected="{{currentchoice}}">
+
+            <poes-votebutton img="http://gateway.ipfs.io/ipfs/{{img1}}" selectedkey="{{currentchoice}}" optie="{{optie1}}" votes="{{votes1}}" key="1"></poes-votebutton>
+            <poes-votebutton img="http://gateway.ipfs.io/ipfs/{{img2}}" selectedkey="{{currentchoice}}" optie="{{optie2}}" votes="{{votes2}}" key="2"></poes-votebutton>
+            <poes-votebutton img="http://gateway.ipfs.io/ipfs/{{img3}}" selectedkey="{{currentchoice}}" optie="{{optie3}}" votes="{{votes3}}" key="3"></poes-votebutton>
+
+            <button on-tap="castvote">STEM!</button>
+
+            <!-- 
               <div class="votething bluecolor" key="1">
                 <div class="votethingimg">
                   <img id="img1" src="http://gateway.ipfs.io/ipfs/{{img1}}" />
@@ -662,7 +668,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <h1>{{optie3}}</h1>
                   <p>(<span>{{votes3}}</span> stemmen)</p>
                 </div>  
-              </div>
+              </div> -->
         </iron-selector>
 
         <div class="givevote">
@@ -790,7 +796,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         winkey: {
           type: String,
           observer: '_winkey'
+        },
+        currentchoice: {
+          observer: '_currentchoice'
         }
+      },
+
+      _currentchoice: function(){
+        console.log(this.currentchoice);
       },
 
       attached: function(){
