@@ -64,9 +64,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .voteheader {
-        padding: 50px;
+        padding: 50px 50px 0px 50px;
         @apply(--layout-vertical);
         @apply(--layout-center);
+      }
+
+      .voteheader h1 {
+        background-color: rgba(0,0,0,0.05);
+        box-sizing:border-box;
+        padding: 10px 20px 10px 20px;
       }
 
       .votebody {
@@ -91,14 +97,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .winner {
-        border: 4px solid red;
+        box-sizing:border-box;
+        border: 4px solid var(--blue-theme-color);
       }
 
       .timestamp {
-        margin-top: 10px;
-        box-sizing:border-box;
-        padding: 5px 10px 5px 10px;
-        background-color: rgba(0,0,0,0.05);
+        margin-bottom: 10px;
         @apply(--layout-horizontal);
         @apply(--layout-center);
       }
@@ -109,6 +113,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
+      .voteresults {
+        width: 100%;
+        box-sizing:border-box;
+        padding: 20px 50px 0px 50px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        @apply(--layout-wrap);
+      }
+
+      .votething {
+        width: 100%;
+        max-width: 300px;
+        height: 300px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-wrap);
+
+        background-color: rgba(0,0,0,0.05);
+        margin: 10px;
+      }
+
+      .votethingimg {
+        width: 300px;
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        min-width: 100%;
+        min-height: 100%;
+      }
 
 
 
@@ -136,7 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor: pointer;
         @apply(--theme-font-button);
         text-decoration: none;
-        background-color: var(--pinktwee-theme-color);
+        background-color: var(--pink-theme-color);
         padding: 20px 25px 20px 25px;
         font-size: 28px;
         border: 1px solid black;
@@ -144,7 +179,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .ownvote button:hover {
-        color: white;
+        background-color: var(--pinktwee-theme-color);
       }
 
 
@@ -342,15 +377,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!--           <div class="canvaspink"> -->
           <div class="voteheader">
-
             <!-- <h1 on-tap="renderchart">Huidige resultaten Poezendoos</h1> -->
             <!-- <h1>Je kon al stemmen van <span>{{starttijd}}</span></h1> -->
             <p class="themefont bigp">Poezenvoting:</p>
-
             <h1>{{vraag}}</h1>
-
-            <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>  
-
+            <p class="themefont">Huidige stemresultaten:</p>
           </div>
 
 
@@ -368,13 +399,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
             <!-- HET WINNENDE DING VOOR KING FLURKEL, HIER KUTTEN -->
-            <div>
-              <div class="voteitem winner">
-                <h1>Winner is optie <span>{{winkey}}</span></h1>
-              <div><img id="img1" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{winimg}}" /></div>
+            <div class="voteresults">
+              <div class="votething winner">
+                <h2>Winner is optie <span>{{winkey}}</span></h2>
+              <div class="votethingimg"><img id="img1" src="http://gateway.ipfs.io/ipfs/{{winimg}}" /></div>
               <div>{{winoptie}}</div>
               <div>{{winvotes}}</div>
               </div>
+
+              <div class="votething">
+              <div class="votethingimg"><img src="../../images/voteitems/TrosBananen2.jpg"></div>
+              <div>{{winoptie}}</div>
+              <div>{{winvotes}}</div>
+              </div>
+
+              <div class="votething">
+              <div class="votethingimg"><img id="img1" src="http://gateway.ipfs.io/ipfs/{{winimg}}" /></div>
+              <div>{{winoptie}}</div>
+              <div>{{winvotes}}</div>
+              </div>
+
             </div> 
 
 
@@ -392,7 +436,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           </div> -->
 
-          <div class="voteitem winner">
+
+
+<!--           <div class="voteitem winner">
             <div><img id="img1" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img1}}" /></div>
             <div>{{optie1}}</div>
             <div>{{votes1}}</div>
@@ -406,9 +452,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div><img id="img3" class="voteitemimg" src="http://gateway.ipfs.io/ipfs/{{img3}}" /></div>
             <div>{{optie3}}</div>
             <div>{{votes3}}</div>
-          </div>
+          </div> -->
+
+
 
           <div class="ownvote">
+            <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>  
+
             <template is="dom-if" if="{{!voted}}">
             <button on-tap="toCast">Breng jouw stem uit</button>
             </template>
@@ -427,7 +477,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         <neon-animatable vote-route="castvote">
-          <div class="canvaspink">
+          <!-- <div class="canvaspink"> -->
 
             <iron-selector
             id="voteselector"
@@ -465,7 +515,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
 
         </iron-selector>
-        </div>
+        <!-- </div> -->
       </neon-animatable>
 
 
