@@ -15,9 +15,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+        color: var(--txtcolor);
+        opacity: var(--opacity);
+
       }
-      .tekst {
-        color: var(--color);;
+      .bg {
+        background-color: var(--bgcolor);
       }
 
       h1 {
@@ -58,24 +61,120 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         height: 200px;
         overflow: hidden;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center); 
       }
 
       .votethingimg img {
-        min-width: 100%;
-        min-height: 100%;
+        width: 100px;
+        height: 100px;
       }
 
 
+@media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
+
+     .votething {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .votethingimg {
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        width: 50px;
+        height: 50px;
+      }
+      .votethingtxt {
+        padding: 15px;
+      }
+
+      .votethingtxt h1 {
+        font-size: 24px;
+        line-height: 28px;
+      }
+      .votethingtxt p {
+        font-size: 16px;
+      }
+      .small {
+        font-size: 9px;
+      }
+}
+  /* mobile-large */
+  @media all and (min-width: 361px) and (orientation: portrait) {
+     .votething {
+        width: 100%;
+        max-width: 600px;
+      }
+      .votethingimg {
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        width: 50px;
+        height: 50px;
+      }
+      .votethingtxt {
+        padding: 15px;
+      }
+      .votethingtxt h1 {
+        font-size: 24px;
+        line-height: 28px;
+      }
+      .votethingtxt p {
+        font-size: 16px;
+      }
+      .small {
+        font-size: 9px;
+      }
+   }
+  /* mobile-small-landscape */
+  @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) {
+     .votething {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .votethingimg {
+        width: 90px;
+        height: 90px;
+        overflow: hidden;
+      }
+
+      .votethingimg img {
+        width: 50px;
+        height: 50px;
+      }
+      .votethingtxt {
+        padding: 15px;
+      }
+
+      .votethingtxt h1 {
+        font-size: 24px;
+        line-height: 28px;
+      }
+      .votethingtxt p {
+        font-size: 16px;
+      }
+      .small {
+        font-size: 9px;
+      }
+   }
 
 
     </style>
 
-              <div class="votething">
+              <div class="votething bg">
                 <div class="votethingimg">
-                  <img src="{{img}}" />
+                  <img src="{{yesno}}">
                 </div>
                 <div class="votethingtxt">       
-                  <h1>{{optie}}</h1>
+                  <h1 class="tekst">{{optie}}</h1>
                   <p><span>{{votes}}</span> stemmen</p>
                 </div>  
               </div>
@@ -110,18 +209,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function(){
-        this.customStyle['--color'] = "blue";
+        this.yesno = "../../images/choice-no.svg";
+        this.customStyle['--bgcolor'] = "white";
+        this.customStyle['--txtcolor'] = "black";
+        this.customStyle['--opacity'] = "1";
         this.updateStyles();
       },
 
       _selected: function(){
         console.log("SELECTED: ", this.selectedkey, this.key);
         if(this.selectedkey == this.key){
+          this.yesno = "../../images/choice-yes.svg";
           //console.log("SELECTED: ", this.selectedkey, this.key);
-          this.customStyle['--color'] = "yellow";
+          this.customStyle['--bgcolor'] = "var(--blue-theme-color)";
+          this.customStyle['--txtcolor'] = "white";
+          this.customStyle['--opacity'] = "1";
           this.updateStyles();
         } else {
-          this.customStyle['--color'] = "blue";
+        this.yesno = "../../images/choice-no.svg";
+          this.customStyle['--bgcolor'] = "white";
+          this.customStyle['--txtcolor'] = "black";
+          this.customStyle['--opacity'] = "0.5";
           this.updateStyles();
         }
       }

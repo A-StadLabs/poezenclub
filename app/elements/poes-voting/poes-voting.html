@@ -109,6 +109,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: rgba(0,0,0,0.05);
       }
 
+
+      poes-votebutton {
+        width: 100%;
+        max-width: 300px;
+        @apply(--layout-horizontal);
+        @apply(--layout-start);
+        @apply(--layout-wrap);        
+        box-sizing:border-box;
+      }
+
+
       .votethingtxt {
         box-sizing:border-box;
         padding: 20px;
@@ -129,11 +140,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-      .winner {
+
+/*      .winner {
+        color:var(--oranje-theme-color);
 
       }
-
-
+*/
       .winnerlabel {
         background-color: var(--oranje-theme-color);
         width: 100%;
@@ -272,7 +284,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-       .bolleke {
+
+
+/*       .bolleke {
         visibility: hidden;
        }
 
@@ -296,7 +310,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #voteselector .iron-selected img {
         opacity: 1;
         box-sizing: border-box;
-      }
+      }*/
 
 /*      .voteitem {
         width: 80%;
@@ -485,7 +499,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
  @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { 
-      .voteitem {
+/*      .voteitem {
         width: 30%;
         max-width: 300px;
       }
@@ -500,12 +514,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 400px;
         height: 200px;
 
-      }
+      }*/
 
  }
   /* desktop-medium */
   @media all and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4/3) { 
-      .voteitem {
+/*      .voteitem {
         width: 30%;
         max-width: 300px;
       }
@@ -518,12 +532,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         max-width: 400px;
         height: 200px;
-      }
+      }*/
   }
 
   /* desktop-large */
   @media all and (min-width: 1281px) and (max-width: 1600px) { 
-       .voteitem {
+/*       .voteitem {
         width: 30%;
         max-width: 400px;
       }
@@ -537,11 +551,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         max-width: 400px;
         height: 200px;
-      }
+      }*/
   }
   /* desktop-xlarge */
   @media all and (min-width: 1601px) and (max-width: 1920px) { 
-        .voteitem {
+/*        .voteitem {
         width: 30%;
         max-width: 400px;
       }
@@ -554,7 +568,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         max-width: 400px;
         height: 200px;
-      }
+      }*/
 
 
 }
@@ -578,11 +592,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="canvas">
           <div class="votethings">
 
-              <div class="votething winner">
+              <div class="votething">
                 <div class="votethingimg">
                   <img id="img1" src="http://gateway.ipfs.io/ipfs/{{winimg}}" />
                 </div>
-                <div class="votethingtxt">
+                <div class="votethingtxt winner">
                   <h1>{{winoptie}}</h1>
                   <p><span>{{winvotes}}</span> stemmen</p>
                 </div>
