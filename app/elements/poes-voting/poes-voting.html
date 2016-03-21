@@ -691,6 +691,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // this.votes3 = this.voteresults[3];
 
         this.voteresults = {1: 10, 2: 5, 3: 8};
+        
         this.votearray = this.object2array(this.voteresults);
         this.votearray = _.sortBy(this.votearray, "data");
         this.winkey = this.votearray[2].key;
