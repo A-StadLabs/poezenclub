@@ -76,7 +76,7 @@ switch (command) {
 
 
 var count = 0;
-var froms = [];
+var froms = {};
 
 var showfroms = debounce(_showfroms, 2000);
 
@@ -102,7 +102,7 @@ var filter = web3.eth.filter({
 		console.log('--------');
 		console.log('transaction hash result', res);
 		console.log('--------');
-		froms.push(res.from);
+		froms[res.from] = "1";
 		showfroms();
 	});
 
