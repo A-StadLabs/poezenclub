@@ -1,6 +1,7 @@
 var lightwallet = require('eth-lightwallet');
 var Web3 = require('web3');
 var fs = require('fs');
+var debounce = require('debounce');
 //var keystoreFile = "../../poezenclub/scripts/adamswallet.json";
 
 var myArgs = require('optimist').argv;
@@ -19,11 +20,11 @@ var web3_monitor;
 
 web3 = new Web3();
 
-	var provider = new HookedWeb3Provider({
-		host: host,
-		transaction_signer: global_keystore
-	});
-	web3.setProvider(provider);
+var provider = new HookedWeb3Provider({
+	host: host,
+	transaction_signer: global_keystore
+});
+web3.setProvider(provider);
 
 /*
 	web3_monitor = new Web3();
@@ -43,7 +44,7 @@ var myContractInstance = votingcontract ? MyContract.at(votingcontract) : null;
 if (votingcontract) {
 	console.log('follow this contract at http://testnet.etherscan.io/address/' + votingcontract);
 }
-		
+
 /*
 var filter = web3.eth.filter('pending');
 
@@ -72,17 +73,41 @@ switch (command) {
 	default: 
 
 */
-var count=0;
+
+
+var count = 0;
+var froms = [];
+
+var showfroms = debounce(_showfroms, 2000);
+
+function _showfroms() {
+	console.log('Froms:', froms);
+}
+
+
 var filter = web3.eth.filter({
-	fromBlock: 	606422,
+	fromBlock: 606422,
 	toBlock: "latest",
 	address: votingcontract
-	//topics: ["0x" + web3.sha3("Resolved(uint256,address,address,uint8)")]
+		//topics: ["0x" + web3.sha3("Resolved(uint256,address,address,uint8)")]
 }, function(error, result) {
-	if (!error) console.log(result);
+	if (!error) {
+		console.log('++++++++');
+		console.log('found activity on contract ', result);
+		console.log('++++++++');
+	}
 	count++;
-	console.log('count=',count);
+	console.log('count=', count);
+	web3.eth.getTransaction(result.transactionHash, function(err, res) {
+		console.log('--------');
+		console.log('transaction hash result', res);
+		console.log('--------');
+		froms.push(res.from);
+		showfroms();
+	});
+
 });
+
 
 /*
 setTimeout(function() {
