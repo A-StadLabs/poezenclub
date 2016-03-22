@@ -65,16 +65,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .voteheader {
-        padding: 50px 50px 0px 50px;
+        padding: 50px 50px 50px 50px;
         @apply(--layout-vertical);
         @apply(--layout-center);
       }
 
-      .voteheader h1 {
+      .voteheadertxt {
+        width: 50%;
+        min-width: 280px;
+        margin: 0px 0px 20px 0px;
+        text-align: center;
+      }
+
+      .voteheadertxt h1 {
         font-size: 54px;
 /*        background-color: rgba(0,0,0,0.05);*/
         box-sizing:border-box;
         padding: 10px 20px 10px 20px;
+      }
+
+      .voteheadertxt p {
+        @apply(--theme-font-general);
+        font-size: 20px;
       }
 
       .votebody {
@@ -109,6 +121,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: rgba(0,0,0,0.05);
       }
 
+
+      poes-votebutton {
+        width: 100%;
+        max-width: 300px;
+        @apply(--layout-horizontal);
+        @apply(--layout-start);
+        @apply(--layout-wrap);        
+        box-sizing:border-box;
+      }
+
+
       .votethingtxt {
         box-sizing:border-box;
         padding: 20px;
@@ -129,11 +152,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-      .winner {
+
+/*      .winner {
+        color:var(--oranje-theme-color);
 
       }
-
-
+*/
       .winnerlabel {
         background-color: var(--oranje-theme-color);
         width: 100%;
@@ -177,9 +201,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .ownvote {
         width: 100%;
         min-height: 100px;
-        @apply(--layout-horizontal);
+        @apply(--layout-vertical);
         @apply(--layout-center-center);
-        @apply(--layout-wrap);
         box-sizing:border-box;
         padding: 20px 0px 50px 0px;
       }
@@ -272,7 +295,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-       .bolleke {
+
+
+/*       .bolleke {
         visibility: hidden;
        }
 
@@ -296,7 +321,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #voteselector .iron-selected img {
         opacity: 1;
         box-sizing: border-box;
-      }
+      }*/
 
 /*      .voteitem {
         width: 80%;
@@ -418,6 +443,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .small {
         font-size: 9px;
       }
+
+      .voteheadertxt {
+        text-align: center;
+      }
+
+
 }
   /* mobile-large */
   @media all and (min-width: 361px) and (orientation: portrait) {
@@ -448,6 +479,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .small {
         font-size: 9px;
       }
+      .voteheadertxt {
+        text-align: center;
+      }
+
    }
   /* mobile-small-landscape */
   @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) {
@@ -480,12 +515,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .small {
         font-size: 9px;
       }
+ 
+      .voteheadertxt {
+        text-align: center;
+      }
+
+
    }
 
 
 
  @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { 
-      .voteitem {
+/*      .voteitem {
         width: 30%;
         max-width: 300px;
       }
@@ -500,12 +541,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 400px;
         height: 200px;
 
-      }
+      }*/
 
  }
   /* desktop-medium */
   @media all and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4/3) { 
-      .voteitem {
+/*      .voteitem {
         width: 30%;
         max-width: 300px;
       }
@@ -518,12 +559,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         max-width: 400px;
         height: 200px;
-      }
+      }*/
   }
 
   /* desktop-large */
   @media all and (min-width: 1281px) and (max-width: 1600px) { 
-       .voteitem {
+/*       .voteitem {
         width: 30%;
         max-width: 400px;
       }
@@ -537,11 +578,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         max-width: 400px;
         height: 200px;
-      }
+      }*/
   }
   /* desktop-xlarge */
   @media all and (min-width: 1601px) and (max-width: 1920px) { 
-        .voteitem {
+/*        .voteitem {
         width: 30%;
         max-width: 400px;
       }
@@ -554,7 +595,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         max-width: 400px;
         height: 200px;
-      }
+      }*/
 
 
 }
@@ -578,11 +619,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="canvas">
           <div class="votethings">
 
-              <div class="votething winner">
+              <div class="votething">
                 <div class="votethingimg">
                   <img id="img1" src="http://gateway.ipfs.io/ipfs/{{winimg}}" />
                 </div>
-                <div class="votethingtxt">
+                <div class="votethingtxt winner">
                   <h1>{{winoptie}}</h1>
                   <p><span>{{winvotes}}</span> stemmen</p>
                 </div>
@@ -612,11 +653,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </div> 
 
-            <div class="ownvote">
+            <div class="ownvote">              
               <template is="dom-if" if="{{!voted}}">
-              <button class="mainbutton" on-tap="toCast">Stem mee!</button>
+              <button class="mainbutton" on-tap="toCast">Breng je stem uit!</button>
               </template>
-              <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>    
               <template is="dom-if" if="{{voted}}">
               <div class="ownvotetxt">
                 <poes-aai catnumber="{{poezenimage}}"></poes-aai>
@@ -624,6 +664,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
               <button class="minibtn" on-tap="toCast">Mijn stem veranderen</button>
               </template>
+      <div class="voteheadertxt">
+      <p>Het stemmen eindigt <span>{{resttijd}}</span>. De volgende dag wordt de Poezendoos gevuld met de meest gestemde optie. Enkel degenen die voor deze optie stemden, krijgen toegang tot de Poezendoos. Elke week is er een nieuwe stemronde.</p>
+      <!-- <div class="timestamp"><img src="../../images/time.svg"></div>  -->    
+      </div>
+
             </div>
         </div> 
       </neon-animatable>
