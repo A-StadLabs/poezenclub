@@ -1033,10 +1033,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       readVoteResults: function() {
         var self = this;
+
         var MyContract = self.web3.eth.contract(self.contractjson.abi);
         var myContractInstance = MyContract.at(self.contractaddress);
 
         self.startDate;
+
+        var myaddress = self.fixaddress(self.account);
+
+        self.myvote = myContractInstance.voters(myaddress)[0].toNumber();
 
         this.voteresults = {};
         this.votekeys = [1, 2, 3];
