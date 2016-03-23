@@ -543,6 +543,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie1}}</h1>
+                  <p>{{vote}}</p>
                   <p><span>{{votes1}}</span> stemmen</p>
                 </div>  
                 <template is="dom-if" if="{{optie1winner}}">
@@ -558,6 +559,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie2}}</h1>
+                  <p>{{vote}}</p>
                   <p><span>{{votes2}}</span> stemmen</p>
                 </div>  
                 <template is="dom-if" if="{{optie2winner}}">
@@ -572,6 +574,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie3}}</h1>
+                  <p>{{vote}}</p>
                   <p><span>{{votes3}}</span> stemmen</p>
                 </div>  
                 <template is="dom-if" if="{{optie3winner}}">
@@ -1011,9 +1014,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
           var myContractInstance = MyContract.at(self.contractaddress);
 
+          self.myvote = myContractInstance.voteresults(self.address).toNumber();
+
+          if(self.myvote){
+            alert(self.myvote);
+          };
+
           myContractInstance.VoteAdded(function(err, res) {
 
             console.log('received VoteAdded event');
+
+            self.readVoteResults();
 
             // we could also check if the transaction hash matches..
             if (self.transactionHash == res.transactionHash){
