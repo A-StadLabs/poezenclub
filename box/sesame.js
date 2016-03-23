@@ -3,71 +3,34 @@ var SerialPort = require("serialport").SerialPort
 var serialPort = new SerialPort("/dev/ttyAMA0", {
   baudrate: 19200
 }, false); // this is the openImmediately flag [default is true]
-var host = "http://109.123.70.141:8545";
+var host = process.env.ethnodehost || "http://109.123.70.141:8545";
 var mqtt = require('mqtt');
 var client = mqtt.connect('ws://opantwerpen.be:15674');
 var code;
+var debounce = require('debounce');
 
 var Web3 = require('web3');
+var LocalsMembership = require('../app/contracts/LocalsMembership.json');
+var LocalsMembership_address = "0x83883514f7fcb0cf627829d067f0e8488201f6b9";
+var LocalsMembership_startBlock = 369378;
 var LocalsValidation = require('../app/contracts/LocalsValidation.json');
+
 var PoezenVoting = require('../app/contracts/PoezenVoting.json');
 
-/* {
-  "bytecode": "60606040526000805560018054600160a060020a0319163317905560f6806100276000396000f3606060405260e060020a600035046333ac20098114602e57806384394e6f146037578063fa52c7d8146060575b005b60776000545b90565b6077600160a060020a033316600090815260026020526040812054600114156089575060016034565b607760043560026020526000908152604090205481565b60408051918252519081900360200190f35b6040812060019081905581548101825554600160a060020a03168134606082818181858883f1505060408051600160a060020a033316815290517fc950a438e6ad1cf066a2ec63cd7e6753ed8e6fe1d55949e889204d0f0230a23f94509081900360200192509050a1603456",
-  "abi": [{
-    "constant": true,
-    "inputs": [],
-    "name": "countValidations",
-    "outputs": [{
-      "name": "count",
-      "type": "uint256"
-    }],
-    "type": "function"
-  }, {
-    "constant": false,
-    "inputs": [],
-    "name": "addValidation",
-    "outputs": [{
-      "name": "returnCode",
-      "type": "uint256"
-    }],
-    "type": "function"
-  }, {
-    "constant": true,
-    "inputs": [{
-      "name": "",
-      "type": "address"
-    }],
-    "name": "validators",
-    "outputs": [{
-      "name": "",
-      "type": "uint256"
-    }],
-    "type": "function"
-  }, {
-    "inputs": [],
-    "type": "constructor"
-  }, {
-    "anonymous": false,
-    "inputs": [{
-      "indexed": false,
-      "name": "validator",
-      "type": "address"
-    }],
-    "name": "ValidationAdded",
-    "type": "event"
-  }]
-};
-*/
+console.log('Welkom bij de Poezendoos');
+console.log('host     = ', host);
+console.log('simulate = ', process.env.simulate);
 
 web3 = new Web3();
 
-if (process.env.simulate){
+/*
+if (process.env.simulate) {
   console.log('SIMULATE');
 }
-
+*/
 
 var writingtothelcd = false;
+
 function schrijflcd(text, cb) {
 
   if (process.env.simulate) {
@@ -148,83 +111,194 @@ if (process.env.simulate) {
 }
 
 
-function afterSerialPortOpen(){
+function afterSerialPortOpen() {
 
-    console.log('open');
-    schrijflcd("Welkom bij de poezendoos");
+  console.log('open');
+  schrijflcd("Welkom bij de poezendoos");
 
-    web3.setProvider(new web3.providers.HttpProvider(host));
+  web3.setProvider(new web3.providers.HttpProvider(host));
 
-    client.on('connect', function() {
-      client.subscribe('poezendoos');
-      client.publish('poezendoos', 'Poezendoos online!');
-    });
+  client.on('connect', function() {
+    client.subscribe('poezendoos');
+    client.publish('poezendoos', 'Poezendoos online!');
+  });
 
-    generateCode();
-    var channels = ['poezendoos/service','poezendoos/' + code];
-    console.log("Poezendoos channels:",channels);
-    client.subscribe(channels);
-    client.publish('poezendoos/' + code, 'command|listening');
-    schrijflcd("   poezendoos" + String.fromCharCode(13) + "     " + code);
+  generateCode();
+  var channels = ['poezendoos/service', 'poezendoos/' + code];
+  console.log("Poezendoos channels:", channels);
+  client.subscribe(channels);
+  client.publish('poezendoos/' + code, 'command|listening');
+  schrijflcd("   poezendoos" + String.fromCharCode(13) + "     " + code);
 
-    client.on('message', function(topic, message) {
-      // message is Buffer
-      //console.log(message.toString());
-      var msg = message.toString();
+  client.on('message', function(topic, message) {
+    // message is Buffer
+    //console.log(message.toString());
+    var msg = message.toString();
 
-      var commandarray = msg.split("|");
+    var commandarray = msg.split("|");
 
-      console.log(commandarray);
-      // Check command and do something
-      if (commandarray[0] === 'checkContract') {
-        var contractaddress = commandarray[1];
-        var pincode = commandarray[2];
+    console.log(commandarray);
+    // Check command and do something
+    if (commandarray[0] === 'checkContract') {
+      var contractaddress = commandarray[1];
+      var pincode = commandarray[2];
 
-        schrijflcd(" de poezendoos " + String.fromCharCode(13) + " kijkt het na...");
+      schrijflcd(" de poezendoos " + String.fromCharCode(13) + " kijkt het na...");
 
-        checkContract(contractaddress, function(result) {
-          console.log("ik heb een result: ", result);
-          if (result > 1) {
-            schrijflcd('u heeft ' + result + ' validaties');
-            openDoor();
-            client.publish(pincode, 'doosisopen');
-          } else {
-            schrijflcd('u heeft ' + result + ' validaties. Dat is niet genoeg');
-          }
-        });
-        // check if the contract is valid.
-        // checkContract(contractaddress, useraccount, function(result){
-        //  if(result){
-        //    openDoor();
-        //  }
-        // });
-      };
+      checkContract(contractaddress, function(result) {
+        console.log("ik heb een result: ", result);
+        if (result > 1) {
+          schrijflcd('u heeft ' + result + ' validaties');
+          openDoor();
+          client.publish(pincode, 'doosisopen');
+        } else {
+          schrijflcd('u heeft ' + result + ' validaties. Dat is niet genoeg');
+        }
+      });
+      // check if the contract is valid.
+      // checkContract(contractaddress, useraccount, function(result){
+      //  if(result){
+      //    openDoor();
+      //  }
+      // });
+    };
 
-      if (commandarray[0] === 'checkVotingContract') {
-        // het voting contract
-        var contractaddress = commandarray[1];
-        // het account van de voter
-        var voteraddress = commandarray[2];
-        //        var pincode = commandarray[2];
+    if (commandarray[0] === 'checkVotingContract') {
+      // het voting contract
+      var contractaddress = commandarray[1];
+      // het account van de voter
+      var voteraddress = commandarray[2];
+      //        var pincode = commandarray[2];
 
-        checkVotingWinner(contractaddress, voteraddress, function(iamawinner) {
-          if (iamawinner){
-            console.log('gij zijt gewonnen';
-          }else{
-            console.log('looooooooooser!';
-          }
-        });
-      }
+      checkVotingWinner(contractaddress, voteraddress, function(iamawinner) {
+        if (iamawinner) {
+          console.log('gij zijt gewonnen');
+        } else {
+          console.log('looooooooooser!');
+        }
+      });
+    }
 
-      if (commandarray[0] === 'sluitDoos') {
-        console.log('doos gaat dicht.');
-        client.unsubscribe('poezendoos/' + code);
-        //closeDoor();
-      }
-      //client.end();
+    if (commandarray[0] === 'sluitDoos') {
+      console.log('doos gaat dicht.');
+      client.unsubscribe('poezendoos/' + code);
+      //closeDoor();
+    }
+    //client.end();
 
-    });
-  
+  });
+
+  var froms = [];
+  var datas = [];
+  var showfroms = debounce(_showfroms, 2000);
+
+  function _showfroms() {
+    console.log('Froms:', froms);
+    console.log('Datas:', datas);
+  }
+
+  var topic = '0x' + web3.sha3('MemberAdded(address,address)');
+
+  console.log('Start listening to topic=', topic);
+
+  // var filter = web3.eth.filter({
+  //   fromBlock: LocalsMembership_startBlock,
+  //   toBlock: "latest",
+  //   address: LocalsMembership_address,
+  //   topics: [topic]
+  // }, function(error, result) {
+  //   if (!error) {
+  //     console.log('++++++++');
+  //     console.log('found activity on contract ', result);
+  //     console.log('++++++++');
+
+  //     console.log('from=', result.data.substring(2, 64));
+  //     console.log('to=', result.data.substring(64 + 2, 64));
+
+  //     var address = getAddressFromDataLine(result.data);
+  //     if (address){
+  //       console.log('add address');
+  //       datas.push(address);
+  //       showfroms();
+  //     }
+  //   }
+
+  //   /*
+  //       if (result && result.transactionHash) {
+  //         web3.eth.getTransaction(result.transactionHash, function(err, res) {
+  //           console.log('--------');
+  //           console.log('transaction hash result', res);
+  //           console.log('--------');
+  //           froms[res.from] = "1";
+
+  //           showfroms();
+  //         });
+  //       }
+  //       */
+  // });
+
+}
+
+
+var adrs = ['0x51579d1ad9cea78a5020bec7f42e132b12b6205b',
+  '0x537b5a48bd491c9813637908a49d3857d14c11dc',
+  '0xcc5c5b9315c3dd882b3e3eabefd8e99b9fb7a003',
+  '0xab2525dcc956d489e7b7f21f8bed1c2326283dcf',
+  '0x2338a5c57150f1071c386637fa379dee3d3969c7',
+  '0x518e272fc1f1cefa8d572a5e80f1bdb2cc3b7e7f',
+  '0xb69ae11fa5e355d66f97d9fba29f5cf5805575e9',
+  '0x47f831d925ec535532993b0c17af1fbcbed075df',
+  '0xb8f19bd897a48b09148c2a738e5a0eeea77b4565',
+  '0x92c886d58c4af09b364232f46ecfd932f57e152f'
+];
+
+var topic1 = '0x' + web3.sha3('addValidation()');
+console.log('topic addvalidation',topic1);
+
+var filter2 = web3.eth.filter({
+  fromBlock: LocalsMembership_startBlock,
+  toBlock: "latest",
+  from: '0x47f831d925ec535532993b0c17af1fbcbed075df',
+}, function(error, result) {
+  if (!error) {
+    //console.log('++++++++');
+    //console.log('found activity for address ', result);
+    //console.log('++++++++');
+
+    if (result && result.transactionHash) {
+      web3.eth.getTransaction(result.transactionHash, function(err, res) {
+        console.log('topic addvalidation',topic1);
+
+        console.log('--------');
+        console.log('found activity: ', result);
+        console.log('transaction:', res);
+        console.log('--------');
+      });
+    }
+
+  }
+});
+
+
+/*
+var a = getAddressFromDataLine('0x00000000000000000000000040ccd68be5853dcc188fd47cdb9816ca8cb84bd000000000000000000000000047f831d925ec535532993b0c17af1fbcbed075df');
+console.log(a, web3.isAddress(a));
+*/
+
+//console.log('Address = ',);
+
+function getAddressFromDataLine(l) {
+  console.log(l.length);
+  if (l.length != 130) {
+    return;
+  }
+  var l2 = '0x' + l.substring(130 - 40);
+  if (!web3.isAddress(l2)) {
+    console.log('No address found in ', l);
+    return
+  } else {
+    return l2;
+  }
 }
 
 // HELPER functions //
@@ -234,10 +308,10 @@ function openDoor() {
     schrijflcd('de doos is open');
   });
 
-  setTimeout(function(){
+  setTimeout(function() {
     console.log('15s timeout passed... Close the lid');
     closeDoor();
-  },15*1000);
+  }, 15 * 1000);
 
 };
 
@@ -246,7 +320,7 @@ function closeDoor() {
   client.unsubscribe('poezendoos/' + code);
   beweeglid('close', function() {
     schrijflcd('de doos is terug toe');
-    console.log('closed');    
+    console.log('closed');
     generateCode();
     client.subscribe('poezendoos/' + code);
     client.publish('poezendoos/' + code, 'command|listening');
@@ -262,7 +336,7 @@ function generateCode() {
 
 function checkContract(contractaddress, fn) {
   console.log("Checking contract: ", contractaddress);
-//  console.log("Checking balance: ", web3.eth.getBalance(contractaddress).toNumber(10));
+  //  console.log("Checking balance: ", web3.eth.getBalance(contractaddress).toNumber(10));
   var MyContract = web3.eth.contract(LocalsValidation.abi);
   console.log('get contract from blockchain');
   var myContractInstance = MyContract.at(contractaddress);
@@ -272,13 +346,13 @@ function checkContract(contractaddress, fn) {
   fn(result);
 };
 
-function checkVotingWinner(contractaddress,voteraddress, fn){
-// 1. check of contract al afgelopen is
-// 2. haal opties op
-// 3. bepaal winnende stem
-// 4. haal jouw stem op
-// 5. check of jouw stem de winnende is
-// 6. fn(err,true/false)
+function checkVotingWinner(contractaddress, voteraddress, fn) {
+  // 1. check of contract al afgelopen is
+  // 2. haal opties op
+  // 3. bepaal winnende stem
+  // 4. haal jouw stem op
+  // 5. check of jouw stem de winnende is
+  // 6. fn(err,true/false)
 
   console.log("Checking contract: ", contractaddress);
   var MyContract = web3.eth.contract(LocalsValidation.abi);
@@ -288,8 +362,4 @@ function checkVotingWinner(contractaddress,voteraddress, fn){
 
 
 
-
 }
-
-
-
