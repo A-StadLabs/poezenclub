@@ -983,9 +983,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
           var myContractInstance = MyContract.at(self.contractaddress);
 
+
+
           myContractInstance.VoteAdded(function(err, res) {
 
             console.log('received VoteAdded event');
+
+            self.readVoteResults();
 
             // we could also check if the transaction hash matches..
             if (self.transactionHash == res.transactionHash){
