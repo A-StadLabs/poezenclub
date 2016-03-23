@@ -625,9 +625,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie1}}</h1>
-                  <p>{{vote}}</p>
                   <p><span>{{votes1}}</span> stemmen</p>
                 </div>  
+                <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="1"></poes-avatar>
                 <template is="dom-if" if="{{optie1winner}}">
                   <div class="winnerlabel">
                     <p class="themefont">Dit is momenteel de winnende optie!</p>
@@ -641,9 +641,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie2}}</h1>
-                  <p>{{vote}}</p>
                   <p><span>{{votes2}}</span> stemmen</p>
                 </div>  
+                <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="2"></poes-avatar>
                 <template is="dom-if" if="{{optie2winner}}">
                   <div class="winnerlabel">
                     <p class="themefont">Dit is momenteel de winnende optie!</p>
@@ -656,9 +656,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie3}}</h1>
-                  <p>{{vote}}</p>
                   <p><span>{{votes3}}</span> stemmen</p>
-                </div>  
+                </div> 
+                <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="3"></poes-avatar> 
                 <template is="dom-if" if="{{optie3winner}}">
                   <div class="winnerlabel">
                     <p class="themefont">Dit is momenteel de winnende optie!</p>
@@ -1109,11 +1109,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
           var myContractInstance = MyContract.at(self.contractaddress);
 
-          self.myvote = myContractInstance.voteresults(self.address).toNumber();
+          var myaddress = self.fixaddress(self.account);
 
-          if(self.myvote){
-            alert(self.myvote);
-          };
+          //console.log("Spnt tst ", myContractInstance.voters(myaddress));
+
+          self.myvote = myContractInstance.voters(myaddress)[0].toNumber();
+
+          console.log("I VOTED ", self.myvote);
 
           myContractInstance.VoteAdded(function(err, res) {
 
