@@ -572,7 +572,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         <div class="givevote">
-          <button on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor optie <span>{{currentchoice}}</span></button>
+          <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor optie <span>{{currenttxt}}</span></button>
         </div>
       </div>
       </neon-animatable>
@@ -708,6 +708,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      ready: function(){
+        this.$.votebutt.disabled = true;
+      },
+
       // Add 0x to address 
       fixaddress: function(address) {
         function strStartsWith(str, prefix) {
@@ -742,8 +746,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _currentchoice: function() {
-        console.log(this.currentchoice);
-        
+        console.log("CURRENT CHOICE: ",this.currentchoice);
+        eval("this.currenttxt = this.optie" + this.currentchoice);
+        this.$.votebutt.disabled = false;
       },
 
       attached: function(){
