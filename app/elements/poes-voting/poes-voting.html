@@ -699,10 +699,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         currentchoice: {
           observer: '_currentchoice'
+        },
+        // The blockchain status of your vote        
+        votestatus: {
+          type:Number,
+          value: 0,
+          observer: '_votestatuschanged'
         }
       },
 
-      _currentchoice: function(){
+      // Add 0x to address 
+      fixaddress: function(address) {
+        function strStartsWith(str, prefix) {
+            return str.indexOf(prefix) === 0;
+        }
+        if (!strStartsWith(address, '0x')) {
+          return ('0x' + address);
+        }
+        return address;
+      },
+
+      _votestatuschanged: function() {
+        console.log('>>>>>>>>>>>>>>>>>');
+        console.log('HIER OPPIKKEN BAN');
+        console.log('NIEUWE VOTESTATUS=',this.votestatus);
+        switch (this.votestatus) {
+          case 0:
+            console.log('Voting in initial state');
+            break;
+          case 1:
+            console.log('Vote submitted');
+            break;
+          case 2:
+            console.log('Vote transaction hash received');
+            break;
+          case 3:
+            console.log('Vote transaction confirmation received');
+            break;
+        }
+        console.log('<<<<<<<<<<<<<<<<<');
+
+      },
+
+      _currentchoice: function() {
         console.log(this.currentchoice);
         
       },
@@ -852,17 +891,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // console.log(e.target.import.body.innerText);
           self.contractjson = JSON.parse(e.target.import.body.innerText);
 
-          // TODO verwijder mij !!! ASAP !
-//          self.castVote();
-
           self.readVoteResults();
 
+          // Now start monitoring the voting contract to watch voting changes
+          var MyContract = self.web3.eth.contract(self.contractjson.abi);
+          var myContractInstance = MyContract.at(self.contractaddress);
+
+          myContractInstance.VoteAdded(function(err, res) {
+
+            console.log('received VoteAdded event');
+
+            // we could also check if the transaction hash matches..
+            if (self.transactionHash == res.transactionHash){
+              self.web3.eth.getTransaction(res.transactionHash, function(err, res) {
+                if (res && self.fixaddress(res.from) == self.fixaddress(self.account)) {
+                  console.log("My vote is registered");
+                  self.votestatus = 3;
+                } else {
+                  console.log('transaction does not match my account');
+                  console.log('my account = ', self.account);
+                  console.log('this transaction hash res = ', res);
+                }
+              });
+            }else{
+              console.log('transactionhash does not match my transaction hash');
+            }
+
+          });
+          // /contract monitor
 
         }, function(e) {
           console.log('ERROR!');
         });
       },
-
 
       castVote: function() {
         console.log('watwat');
@@ -874,6 +935,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         self.vote = this.currentchoice;
 
         console.log(self.account,'casts a vote for option',self.vote,'to contract ',self.contractaddress);
+
+        // change votestatus to 'vote submitted'
+        self.votestatus = 1;
 
         self.web3.eth.getGasPrice(function(err, result) {
 
@@ -898,7 +962,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 console.log("ERROR: Transaction didn't go through. See console.");
               } else {
                 console.log("Transaction Successful!");
-                console.log(result);
+                console.log('Tx hash=',result);
+                // set vote status to TxHash received 
+                self.votestatus = 2;
+                self.transactionHash = result;
+
               }
             }
           );
