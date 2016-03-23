@@ -349,6 +349,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 0px;
       }
 
+      .msgs {
+        width: 90%;
+        max-width: 700px;
+
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);      
+      }
+
+
+      poes-statusmsg {
+        width: 100%;
+      }
+
 
 @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
 
@@ -500,7 +513,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="canvas">
           <div class="votethings">
 
-              <div class="votething">
+<!--               <div class="votething">
                 <div class="votethingimg">
                   <img id="img1" src="http://gateway.ipfs.io/ipfs/{{winimg}}" />
                 </div>
@@ -508,10 +521,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <h1>{{winoptie}}</h1>
                   <p><span>{{winvotes}}</span> stemmen</p>
                 </div>
-                <div class="winnerlabel">
-                <p class="themefont">Dit is momenteel de winnende optie!</p>
-                </div>
-              </div>
+                <template is="dom-if" if="{{isWinner(optie1)}}">
+                  <div class="winnerlabel">
+                    <p class="themefont">Dit is momenteel de winnende optie!</p>
+                  </div>
+                </template>
+              </div> -->
  
               <div class="votething">
                 <div class="votethingimg">
@@ -521,8 +536,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <h1>{{optie1}}</h1>
                   <p><span>{{votes1}}</span> stemmen</p>
                 </div>  
+                <template is="dom-if" if="{{optie1winner}}">
+                  <div class="winnerlabel">
+                    <p class="themefont">Dit is momenteel de winnende optie!</p>
+                  </div>
+                </template>
               </div>
 
+              <div class="votething">
+                <div class="votethingimg">
+                  <img id="img2" src="http://gateway.ipfs.io/ipfs/{{img2}}" />
+                </div>
+                <div class="votethingtxt">       
+                  <h1>{{optie2}}</h1>
+                  <p><span>{{votes2}}</span> stemmen</p>
+                </div>  
+                <template is="dom-if" if="{{optie2winner}}">
+                  <div class="winnerlabel">
+                    <p class="themefont">Dit is momenteel de winnende optie!</p>
+                  </div>
+                </template> 
+              </div>
               <div class="votething">
                 <div class="votethingimg">
                   <img id="img3" src="http://gateway.ipfs.io/ipfs/{{img3}}" />
@@ -531,7 +565,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <h1>{{optie3}}</h1>
                   <p><span>{{votes3}}</span> stemmen</p>
                 </div>  
+                <template is="dom-if" if="{{optie3winner}}">
+                  <div class="winnerlabel">
+                    <p class="themefont">Dit is momenteel de winnende optie!</p>
+                  </div>
+                </template> 
               </div>
+
             </div> 
 
             <div class="ownvote">              
@@ -572,7 +612,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         <div class="givevote">
-          <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor optie <span>{{currenttxt}}</span></button>
+          <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor <span>{{currenttxt}}</span></button>
         </div>
       </div>
       </neon-animatable>
@@ -581,7 +621,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <neon-animatable vote-route="myvotestate">
         <div class="canvas">
-          <h1>Je stemde op <span>{{currentchoice}}</span></h1>
+          <div class="msgs">
+          <template is="dom-if" if="{{!voteaccepted}}">
+            <poezenclub-loader normal loadmsg=""></poezenclub-loader>
+          </template>
+
+          <template is="dom-if" if="{{voteaccepted}}">
+            <h2>Klaar!</h2>
+          </template>
+
+<!--           <h1>Je stemde op <span>{{currentchoice}}</span></h1> -->
+          <poes-statusmsg id="melding1" msg="Je stemde op" choice="{{currenttxt}}" withchoice>
+          </poes-statusmsg>
+          <hr>
+          <poes-statusmsg id="melding2" msg="Je stem wordt doorgegeven aan het contract" nochoice>
+          </poes-statusmsg>
+          <hr>
+          <poes-statusmsg id="melding3" msg="Je stem is geregistreerd door het contract" nochoice>
+          </poes-statusmsg>
+          <template is="dom-if" if="{{voteaccepted}}">
+            <button class="mediumbutton" on-tap="toVotecounts">terug naar overzicht</button>
+          </template>
+
+
+<!--           <div class="whitespace">
+          </div> -->
+        </div>
         </div>
       </neon-animatable>
 
@@ -705,6 +770,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type:Number,
           value: 0,
           observer: '_votestatuschanged'
+        },
+        voteaccepted: {
+          type: Boolean,
+          value: false,
+          notify: true
         }
       },
 
@@ -733,12 +803,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             break;
           case 1:
             console.log('Vote submitted');
+            this.$.melding1.valid = true;
             break;
           case 2:
             console.log('Vote transaction hash received: Ik heb de stem ontvangen maar is nog niet gemined');
+            this.$.melding2.valid = true;
             break;
           case 3:
             console.log('Vote transaction confirmation received: alles kids, block is gemined');
+            this.$.melding3.valid = true;
+            this.voteaccepted = true;
             break;
         }
         console.log('<<<<<<<<<<<<<<<<<');
@@ -827,6 +901,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.govote('castvote');
       },
 
+        toVotecounts: function(){
+        this.govote('votecounts');
+      },
+
       renderchart: function(){
          // create an instance with createElement:
       
@@ -861,6 +939,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         eval("this.winimg = this.img" + this.winkey);
         eval("this.winvotes = this.votes" + this.winkey);
         eval("this.winoptie = this.optie" + this.winkey);
+
+        this.optie1winner = this.winkey == 1;
+        this.optie2winner = this.winkey == 2;
+        this.optie3winner = this.winkey == 3;
 
         this.chartdata = [{
             key: 1,
@@ -997,7 +1079,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       };
       return newarray;
-    }
+    },
+
+    // isWinner: function(optie){
+    //   console.log('DE optie is:',optie, 'terwijl de WINOPTIE dit is:',this.winkey);
+    //   return (optie == this.winkey);
+    // }
 
     });
   })();
