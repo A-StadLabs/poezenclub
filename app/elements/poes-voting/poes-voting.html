@@ -146,7 +146,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .votethingimg img {
-        width: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        max-width: 400px;
+
       }
 
 
@@ -372,11 +375,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .msgs {
-        width: 90%;
+        width: 100%;
         max-width: 700px;
-
         @apply(--layout-vertical);
-        @apply(--layout-center-center);      
+        @apply(--layout-center);
+        @apply(--layout-start-justified);
       }
 
 
@@ -454,6 +457,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .votethingimg img {
         min-width: 100%;
         min-height: 100%;
+        max-width: 100px;
+
       }
       .votethingtxt {
         padding: 15px;
@@ -474,7 +479,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
-
+      .msgs {
+        min-height: 700px;
+      }
 }
   /* mobile-large */
   @media all and (min-width: 361px) and (orientation: portrait) {
@@ -491,6 +498,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .votethingimg img {
         min-width: 100%;
         min-height: 100%;
+        max-width: 100px;
       }
       .votethingtxt {
         padding: 15px;
@@ -508,7 +516,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .voteheadertxt {
         text-align: center;
       }
-
+      .msgs {
+        min-height: 700px;
+      }
    }
   /* mobile-small-landscape */
   @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) {
@@ -526,6 +536,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .votethingimg img {
         min-width: 100%;
         min-height: 100%;
+        max-width: 100px;
       }
       .votethingtxt {
         padding: 15px;
@@ -546,7 +557,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
-
+      .msgs {
+        min-height: 700px;
+      }
 
 
    }
@@ -1133,6 +1146,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       castVote: function() {
+        this.$.melding1.valid = false;
+        this.$.melding2.valid = false;
+        this.$.melding3.valid = false;
         console.log('watwat');
         this.govote('myvotestate');
 
