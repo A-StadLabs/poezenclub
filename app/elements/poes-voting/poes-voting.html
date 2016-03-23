@@ -244,6 +244,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-center-center);  
       }
 
+      .smallbutton {
+          outline: 0; 
+        box-sizing:border-box;
+        border-radius: 8px;
+        cursor: pointer;
+        @apply(--theme-font-button);
+        background-color: transparent;
+        border:none;
+    /*        border: 1px solid rgba(0,0,0,0.5); */
+        padding: 6px;
+        font-size: 22px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);        
+      }
+
 
       .ownvote .minibtn {
         outline: 0; 
@@ -370,6 +385,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
+      .funnything {
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+        @apply(--layout-start);
+        margin: 0px;
+      }
+
+      .textballon {
+        margin: 0px;
+      }
+      .textballon h1 {
+        background-color: white;
+        border-radius: 10px;
+        box-sizing:border-box;
+        padding: 30px;
+        margin: 0px;
+      }
+
+      .funnythingdeeltwee {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-start-justified);
+        width: 100%;
+        height: 90px;
+        margin: 0px;
+      }
+
+      .funnythingdeeltwee img {
+        height: 100%;
+      }
+
+      poes-avatar {
+        height: 50px;
+        width: 50px;
+        margin: 20px 10px 20px 25px;
+      }
+
+      .smallest {
+        @apply(--theme-font-general);
+        font-size: 16px;
+      }
+
+
+
+
+
+
+
+
+
+
+
+
 @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
 
      .votething {
@@ -479,6 +547,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
+
+
    }
 
 
@@ -506,9 +576,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <div class="voteheader">
-      <h1>{{vraag}}</h1>
       <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>     
-
+      <h1>{{vraag}}</h1>
     </div>
 
 
@@ -624,7 +693,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="givevote">
           <div class="givevotebtns">
             
-          <button id="votebutt" on-tap="backtoVotecounts" class="mediumbutton"><</button>            
+          <button id="votebutt" on-tap="backtoVotecounts" class="smallbutton"><</button>            
           <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor <span>{{currenttxt}}</span></button>
         </div>
 
@@ -644,10 +713,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template>
 
           <template is="dom-if" if="{{voteaccepted}}">
-            <h2>Klaar!</h2>
+            <div class="funnything">
+              <div class="textballon">
+                <h1><span>{{currenttxt}}</span>!</h1>
+              </div>
+              <div class="funnythingdeeltwee">
+                <poes-avatar poesnr="{{poezenimage}}"></poes-avatar>
+                <img src="../../images/textballonhoekje.svg">
+                <p class="smallest">Je stem werd uitgebracht.</p>
+              </div>
+            </div>
           </template>
 
-<!--           <h1>Je stemde op <span>{{currentchoice}}</span></h1> -->
           <poes-statusmsg id="melding1" msg="Je stemde op" choice="{{currenttxt}}" withchoice>
           </poes-statusmsg>
           <hr>
