@@ -71,8 +71,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .voteheadertxt {
-        width: 50%;
+        width: 80%;
         min-width: 280px;
+        max-width: 800px;
         margin: 0px 0px 20px 0px;
         text-align: center;
       }
@@ -140,7 +141,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .votethingimg {
         width: 100%;
-        height: 200px;
+        height: 300px;
         overflow: hidden;
       }
 
@@ -176,7 +177,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 15px;
         margin-right: 10px;
       }
-
+      .timestamp p {
+        font-size: 13px;
+      }
 
       .votethings {
         width: 100%;
@@ -290,6 +293,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-wrap);
         box-sizing:border-box;
         padding: 20px 0px 50px 0px;
+      }
+
+      .givevotebtns {
+         @apply(--layout-horizontal);
+        @apply(--layout-center-center);       
       }
 
 
@@ -499,13 +507,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="voteheader">
       <h1>{{vraag}}</h1>
+      <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>     
+
     </div>
 
 
     <div class="votebody">
     <neon-animated-pages selected="{{votestate}}" 
-            entry-animation="slide-from-right-animation"
-            exit-animation="slide-from-right-animation"
+            entry-animation="{{voteEntry}}"
+            exit-animation="{{voteExit}}"
             attr-for-selected="vote-route">
 
       <neon-animatable vote-route="votecounts">
@@ -533,6 +543,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie1}}</h1>
+                  <p>{{vote}}</p>
                   <p><span>{{votes1}}</span> stemmen</p>
                 </div>  
                 <template is="dom-if" if="{{optie1winner}}">
@@ -548,6 +559,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie2}}</h1>
+                  <p>{{vote}}</p>
                   <p><span>{{votes2}}</span> stemmen</p>
                 </div>  
                 <template is="dom-if" if="{{optie2winner}}">
@@ -562,6 +574,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie3}}</h1>
+                  <p>{{vote}}</p>
                   <p><span>{{votes3}}</span> stemmen</p>
                 </div>  
                 <template is="dom-if" if="{{optie3winner}}">
@@ -584,9 +597,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
               <button class="minibtn" on-tap="toCast">Mijn stem veranderen</button>
               </template>
-      <div class="voteheadertxt">
-      <p>Het stemmen eindigt <span>{{resttijd}}</span>. De volgende dag wordt de Poezendoos gevuld met de meest gestemde optie. Enkel degenen die voor deze optie stemden, krijgen toegang tot de Poezendoos. Elke week is er een nieuwe stemronde.</p>
-      <!-- <div class="timestamp"><img src="../../images/time.svg"></div>  -->    
+      <div class="voteheadertxt"><p>Het stemmen is <span>{{starttijd}}</span> begonnen en eindigt <span>{{resttijd}}</span>. De volgende dag wordt de Poezendoos gevuld met de meest gestemde optie. Enkel degenen die voor deze optie stemden, krijgen toegang tot de Poezendoos. Elke week is er een nieuwe stemronde.</p>
       </div>
 
             </div>
@@ -611,8 +622,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         <div class="givevote">
+          <div class="givevotebtns">
+            
+          <button id="votebutt" on-tap="backtoVotecounts" class="mediumbutton"><</button>            
           <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor <span>{{currenttxt}}</span></button>
         </div>
+
+        </div>
+      <div class="voteheadertxt"><p>Let op: enkel degenen die voor de winnende optie stemmen, krijgen toegang tot de Poezendoos.</p></div>
+
       </div>
       </neon-animatable>
 
@@ -779,6 +797,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function(){
         this.$.votebutt.disabled = true;
+        this.voteEntry = "slide-from-right-animation";
+        this.voteExit = "slide-left-animation";
       },
 
       // Add 0x to address 
@@ -897,12 +917,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
         toCast: function(){
+               this.voteEntry = "slide-from-right-animation";
+        this.voteExit = "slide-left-animation";   
         this.govote('castvote');
       },
 
         toVotecounts: function(){
+                  this.voteEntry = "slide-from-right-animation";
+        this.voteExit = "slide-left-animation";
         this.govote('votecounts');
       },
+
+        backtoVotecounts: function(){
+                  this.voteEntry = "slide-from-left-animation";
+        this.voteExit = "slide-right-animation";
+        this.govote('votecounts');
+      },
+
 
       renderchart: function(){
          // create an instance with createElement:
@@ -988,7 +1019,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
           var myContractInstance = MyContract.at(self.contractaddress);
 
+          self.myvote = myContractInstance.voteresults(self.address).toNumber();
 
+          if(self.myvote){
+            alert(self.myvote);
+          };
 
           myContractInstance.VoteAdded(function(err, res) {
 
