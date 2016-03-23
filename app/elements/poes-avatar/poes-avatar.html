@@ -15,6 +15,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+        visibility: var(--vishidden);
+        visibility: 
       }
 
       .avatar {
@@ -37,13 +39,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         poesnr: {
           type: Number,
           value: 1,
-          observer: 'poessrc'
+          observer: '_poessrc'
+        },
+        choice: {
+          type: Number,
+          value: 1,
+          observer: '_choice'
+        },
+        key: {
+          type: Number,
+          value: 1
         }
       },
 
-      poessrc: function(){
+      _poessrc: function(){
         this.src = 'images/poezen/poes'+this.poesnr+'.png';
+      },
+
+      ready: function(){
+        this.set('interval', setInterval(this._choice.bind(this), 2500));
+      },
+
+      _choice: function(){
+        console.log(this.choice, this.key);
+
+        if(this.choice==this.key){
+           //this.hidden = false;
+          console.log("niet gelijk");
+          this.customStyle['--vishidden'] = "visible";
+          this.updateStyles();
+        } else {
+          this.customStyle['--vishidden'] = "hidden";
+          this.updateStyles();
+        }
+      
       }
+
     });
   })();
   </script>
