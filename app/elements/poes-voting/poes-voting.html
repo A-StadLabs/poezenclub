@@ -124,7 +124,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       poes-votebutton {
         width: 100%;
-        max-width: 300px;
         @apply(--layout-horizontal);
         @apply(--layout-start);
         @apply(--layout-wrap);        
@@ -295,85 +294,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
 
-
-
-/*       .bolleke {
-        visibility: hidden;
-       }
-
-
-      #voteselector .iron-selected {
-        background-color: var(--blue-theme-color);
-        color: white;
-         -moz-box-shadow:    3px 3px 3px 3px rgba(0,0,0,0.05);
-        -webkit-box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.05);
-        box-shadow:         3px 3px 3px 3px rgba(0,0,0,0.05);
-      }
-
-       #voteselector .iron-selected h1  {
-       color: white;
-      }
-
-       #voteselector .iron-selected .bolleke  {
-        visibility: visible;
-      }
-
-      #voteselector .iron-selected img {
-        opacity: 1;
-        box-sizing: border-box;
-      }*/
-
-/*      .voteitem {
-        width: 80%;
-        background-color: rgba(0,0,0,0.05);
-        border-bottom: 1px solid var(--pinktwee-theme-color);
-        overflow: hidden;
-        @apply(--layout-horizontal);
-        @apply(--layout-start);
-        @apply(--layout-wrap);
-        margin: 5px;
-      }
-
-
-
-      .voteitemimg {
-        height: 90px;
-        width: 90px;
-        max-width: 20%;
-
-        overflow: hidden;
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-        background-color: white;
-      }
-
-      .voteitemimg img {
+      #voteselector {
         width: 100%;
-        opacity: 0.5;
-      }
+                max-width: 700px;
 
-
-      .voteitemtxt {
-        min-width: 230px;
-        max-width: 80%;
-        box-sizing:border-box;
-        padding: 20px 20px 15px 20px; 
         @apply(--layout-vertical);
-        @apply(--layout-start);
-      }
-
-      .voteitemtxt h1 {
-        font-size: 36px;
-        line-height: 1;
+        @apply(--layout-center-center);
       }
 
 
-      .voteitemtxt p {
-      font-size: 15px;
-      font-weight: 300;
-      margin: 0px;
-      padding: 0px;
-            }*/
 
       .small {
         font-size: 9px;
@@ -409,6 +338,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .bluecolor h1 {
         color: var(--blue-theme-color);
+      }
+
+      hr {
+        width: 100%;
+        outline: 0;
+        border: 0;
+        background-color: rgba(0,0,0,0.05);
+        height: 1px;
+        margin: 0px;
       }
 
 
@@ -526,79 +464,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
  @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { 
-/*      .voteitem {
-        width: 30%;
-        max-width: 300px;
-      }
 
-      .voteitemtxt {
-        width: 100%;
-      }
-
-      .voteitemimg {
-        height: 100%;
-        width: 100%;
-        max-width: 400px;
-        height: 200px;
-
-      }*/
 
  }
   /* desktop-medium */
   @media all and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4/3) { 
-/*      .voteitem {
-        width: 30%;
-        max-width: 300px;
-      }
-      .voteitemtxt {
-        width: 100%;
-      } 
 
-      .voteitemimg {
-        height: 100%;
-        width: 100%;
-        max-width: 400px;
-        height: 200px;
-      }*/
   }
 
   /* desktop-large */
   @media all and (min-width: 1281px) and (max-width: 1600px) { 
-/*       .voteitem {
-        width: 30%;
-        max-width: 400px;
-      }
 
-      .voteitemtxt {
-        width: 100%;
-      }
-
-      .voteitemimg {
-        height: 100%;
-        width: 100%;
-        max-width: 400px;
-        height: 200px;
-      }*/
   }
   /* desktop-xlarge */
   @media all and (min-width: 1601px) and (max-width: 1920px) { 
-/*        .voteitem {
-        width: 30%;
-        max-width: 400px;
-      }
-      .voteitemtxt {
-        width: 100%;
-      }
 
-      .voteitemimg {
-        height: 100%;
-        width: 100%;
-        max-width: 400px;
-        height: 200px;
-      }*/
-
-
-}
+  }
 
 
     </style>
@@ -681,39 +562,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             selected="{{currentchoice}}">
 
             <poes-votebutton img="http://gateway.ipfs.io/ipfs/{{img1}}" selectedkey="{{currentchoice}}" optie="{{optie1}}" votes="{{votes1}}" key="1"></poes-votebutton>
+            <hr>
             <poes-votebutton img="http://gateway.ipfs.io/ipfs/{{img2}}" selectedkey="{{currentchoice}}" optie="{{optie2}}" votes="{{votes2}}" key="2"></poes-votebutton>
+            <hr>
             <poes-votebutton img="http://gateway.ipfs.io/ipfs/{{img3}}" selectedkey="{{currentchoice}}" optie="{{optie3}}" votes="{{votes3}}" key="3"></poes-votebutton>
 
-           
-
-            <!-- 
-              <div class="votething bluecolor" key="1">
-                <div class="votethingimg">
-                  <img id="img1" src="http://gateway.ipfs.io/ipfs/{{img1}}" />
-                </div>
-                <div class="votethingtxt">
-                  <h1>{{optie1}}</h1>
-                  <p>(<span>{{votes1}}</span> stemmen)</p>
-                </div>  
-              </div>
-              <div class="votething bluecolor" key="2">
-                <div class="votethingimg">
-                  <img id="img2" src="http://gateway.ipfs.io/ipfs/{{img2}}" />
-                </div>
-                <div class="votethingtxt">       
-                  <h1>{{optie2}}</h1>
-                  <p>(<span>{{votes2}}</span> stemmen)</p>
-                </div>  
-              </div>
-              <div class="votething bluecolor" key="3">
-                <div class="votethingimg">
-                  <img id="img3" src="http://gateway.ipfs.io/ipfs/{{img3}}" />
-                </div>
-                <div class="votethingtxt">      
-                  <h1>{{optie3}}</h1>
-                  <p>(<span>{{votes3}}</span> stemmen)</p>
-                </div>  
-              </div> -->
         </iron-selector>
 
 
@@ -726,9 +579,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-      <neon-animatable vote-route="vote2">
-        <div class="canvaspink">
-
+      <neon-animatable vote-route="myvotestate">
+        <div class="canvas">
+          <h1>Je stemde op <span>{{currentchoice}}</span></h1>
         </div>
       </neon-animatable>
 
@@ -851,6 +704,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _currentchoice: function(){
         console.log(this.currentchoice);
+        
       },
 
       attached: function(){
@@ -1012,6 +866,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       castVote: function() {
         console.log('watwat');
+        this.govote('myvotestate');
+
 
         var self = this;
 

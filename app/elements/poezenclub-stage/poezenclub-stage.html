@@ -35,15 +35,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
       .drawer {
-/*        width: 100%;
-        min-height: 100%;*/
-/*        width: 100%;*/
-
         background-color: var(--pink-theme-color);
         @apply(--layout-vertical);
         @apply(--layout-center);
         overflow-y: scroll;
         overflow-x: hidden;
+        height: 100%;
+        box-sizing:border-box;
+        padding: 0px;
       }
 
 
@@ -216,14 +215,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .validatorz {
         width: 84vw;
         max-width: 100%;
-        
+      }
+
+      .validatorzsmall {
+        width: 80%;
+        text-align: center;
       }
 
       poes-validatordetail {
         height: 100px;
-        width: 80%;
-
+        width: 100%;
       }
+
+      .validatordetailsmall {
+        height: 70px;
+        width: 100%;
+      }
+
+
 
       hr {
         color: rgba(0,0,0,0.15);
@@ -391,11 +400,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   .grande {
-    width: 260px;
-    height: 260px;
-    background-color: transparent;
+    width: 200px;
+    height: 200px;
     overflow: hidden;
-    margin: 0px;
+    margin: 50px 0px 0px 0px;
+    background-color: rgba(0,0,0,0.05);
   }
 
   .alert {
@@ -460,9 +469,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     width: 100%;
     @apply(--layout-horizontal);
     @apply(--layout-center-center); 
+    box-sizing:border-box;
+    padding: 20px 0px 0px 0px;
   }
   .poestitel h2 {
     font-size: 28px;
+    margin: 0px;
   }
   .poestitel img {
     width: 28px;
@@ -470,11 +482,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   .voting {
-/*    background-color: red;*/
     width: 100%;
     height: 600px;
-/*    border: 1px blue;
-    overflow-y: scroll;*/
   }
 
     </style>
@@ -521,9 +530,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <template is="dom-if" if="{{validated}}">
 
-        <div class="validatorz vertical layout">
-          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small></poes-validatordetail>
-          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small></poes-validatordetail>
+        <div class="validatorzsmall vertical layout">
+          <p>Je bent gevalideerd door</p>
+          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
+          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
         </div>
 
    </template>
@@ -533,7 +543,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
         </div> -->
-        <div class="whitespace"></div>
         <div class="whitespace"></div>
         <button class="settingsbtn" on-tap="gotosettings">instellingen<img class="btnimg" src="../../images/cogwheel.svg"></button>
       </div>
