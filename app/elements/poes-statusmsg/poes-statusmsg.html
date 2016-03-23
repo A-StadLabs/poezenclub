@@ -1,0 +1,111 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="poes-statusmsg">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .statusmsg {
+        width: 100%;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-start);
+        padding: 20px;
+      }
+
+      h1 {
+        @apply(--theme-font-general);
+        margin: 0px;        
+        padding: 0px; 
+        font-weight: 400;
+        font-size: 22px;
+        width: 90%;       
+      }
+
+      img {
+        @apply(--layout-end-justified);
+        height: 30px;
+        width: 30px;
+      }
+
+      .bold {
+        font-weight: 700;
+      }
+
+
+    </style>
+    <template is="dom-if" if="{{withchoice}}">
+    <div class="statusmsg">
+      <h1>
+        <span>{{msg}}</span> <span class="bold">{{choice}}</span>
+      </h1>
+      <template is="dom-if" if="{{!valid}}">
+        <img src="../../images/notyetchecked.svg">
+      </template>
+      <template is="dom-if" if="{{valid}}">
+        <img src="../../images/checked.svg">
+      </template>
+    </div>
+    </template>
+
+    <template is="dom-if" if="{{nochoice}}">
+    <div class="statusmsg">
+      <h1>
+        <span>{{msg}}</span>
+      </h1>
+      <template is="dom-if" if="{{!valid}}">
+        <img src="../../images/notyetchecked.svg">
+      </template>
+      <template is="dom-if" if="{{valid}}">
+        <img src="../../images/checked.svg">
+      </template>
+    </div>
+    </template>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'poes-statusmsg',
+
+      properties: {
+        valid: {
+          type: Boolean,
+          value: false,
+          notify: true
+        },
+        withchoice: {
+          type: Boolean,
+          notify: true
+        },
+        nochoice: {
+          type: Boolean,
+          notify: true
+        },
+        msg: {
+          type: String,
+          notify: true
+        },
+        choice: {
+          type: String,
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>
