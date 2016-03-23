@@ -935,6 +935,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.votearray = _.sortBy(this.votearray, "data");
         this.winkey = this.votearray[2].key;
 
+        // indien nog niet gestemd OF ex-eaquo
+        if (this.votearray[2].data == 0 || (this.votearray[0].data == this.votearray[1].data && this.votearray[1].data == this.votearray[2].data)){
+          this.winkey = 0;
+        }
+
         eval("this.winimg = this.img" + this.winkey);
         eval("this.winvotes = this.votes" + this.winkey);
         eval("this.winoptie = this.optie" + this.winkey);
