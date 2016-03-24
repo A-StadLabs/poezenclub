@@ -750,7 +750,7 @@
             <div class="ownvote">              
               <template is="dom-if" if="{{winner}}">
                 <p>Joepie! Je hebt de juiste keuze gemaakt.</p>
-                <button on-tap="openbox">Open de doos</button>
+                <button class="mainbutton" on-tap="openbox">Open de doos</button>
               </template>
               <template is="dom-if" if="{{!winner}}">
                 <div class="voteheadertxt"><p>Je sloot je niet aan bij de winnende keuze. Daarom kan je de doos niet openen.</p>
@@ -944,7 +944,7 @@ self.contractaddress = self.vote.contractaddress;
 
             var now = Math.floor(Date.now()/1000);
 
-            if(!self.vote.endunix < now){
+            if(self.vote.endunix < now){
               console.log("Voting has ended.", self.vote.endunix, now);
               self.govote('voteended');
             } else {
