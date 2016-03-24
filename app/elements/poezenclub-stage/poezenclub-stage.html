@@ -1236,7 +1236,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       submitboxpin: function(){
         console.log(this.boxpin);
         var pin = this.boxpin;
-        this.$.lomqtt.send("poezendoos/"+pin,"checkContract"+"|"+this.contractaddress+"|"+this.pincode, 2);
+        //this.$.lomqtt.send("poezendoos/"+pin,"checkContract"+"|"+this.contractaddress+"|"+this.pincode, 2);
+        this.$.lomqtt.send("poezendoos/"+pin,"checkVotingContract"+"|"+this.votingcontractaddress+"|"+this._fixaddress(this.address)+"|"+this.pincode, 2);
         this.go("boxchecks");
       },
 
