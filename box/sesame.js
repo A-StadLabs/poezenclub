@@ -124,7 +124,7 @@ function afterSerialPortOpen() {
   });
 
   generateCode();
-  var channels = ['poezendoos/service', 'poezendoos/' + code];
+  var channels = ['poezendoos/service', 'poezendoos/99999', 'poezendoos/' + code];
   console.log("Poezendoos channels:", channels);
   client.subscribe(channels);
   client.publish('poezendoos/' + code, 'command|listening');
@@ -170,9 +170,13 @@ function afterSerialPortOpen() {
       var voteraddress = commandarray[2];
       //        var pincode = commandarray[2];
 
-      checkVotingWinner(contractaddress, voteraddress, function(iamawinner) {
+      schrijflcd(" de poezendoos " + String.fromCharCode(13) + " telt de stemmen");
+
+      checkVotingWinner(contractaddress, voteraddress, function(err,iamawinner) {
         if (iamawinner) {
           console.log('gij zijt gewonnen');
+          openDoor();
+          //client.publish(pincode, 'doosisopen');
         } else {
           console.log('looooooooooser!');
         }
@@ -240,44 +244,44 @@ function afterSerialPortOpen() {
 }
 
 
-var adrs = ['0x51579d1ad9cea78a5020bec7f42e132b12b6205b',
-  '0x537b5a48bd491c9813637908a49d3857d14c11dc',
-  '0xcc5c5b9315c3dd882b3e3eabefd8e99b9fb7a003',
-  '0xab2525dcc956d489e7b7f21f8bed1c2326283dcf',
-  '0x2338a5c57150f1071c386637fa379dee3d3969c7',
-  '0x518e272fc1f1cefa8d572a5e80f1bdb2cc3b7e7f',
-  '0xb69ae11fa5e355d66f97d9fba29f5cf5805575e9',
-  '0x47f831d925ec535532993b0c17af1fbcbed075df',
-  '0xb8f19bd897a48b09148c2a738e5a0eeea77b4565',
-  '0x92c886d58c4af09b364232f46ecfd932f57e152f'
-];
+// var adrs = ['0x51579d1ad9cea78a5020bec7f42e132b12b6205b',
+//   '0x537b5a48bd491c9813637908a49d3857d14c11dc',
+//   '0xcc5c5b9315c3dd882b3e3eabefd8e99b9fb7a003',
+//   '0xab2525dcc956d489e7b7f21f8bed1c2326283dcf',
+//   '0x2338a5c57150f1071c386637fa379dee3d3969c7',
+//   '0x518e272fc1f1cefa8d572a5e80f1bdb2cc3b7e7f',
+//   '0xb69ae11fa5e355d66f97d9fba29f5cf5805575e9',
+//   '0x47f831d925ec535532993b0c17af1fbcbed075df',
+//   '0xb8f19bd897a48b09148c2a738e5a0eeea77b4565',
+//   '0x92c886d58c4af09b364232f46ecfd932f57e152f'
+// ];
 
-var topic1 = '0x' + web3.sha3('addValidation()');
-console.log('topic addvalidation',topic1);
+// var topic1 = '0x' + web3.sha3('addValidation()');
+// console.log('topic addvalidation',topic1);
 
-var filter2 = web3.eth.filter({
-  fromBlock: LocalsMembership_startBlock,
-  toBlock: "latest",
-  from: '0x47f831d925ec535532993b0c17af1fbcbed075df',
-}, function(error, result) {
-  if (!error) {
-    //console.log('++++++++');
-    //console.log('found activity for address ', result);
-    //console.log('++++++++');
+// var filter2 = web3.eth.filter({
+//   fromBlock: LocalsMembership_startBlock,
+//   toBlock: "latest",
+//   from: '0x47f831d925ec535532993b0c17af1fbcbed075df',
+// }, function(error, result) {
+//   if (!error) {
+//     //console.log('++++++++');
+//     //console.log('found activity for address ', result);
+//     //console.log('++++++++');
 
-    if (result && result.transactionHash) {
-      web3.eth.getTransaction(result.transactionHash, function(err, res) {
-        console.log('topic addvalidation',topic1);
+//     if (result && result.transactionHash) {
+//       web3.eth.getTransaction(result.transactionHash, function(err, res) {
+//         console.log('topic addvalidation',topic1);
 
-        console.log('--------');
-        console.log('found activity: ', result);
-        console.log('transaction:', res);
-        console.log('--------');
-      });
-    }
+//         console.log('--------');
+//         console.log('found activity: ', result);
+//         console.log('transaction:', res);
+//         console.log('--------');
+//       });
+//     }
 
-  }
-});
+//   }
+// });
 
 
 /*
@@ -347,18 +351,73 @@ function checkContract(contractaddress, fn) {
 };
 
 function checkVotingWinner(contractaddress, voteraddress, fn) {
+
+  console.log('checkVotingWinner ',contractaddress,voteraddress);
+
+  var MyContract = web3.eth.contract(PoezenVoting.abi);
+  var myContractInstance = MyContract.at(contractaddress);
+
   // 1. check of contract al afgelopen is
+  var endcontract = myContractInstance.votingEnd().toNumber(10);
+  var now = Math.floor(new Date().getTime() / 1000);
+
+/*
+  if (endcontract > now) {
+    console.log('Voting is nog bezig...', endcontract, '<', now);
+    return fn(null,false);
+  } else {
+    console.log('Voting has ended', endcontract, '>', now);
+  }
+*/
+
   // 2. haal opties op
   // 3. bepaal winnende stem
+  var result1 = myContractInstance.voteresults(1).toNumber(10);
+  var result = result1;
+  console.log('result1=',result1,'result=',result);
+  var result2 = myContractInstance.voteresults(2).toNumber(10);
+  if (result2>result){
+    result = result2;
+  }
+  console.log('result2=',result2,'result=',result);
+  var result3 = myContractInstance.voteresults(3).toNumber(10);
+  if (result3>result){
+    result = result2;
+  }
+  console.log('result3=',result3,'result=',result);
+
+  console.log(result1,result2,result3,'--- best result=',result);
+
   // 4. haal jouw stem op
+  var myVote = myContractInstance.voters(voteraddress)[0].toNumber(10);
+  console.log('myVote is number (index) =',myVote);
+
+  var myVoteResult = myContractInstance.voteresults(myVote).toNumber(10);
+
+  console.log('my vote result=',myVoteResult);
+
+  if (myVoteResult == result){
+    console.log('i am a winner');
+    return fn(null,true);
+  }else{
+    console.log('i am a loser');
+    return fn(null,false);
+  }
+
+
+
   // 5. check of jouw stem de winnende is
   // 6. fn(err,true/false)
 
+
+/*
   console.log("Checking contract: ", contractaddress);
   var MyContract = web3.eth.contract(LocalsValidation.abi);
   console.log('get contract from blockchain');
   var myContractInstance = MyContract.at(contractaddress);
   console.log('run countValidations');
+*/
+
 
 
 
