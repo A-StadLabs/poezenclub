@@ -1,165 +1,141 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../poes-aai/poes-aai.html">
 <link rel="import" href="../../bower_components/chart-elements/chart-elements.html">
 
-
 <dom-module id="poes-voting">
-  <template>
+<template>
 
-    <script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
-    <script src="../../bower_components/underscore/underscore-min.js"></script>
+  <script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
+  <script src="../../bower_components/underscore/underscore-min.js"></script>
 
+  <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
+</ipfs-upload>
+<style>
+  :host {
+    display: block;
+    width: 100%;
+    height: 600px;
+  }
 
-      <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
-      </ipfs-upload>
-    <style>
-      :host {
-        display: block;
-        width: 100%;
-        height: 600px;
-      }
+  neon-animated-pages {
+    height: 100%;
+  }
 
-      neon-animated-pages {
-        height: 100%;
-      }
+  h1 {
+    @apply(--theme-font-title);
+    text-align: center;
+  }
 
-      h1 {
-        @apply(--theme-font-title);
-        text-align: center;
-      }
+  h2 {
+    @apply(--theme-font-subhead);
+    margin: 0px;        
+    padding: 0px;        
+  }
 
-      h2 {
-        @apply(--theme-font-subhead);
-        margin: 0px;        
-        padding: 0px;        
-      }
+  p {
+    margin: 0px;        
+    padding: 0px;
+  }
 
-      p {
-        margin: 0px;        
-        padding: 0px;
-      }
+  .canvas {
+    width: 100%;
+    @apply(--layout-vertical);
+    @apply(--layout-center-center);
+    box-sizing:border-box;
+    padding: 0px 30px 30px 30px;
+    background-color: var(--pink-theme-color);
+  }
 
-      .canvas {
-        width: 100%;
-        @apply(--layout-vertical);
-        @apply(--layout-center-center);
-        box-sizing:border-box;
-        padding: 0px 30px 30px 30px;
-        background-color: var(--pink-theme-color);
-      }
+  .bigp {
+    font-size: 22px;            
+  }
 
+  .voteheader {
+    padding: 50px 50px 50px 50px;
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+  }
 
-      .bigp {
-        font-size: 22px;            
-      }
+  .voteheadertxt {
+    width: 80%;
+    min-width: 280px;
+    max-width: 800px;
+    margin: 0px 0px 20px 0px;
+    text-align: center;
+  }
 
-      .voteheader {
-        padding: 50px 50px 50px 50px;
-        @apply(--layout-vertical);
-        @apply(--layout-center);
-      }
+  .voteheadertxt h1 {
+    font-size: 54px;
+    /*        background-color: rgba(0,0,0,0.05);*/
+    box-sizing:border-box;
+    padding: 10px 20px 10px 20px;
+  }
 
-      .voteheadertxt {
-        width: 80%;
-        min-width: 280px;
-        max-width: 800px;
-        margin: 0px 0px 20px 0px;
-        text-align: center;
-      }
+  .voteheadertxt p {
+    @apply(--theme-font-general);
+    font-size: 20px;
+  }
 
-      .voteheadertxt h1 {
-        font-size: 54px;
-/*        background-color: rgba(0,0,0,0.05);*/
-        box-sizing:border-box;
-        padding: 10px 20px 10px 20px;
-      }
+  .votebody {
+    background-color: green;
+  }
 
-      .voteheadertxt p {
-        @apply(--theme-font-general);
-        font-size: 20px;
-      }
+  .graph {
+    width: 100px;
+    height: 100px;
+    min-height: 100px;
+    background-color: rgba(0,0,0,0.05);
+  }
 
-      .votebody {
-        background-color: green;
-      }
+  .square-chart {
+    width: 100px;
+    height: 100px;
+  }
 
+  .themefont {
+    @apply(--theme-font-general);
+  }
 
-      .graph {
-        width: 100px;
-        height: 100px;
-        min-height: 100px;
-        background-color: rgba(0,0,0,0.05);
-      }
+  .votething {
+    width: 100%;
+    max-width: 300px;
+    @apply(--layout-horizontal);
+    @apply(--layout-start);
+    @apply(--layout-wrap);        
+    box-sizing:border-box;
+    margin: 6px;
+    background-color: rgba(0,0,0,0.05);
+  }
 
-      .square-chart {
-        width: 100px;
-        height: 100px;
-      }
+  poes-votebutton {
+    width: 100%;
+    @apply(--layout-horizontal);
+    @apply(--layout-start);
+    @apply(--layout-wrap);        
+    box-sizing:border-box;
+  }
 
-      .themefont {
-        @apply(--theme-font-general);
-      }
+  .votethingtxt {
+    box-sizing:border-box;
+    padding: 20px;
+    @apply(--layout-vertical);
+    @apply(--layout-start); 
+  }
 
-     .votething {
-        width: 100%;
-        max-width: 300px;
-        @apply(--layout-horizontal);
-        @apply(--layout-start);
-        @apply(--layout-wrap);        
-        box-sizing:border-box;
-        margin: 6px;
-        background-color: rgba(0,0,0,0.05);
-      }
+  .votethingimg {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
 
+  .votethingimg img {
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 400px;
 
-      poes-votebutton {
-        width: 100%;
-        @apply(--layout-horizontal);
-        @apply(--layout-start);
-        @apply(--layout-wrap);        
-        box-sizing:border-box;
-      }
+  }
 
-
-      .votethingtxt {
-        box-sizing:border-box;
-        padding: 20px;
-        @apply(--layout-vertical);
-        @apply(--layout-start); 
-      }
-
-      .votethingimg {
-        width: 100%;
-        height: 300px;
-        overflow: hidden;
-      }
-
-      .votethingimg img {
-        min-width: 100%;
-        min-height: 100%;
-        max-width: 400px;
-
-      }
-
-
-
-
-/*      .winner {
-        color:var(--oranje-theme-color);
-
-      }
-*/
       .winnerlabel {
         background-color: var(--oranje-theme-color);
         width: 100%;
@@ -240,7 +216,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--theme-font-button);
         background-color: var(--pinktwee-theme-color);
         border:none;
-    /*        border: 1px solid rgba(0,0,0,0.5); */
+        /*        border: 1px solid rgba(0,0,0,0.5); */
         padding: 16px;
         font-size: 22px;
         @apply(--layout-horizontal);
@@ -248,14 +224,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .smallbutton {
-          outline: 0; 
+        outline: 0; 
         box-sizing:border-box;
         border-radius: 8px;
         cursor: pointer;
         @apply(--theme-font-button);
         background-color: transparent;
         border:none;
-    /*        border: 1px solid rgba(0,0,0,0.5); */
+        /*        border: 1px solid rgba(0,0,0,0.5); */
         padding: 6px;
         font-size: 22px;
         @apply(--layout-horizontal);
@@ -290,18 +266,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .ownvotetxt p {
-      @apply(--theme-font-general);
+        @apply(--theme-font-general);
 
-      line-height: 22px;
-      margin: 0px;
+        line-height: 22px;
+        margin: 0px;
 
-      font-weight: 300;
-      font-size: 22px;
-      line-height: 28px;
+        font-weight: 300;
+        font-size: 22px;
+        line-height: 28px;
       }
-
-
-
 
       .givevote {
         width: 100%;
@@ -314,295 +287,277 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .givevotebtns {
-         @apply(--layout-horizontal);
-        @apply(--layout-center-center);       
-      }
+       @apply(--layout-horizontal);
+       @apply(--layout-center-center);       
+     }
 
+     #voteselector {
+      width: 100%;
+      max-width: 700px;
 
-      #voteselector {
-        width: 100%;
-                max-width: 700px;
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+    }
 
-        @apply(--layout-vertical);
-        @apply(--layout-center-center);
-      }
+    .small {
+      font-size: 9px;
+    }
 
+    iron-selector {
+      width: 100%;
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+      @apply(--layout-start);
+      @apply(--layout-center-justified);
 
+    }
 
-      .small {
-        font-size: 9px;
-      }
+    .whiteback {
+      background-color: rgba(255,255,255,0.35);
+    }
 
-      iron-selector {
-        width: 100%;
-        @apply(--layout-horizontal);
-        @apply(--layout-wrap);
-        @apply(--layout-start);
-        @apply(--layout-center-justified);
+    .whiteback img {
+      opacity: 0.9;
+    }
 
-      }
+    .blueborder {
+      box-sizing:border-box;
+      border: 2px solid var(--blue-theme-color);
+    }
 
+    .blueborder img {
+      opacity: 0.9;
+    }
 
-      .whiteback {
-        background-color: rgba(255,255,255,0.35);
-      }
+    .bluecolor h1 {
+      color: var(--blue-theme-color);
+    }
 
+    hr {
+      width: 100%;
+      outline: 0;
+      border: 0;
+      background-color: rgba(0,0,0,0.05);
+      height: 1px;
+      margin: 0px;
+    }
 
-      .whiteback img {
-        opacity: 0.9;
-      }
+    .msgs {
+      width: 100%;
+      max-width: 700px;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+      @apply(--layout-start-justified);
+    }
 
-      .blueborder {
-        box-sizing:border-box;
-        border: 2px solid var(--blue-theme-color);
-      }
-      .blueborder img {
-        opacity: 0.9;
-      }
+    poes-statusmsg {
+      width: 100%;
+    }
 
+    .funnything {
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+      @apply(--layout-start);
+      margin: 0px;
+    }
 
-      .bluecolor h1 {
-        color: var(--blue-theme-color);
-      }
+    .textballon {
+      margin: 0px;
+    }
+    .textballon h1 {
+      background-color: white;
+      border-radius: 10px;
+      box-sizing:border-box;
+      padding: 30px;
+      margin: 0px;
+    }
 
-      hr {
-        width: 100%;
-        outline: 0;
-        border: 0;
-        background-color: rgba(0,0,0,0.05);
-        height: 1px;
-        margin: 0px;
-      }
+    .funnythingdeeltwee {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      @apply(--layout-start-justified);
+      width: 100%;
+      height: 90px;
+      margin: 0px;
+    }
 
-      .msgs {
-        width: 100%;
-        max-width: 700px;
-        @apply(--layout-vertical);
-        @apply(--layout-center);
-        @apply(--layout-start-justified);
-      }
+    .funnythingdeeltwee img {
+      height: 100%;
+    }
 
+    poes-avatar {
+      height: 50px;
+      width: 50px;
+      margin: 20px 10px 20px 25px;
+    }
 
-      poes-statusmsg {
-        width: 100%;
-      }
+    .smallest {
+      @apply(--theme-font-general);
+      font-size: 16px;
+    }
 
-
-      .funnything {
-        @apply(--layout-vertical);
-        @apply(--layout-center);
-        @apply(--layout-start);
-        margin: 0px;
-      }
-
-      .textballon {
-        margin: 0px;
-      }
-      .textballon h1 {
-        background-color: white;
-        border-radius: 10px;
-        box-sizing:border-box;
-        padding: 30px;
-        margin: 0px;
-      }
-
-      .funnythingdeeltwee {
-        @apply(--layout-horizontal);
-        @apply(--layout-center);
-        @apply(--layout-start-justified);
-        width: 100%;
-        height: 90px;
-        margin: 0px;
-      }
-
-      .funnythingdeeltwee img {
-        height: 100%;
-      }
-
-      poes-avatar {
-        height: 50px;
-        width: 50px;
-        margin: 20px 10px 20px 25px;
-      }
-
-      .smallest {
-        @apply(--theme-font-general);
-        font-size: 16px;
-      }
-
-
-
-
-
-
-
-
-
-
-
-
-@media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
+    @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
 
      .votething {
-        width: 100%;
-        max-width: 600px;
-      }
+      width: 100%;
+      max-width: 600px;
+    }
 
-      .votethingimg {
-        width: 90px;
-        height: 90px;
-        overflow: hidden;
-      }
+    .votethingimg {
+      width: 90px;
+      height: 90px;
+      overflow: hidden;
+    }
 
-      .votethingimg img {
-        min-width: 100%;
-        min-height: 100%;
-        max-width: 100px;
+    .votethingimg img {
+      min-width: 100%;
+      min-height: 100%;
+      max-width: 100px;
 
-      }
-      .votethingtxt {
-        padding: 15px;
-      }
+    }
+    .votethingtxt {
+      padding: 15px;
+    }
 
-      .votethingtxt h1 {
-        font-size: 24px;
-        line-height: 28px;
-      }
-      .votethingtxt p {
-        font-size: 16px;
-      }
-      .small {
-        font-size: 9px;
-      }
+    .votethingtxt h1 {
+      font-size: 24px;
+      line-height: 28px;
+    }
+    .votethingtxt p {
+      font-size: 16px;
+    }
+    .small {
+      font-size: 9px;
+    }
 
-      .voteheadertxt {
-        text-align: center;
-      }
+    .voteheadertxt {
+      text-align: center;
+    }
 
-      .msgs {
-        min-height: 700px;
-      }
-}
+    .msgs {
+      min-height: 700px;
+    }
+  }
   /* mobile-large */
   @media all and (min-width: 361px) and (orientation: portrait) {
-     .votething {
-        width: 100%;
-        max-width: 600px;
-      }
-      .votethingimg {
-        width: 90px;
-        height: 90px;
-        overflow: hidden;
-      }
-
-      .votethingimg img {
-        min-width: 100%;
-        min-height: 100%;
-        max-width: 100px;
-      }
-      .votethingtxt {
-        padding: 15px;
-      }
-      .votethingtxt h1 {
-        font-size: 24px;
-        line-height: 28px;
-      }
-      .votethingtxt p {
-        font-size: 16px;
-      }
-      .small {
-        font-size: 9px;
-      }
-      .voteheadertxt {
-        text-align: center;
-      }
-      .msgs {
-        min-height: 700px;
-      }
-   }
-  /* mobile-small-landscape */
-  @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) {
-     .votething {
-        width: 100%;
-        max-width: 600px;
-      }
-
-      .votethingimg {
-        width: 90px;
-        height: 90px;
-        overflow: hidden;
-      }
-
-      .votethingimg img {
-        min-width: 100%;
-        min-height: 100%;
-        max-width: 100px;
-      }
-      .votethingtxt {
-        padding: 15px;
-      }
-
-      .votethingtxt h1 {
-        font-size: 24px;
-        line-height: 28px;
-      }
-      .votethingtxt p {
-        font-size: 16px;
-      }
-      .small {
-        font-size: 9px;
-      }
- 
-      .voteheadertxt {
-        text-align: center;
-      }
-
-      .msgs {
-        min-height: 700px;
-      }
-
-
-   }
-
-
-
- @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { 
-
-
- }
-  /* desktop-medium */
-  @media all and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4/3) { 
-
+   .votething {
+    width: 100%;
+    max-width: 600px;
+  }
+  .votethingimg {
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
   }
 
-  /* desktop-large */
-  @media all and (min-width: 1281px) and (max-width: 1600px) { 
-
+  .votethingimg img {
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 100px;
   }
-  /* desktop-xlarge */
-  @media all and (min-width: 1601px) and (max-width: 1920px) { 
-
+  .votethingtxt {
+    padding: 15px;
   }
+  .votethingtxt h1 {
+    font-size: 24px;
+    line-height: 28px;
+  }
+  .votethingtxt p {
+    font-size: 16px;
+  }
+  .small {
+    font-size: 9px;
+  }
+  .voteheadertxt {
+    text-align: center;
+  }
+  .msgs {
+    min-height: 700px;
+  }
+}
+/* mobile-small-landscape */
+@media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) {
+ .votething {
+  width: 100%;
+  max-width: 600px;
+}
+
+.votethingimg {
+  width: 90px;
+  height: 90px;
+  overflow: hidden;
+}
+
+.votethingimg img {
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 100px;
+}
+.votethingtxt {
+  padding: 15px;
+}
+
+.votethingtxt h1 {
+  font-size: 24px;
+  line-height: 28px;
+}
+.votethingtxt p {
+  font-size: 16px;
+}
+.small {
+  font-size: 9px;
+}
+
+.voteheadertxt {
+  text-align: center;
+}
+
+.msgs {
+  min-height: 700px;
+}
 
 
-    </style>
+}
 
 
-    <div class="voteheader">
-      <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>     
-      <h1>{{vraag}}</h1>
-    </div>
+
+@media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { 
 
 
-    <div class="votebody">
-    <neon-animated-pages selected="{{votestate}}" 
-            entry-animation="{{voteEntry}}"
-            exit-animation="{{voteExit}}"
-            attr-for-selected="vote-route">
+}
+/* desktop-medium */
+@media all and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4/3) { 
 
-      <neon-animatable vote-route="votecounts">
-        <div class="canvas">
-          <div class="votethings">
+}
+
+/* desktop-large */
+@media all and (min-width: 1281px) and (max-width: 1600px) { 
+
+}
+/* desktop-xlarge */
+@media all and (min-width: 1601px) and (max-width: 1920px) { 
+
+}
+
+
+</style>
+
+
+<div class="voteheader">
+  <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>     
+  <h1>{{vraag}}</h1>
+</div>
+
+
+<div class="votebody">
+  <neon-animated-pages selected="{{votestate}}" 
+  entry-animation="{{voteEntry}}"
+  exit-animation="{{voteExit}}"
+  attr-for-selected="vote-route">
+
+  <neon-animatable vote-route="votecounts">
+  <div class="canvas">
+    <div class="votethings">
 
 <!--               <div class="votething">
                 <div class="votethingimg">
@@ -618,7 +573,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </div>
                 </template>
               </div> -->
- 
+
               <div class="votething">
                 <div class="votethingimg">
                   <img id="img1" src="http://109.123.70.141:8080/ipfs/{{img1}}" />
@@ -670,34 +625,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <div class="ownvote">              
               <template is="dom-if" if="{{!voted}}">
-              <button class="mainbutton" on-tap="toCast">Breng je stem uit!</button>
+                <button class="mainbutton" on-tap="toCast">Breng je stem uit!</button>
               </template>
               <template is="dom-if" if="{{voted}}">
-              <div class="ownvotetxt">
-                <poes-aai catnumber="{{poezenimage}}"></poes-aai>
-                <p>Jij stemde op jouw keuze.</p>
-              </div>
-              <button class="minibtn" on-tap="toCast">Mijn stem veranderen</button>
+                <div class="ownvotetxt">
+                  <poes-aai catnumber="{{poezenimage}}"></poes-aai>
+                  <p>Jij stemde op jouw keuze.</p>
+                </div>
+                <button class="minibtn" on-tap="toCast">Mijn stem veranderen</button>
               </template>
-      <div class="voteheadertxt"><p>Het stemmen is <span>{{starttijd}}</span> begonnen en eindigt <span>{{resttijd}}</span>. De volgende dag wordt de Poezendoos gevuld met de meest gestemde optie. Enkel degenen die voor deze optie stemden, krijgen toegang tot de Poezendoos. Elke week is er een nieuwe stemronde.</p>
-      </div>
+              <div class="voteheadertxt"><p>Het stemmen is <span>{{starttijd}}</span> begonnen en eindigt <span>{{resttijd}}</span>. De volgende dag wordt de Poezendoos gevuld met de meest gestemde optie. Enkel degenen die voor deze optie stemden, krijgen toegang tot de Poezendoos. Elke week is er een nieuwe stemronde.</p>
+              </div>
 
             </div>
-        </div> 
-      </neon-animatable>
+          </div> 
+        </neon-animatable>
 
-      <neon-animatable vote-route="castvote">
+        <neon-animatable vote-route="castvote">
         <div class="canvas">
-            <iron-selector
-            id="voteselector"
-            attr-for-selected="key"
-            selected="{{currentchoice}}">
+          <iron-selector
+          id="voteselector"
+          attr-for-selected="key"
+          selected="{{currentchoice}}">
 
-            <poes-votebutton img="http://109.123.70.141:8080/ipfs/{{img1}}" selectedkey="{{currentchoice}}" optie="{{optie1}}" votes="{{votes1}}" key="1"></poes-votebutton>
-            <hr>
-            <poes-votebutton img="http://109.123.70.141:8080/ipfs/{{img2}}" selectedkey="{{currentchoice}}" optie="{{optie2}}" votes="{{votes2}}" key="2"></poes-votebutton>
-            <hr>
-            <poes-votebutton img="http://109.123.70.141:8080/ipfs/{{img3}}" selectedkey="{{currentchoice}}" optie="{{optie3}}" votes="{{votes3}}" key="3"></poes-votebutton>
+          <poes-votebutton img="http://109.123.70.141:8080/ipfs/{{img1}}" selectedkey="{{currentchoice}}" optie="{{optie1}}" votes="{{votes1}}" key="1"></poes-votebutton>
+          <hr>
+          <poes-votebutton img="http://109.123.70.141:8080/ipfs/{{img2}}" selectedkey="{{currentchoice}}" optie="{{optie2}}" votes="{{votes2}}" key="2"></poes-votebutton>
+          <hr>
+          <poes-votebutton img="http://109.123.70.141:8080/ipfs/{{img3}}" selectedkey="{{currentchoice}}" optie="{{optie3}}" votes="{{votes3}}" key="3"></poes-votebutton>
 
         </iron-selector>
 
@@ -705,173 +660,113 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <div class="givevote">
           <div class="givevotebtns">
-            
-          <button id="votebutt" on-tap="backtoVotecounts" class="smallbutton"><</button>            
-          <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor <span>{{currenttxt}}</span></button>
-        </div>
+
+            <button id="votebutt" on-tap="backtoVotecounts" class="smallbutton"><</button>            
+            <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor <span>{{currenttxt}}</span></button>
+          </div>
 
         </div>
-      <div class="voteheadertxt"><p>Let op: enkel degenen die voor de winnende optie stemmen, krijgen toegang tot de Poezendoos.</p></div>
+        <div class="voteheadertxt"><p>Let op: enkel degenen die voor de winnende optie stemmen, krijgen toegang tot de Poezendoos.</p></div>
 
       </div>
-      </neon-animatable>
+    </neon-animatable>
 
 
 
-      <neon-animatable vote-route="myvotestate">
-        <div class="canvas">
-          <div class="msgs">
-          <template is="dom-if" if="{{!voteaccepted}}">
-            <poezenclub-loader normal loadmsg=""></poezenclub-loader>
-          </template>
+    <neon-animatable vote-route="myvotestate">
+    <div class="canvas">
+      <div class="msgs">
+        <template is="dom-if" if="{{!voteaccepted}}">
+          <poezenclub-loader normal loadmsg=""></poezenclub-loader>
+        </template>
 
-          <template is="dom-if" if="{{voteaccepted}}">
-            <div class="funnything">
-              <div class="textballon">
-                <h1><span>{{currenttxt}}</span>!</h1>
-              </div>
-              <div class="funnythingdeeltwee">
-                <poes-avatar poesnr="{{poezenimage}}"></poes-avatar>
-                <img src="../../images/textballonhoekje.svg">
-                <p class="smallest">Je stem werd uitgebracht.</p>
-              </div>
+        <template is="dom-if" if="{{voteaccepted}}">
+          <div class="funnything">
+            <div class="textballon">
+              <h1><span>{{currenttxt}}</span>!</h1>
             </div>
-          </template>
+            <div class="funnythingdeeltwee">
+              <poes-avatar poesnr="{{poezenimage}}"></poes-avatar>
+              <img src="../../images/textballonhoekje.svg">
+              <p class="smallest">Je stem werd uitgebracht.</p>
+            </div>
+          </div>
+        </template>
 
-          <poes-statusmsg id="melding1" msg="Je stemde op" choice="{{currenttxt}}" withchoice>
-          </poes-statusmsg>
-          <hr>
-          <poes-statusmsg id="melding2" msg="Je stem wordt doorgegeven aan het contract" nochoice>
-          </poes-statusmsg>
-          <hr>
-          <poes-statusmsg id="melding3" msg="Je stem is geregistreerd door het contract" nochoice>
-          </poes-statusmsg>
-          <template is="dom-if" if="{{voteaccepted}}">
-            <button class="mediumbutton" on-tap="toVotecounts">terug naar overzicht</button>
-          </template>
+        <poes-statusmsg id="melding1" msg="Je stemde op" choice="{{currenttxt}}" withchoice>
+      </poes-statusmsg>
+      <hr>
+      <poes-statusmsg id="melding2" msg="Je stem wordt doorgegeven aan het contract" nochoice>
+    </poes-statusmsg>
+    <hr>
+    <poes-statusmsg id="melding3" msg="Je stem is geregistreerd door het contract" nochoice>
+  </poes-statusmsg>
+  <template is="dom-if" if="{{voteaccepted}}">
+    <button class="mediumbutton" on-tap="toVotecounts">terug naar overzicht</button>
+  </template>
 
+</div>
+</div>
+</neon-animatable>
 
-<!--           <div class="whitespace">
-          </div> -->
-        </div>
-        </div>
-      </neon-animatable>
+<neon-animatable vote-route="openbox">
+  <poes-box access></poes-box>
+</neon-animatable>
 
 </neon-animated-pages>
 </div>
-<!--     <template is="dom-if" if="{{voteactive}}">
-      <div>
-        <paper-toolbar>
-          <div class="flex"></div>
-          <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
-        </paper-toolbar>
-        <div class="canvaskf">
-        <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
-        <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
-        <iron-selector attr-for-selected="key" selected="{{currentchoice}}" on-iron-select="castVote" class="choice">
-        <template is="dom-repeat" items="{{chartdata}}">
-          <div class="keuzeoptie" key="{{item.key}}">
-            <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
-            <div class="label flex">{{item.label}}</div>
-            <div>{{item.value}}</div>
-          </div>
-        </template>
-        </iron-selector>
-        <p>Bgin van deze stemronde <b>{{starttijd}}</b></p>
-        <p>Einde van deze stemronde <b>{{resttijd}}</b></p>
-        <p>Maandag gaat de doos enkel open voor poezen die de winnende keuze hebben gemaakt.</p>
-        
-        </div>
-      </div>
-    </template>
 
-    
-
-    als de voting niet meer actief is
-
-    <template is="dom-if" if="{{!voteactive}}">
-      <div>
-        <paper-toolbar>
-          <div class="flex"></div>
-          <poes-avatar on-tap="topussybase" poesnr="{{poezenimage}}"></poes-avatar>
-        </paper-toolbar>
-        <div class="canvaskf">
-        <p>Het stemmen is afgelopen.</p>
-        <h2 on-tap="renderchart">Wat moet er vanaf maandag in de poezendoos zitten?</h2>
-        <chart-pie data="{{chartdata}}" class="square-chart" id="chart"></chart-pie>
-        <template is="dom-repeat" items="{{chartdata}}">
-          <div class="keuzeoptie" key="{{item.key}}">
-            <poes-kleurbolleke class="bolleke" kleur="{{item.color}}"></poes-kleurbolleke>
-            <div class="label flex">{{item.label}}</div>
-            <div>{{item.value}}</div>
-          </div>
-        </template>
-
-        <template is="dom-if" if="{{winner}}">
-          <p>Jij stemde voor de winnende keuze!</p>
-          <paper-button raised>OPEN DE DOOS</paper-button>
-        </template>
-
-        <template is="dom-if" if="{{!winner}}">
-          <p>Helaas, je hoort niet bij de winnaars.</p>
-          <p>Probeer het volgende week nog eens!</p>
-        </template>
-
-
-        </div>
-      </div>
-    </template> -->
   </template>
   <script>
-  (function() {
-    'use strict';
+    (function() {
+      'use strict';
 
-    Polymer({
-      is: 'poes-voting',
+      Polymer({
+        is: 'poes-voting',
 
-      properties: {
-        votekey: {
-          type: String
-        },
-        voteactive: {
-          type: Boolean,
-          value: true
-        },
-        winner: {
-          type: Boolean,
-          value: true
-        },
-        contractaddress: {
-          type: String,
-          observer: "_hascontractaddress"
-        },
-        voteipfs: {
-          type:String
-        },
-        ipfs: {
-          type: String,
-          observer: "_ipfschanged"
-        },
-        votestate: {
-          type:String,
-          observer: '_votestatechanged'          
-        },
-        voted: {
-          type: Boolean,
-          value: false,
-          observer: '_votedchanged'          
-        },
-        chartisthere: {
-          type: Boolean,
-          value: false
-        },
-        winkey: {
-          type: String,
-          observer: '_winkey'
-        },
-        currentchoice: {
-          observer: '_currentchoice'
-        },
+        properties: {
+          votekey: {
+            type: String
+          },
+          voteactive: {
+            type: Boolean,
+            value: true
+          },
+          winner: {
+            type: Boolean,
+            value: true
+          },
+          contractaddress: {
+            type: String,
+            observer: "_hascontractaddress"
+          },
+          voteipfs: {
+            type:String
+          },
+          ipfs: {
+            type: String,
+            observer: "_ipfschanged"
+          },
+          votestate: {
+            type:String,
+            observer: '_votestatechanged'          
+          },
+          voted: {
+            type: Boolean,
+            value: false,
+            observer: '_votedchanged'          
+          },
+          chartisthere: {
+            type: Boolean,
+            value: false
+          },
+          winkey: {
+            type: String,
+            observer: '_winkey'
+          },
+          currentchoice: {
+            observer: '_currentchoice'
+          },
         // The blockchain status of your vote        
         votestatus: {
           type:Number,
@@ -894,7 +789,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // Add 0x to address 
       fixaddress: function(address) {
         function strStartsWith(str, prefix) {
-            return str.indexOf(prefix) === 0;
+          return str.indexOf(prefix) === 0;
         }
         if (!strStartsWith(address, '0x')) {
           return ('0x' + address);
@@ -908,21 +803,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('NIEUWE VOTESTATUS=',this.votestatus);
         switch (this.votestatus) {
           case 0:
-            console.log('Voting in initial state');
-            break;
+          console.log('Voting in initial state');
+          break;
           case 1:
-            console.log('Vote submitted');
-            this.$.melding1.valid = true;
-            break;
+          console.log('Vote submitted');
+          this.$.melding1.valid = true;
+          break;
           case 2:
-            console.log('Vote transaction hash received: Ik heb de stem ontvangen maar is nog niet gemined');
-            this.$.melding2.valid = true;
-            break;
+          console.log('Vote transaction hash received: Ik heb de stem ontvangen maar is nog niet gemined');
+          this.$.melding2.valid = true;
+          break;
           case 3:
-            console.log('Vote transaction confirmation received: alles kids, block is gemined');
-            this.$.melding3.valid = true;
-            this.voteaccepted = true;
-            break;
+          console.log('Vote transaction confirmation received: alles kids, block is gemined');
+          this.$.melding3.valid = true;
+          this.voteaccepted = true;
+          break;
         }
         console.log('<<<<<<<<<<<<<<<<<');
 
@@ -965,21 +860,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var self =this;
 
         if (this.ipfs){
-        this.ipfs.cat(this.voteipfs, function(err, res) {
+          this.ipfs.cat(this.voteipfs, function(err, res) {
 
 
-        var buf = '';
-        res
-          .on('error', (err) => {
-            throw err
-          })
-          .on('data', (data) => {
-            buf += data
-          })
-          .on('end', () => {
+            var buf = '';
+            res
+            .on('error', (err) => {
+              throw err
+            })
+            .on('data', (data) => {
+              buf += data
+            })
+            .on('end', () => {
 //            console.log('buffer',buf);
-            self.vote = JSON.parse(buf);
-            self.contractaddress = self.vote.contractaddress;
+self.vote = JSON.parse(buf);
+self.contractaddress = self.vote.contractaddress;
             // de rest gaat via de observer van contractaddress
             console.log(self.vote);
             self.vraag = self.vote.vraag;
@@ -993,8 +888,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             self.resttijd = moment.unix(self.vote.endunix).locale('nl').fromNow();
             self.starttijd = moment.unix(self.vote.startunix).locale('nl').fromNow();
+
+            var now = Math.floor(Date.now()/1000);
+
+            if(!self.vote.endunix < now){
+              console.log("Voting has ended.", self.vote.endunix, now);
+              self.govote('openbox');
+            } else {
+              console.log("Voting is active.", self.vote.endunix, now);
+            };
           });
-        });
+          });
 
         }else{
           console.log('failed to read IPFS object : not available');
@@ -1006,32 +910,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.votestate = tostate;
       },
 
-        toCast: function(){
-               this.voteEntry = "slide-from-right-animation";
-        this.voteExit = "slide-left-animation";   
-        this.govote('castvote');
-      },
+      toCast: function(){
+       this.voteEntry = "slide-from-right-animation";
+       this.voteExit = "slide-left-animation";   
+       this.govote('castvote');
+     },
 
-        toVotecounts: function(){
-                  this.voteEntry = "slide-from-right-animation";
-        this.voteExit = "slide-left-animation";
-        this.govote('votecounts');
-      },
+     toVotecounts: function(){
+      this.voteEntry = "slide-from-right-animation";
+      this.voteExit = "slide-left-animation";
+      this.govote('votecounts');
+    },
 
-        backtoVotecounts: function(){
-                  this.voteEntry = "slide-from-left-animation";
-        this.voteExit = "slide-right-animation";
-        this.govote('votecounts');
-      },
+    backtoVotecounts: function(){
+      this.voteEntry = "slide-from-left-animation";
+      this.voteExit = "slide-right-animation";
+      this.govote('votecounts');
+    },
 
-
-      renderchart: function(){
+    renderchart: function(){
          // create an instance with createElement:
-      
+       },
 
-      },
-
-      readVoteResults: function() {
+       readVoteResults: function() {
         var self = this;
 
         var MyContract = self.web3.eth.contract(self.contractjson.abi);
@@ -1056,7 +957,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.votes3 = this.voteresults[3];
 
         //this.voteresults = {1: 10, 2: 5, 3: 8};
-        
         this.votearray = this.object2array(this.voteresults);
         this.votearray = _.sortBy(this.votearray, "data");
         this.winkey = this.votearray[2].key;
@@ -1075,28 +975,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.optie3winner = this.winkey == 3;
 
         this.chartdata = [{
-            key: 1,
-            value: this.voteresults[1],
-            color: this.vote.kleur1,
-            highlight: "#FF5A5E",
-            label: this.vote.optie1
-          },
+          key: 1,
+          value: this.voteresults[1],
+          color: this.vote.kleur1,
+          highlight: "#FF5A5E",
+          label: this.vote.optie1
+        },
 
-          {
-            key: 2,
-            value: this.voteresults[2],
-            color: this.vote.kleur2,
-            highlight: "#5AD3D1",
-            label: this.vote.optie2
-          },
+        {
+          key: 2,
+          value: this.voteresults[2],
+          color: this.vote.kleur2,
+          highlight: "#5AD3D1",
+          label: this.vote.optie2
+        },
 
-          {
-            key: 3,
-            value: this.voteresults[3],
-            color: this.vote.kleur3,
-            highlight: "#FFC870",
-            label: this.vote.optie3
-          }
+        {
+          key: 3,
+          value: this.voteresults[3],
+          color: this.vote.kleur3,
+          highlight: "#FFC870",
+          label: this.vote.optie3
+        }
         ];
 
       },
@@ -1159,7 +1059,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('watwat');
         this.govote('myvotestate');
 
-
         var self = this;
 
         self.vote = this.currentchoice;
@@ -1173,7 +1072,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
           var myContractInstance = MyContract.at(self.contractaddress);
-
 
           var gasPrice = result.toNumber(10);
 
@@ -1199,7 +1097,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               }
             }
-          );
+            );
 
 
         });
@@ -1208,28 +1106,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _winkey: function(){
         console.log("NUMMER ", parseInt(this.winkey), " IS WINNAAR");
         var win = parseInt(this.winkey);
-        //console.log(this.vote.optiewin);
-        //this.winimg = this.voteresults
       },
 
       object2array: function(input){
-      var newarray = [];
-      var p = input;
-      for (var key in p) {
-        if (p.hasOwnProperty(key)) {
-          newarray.push({data: p[key], key: key});
-          //console.log(newarray);
+        var newarray = [];
+        var p = input;
+        for (var key in p) {
+          if (p.hasOwnProperty(key)) {
+            newarray.push({data: p[key], key: key});
         }
       };
       return newarray;
-    },
+    }
 
-    // isWinner: function(optie){
-    //   console.log('DE optie is:',optie, 'terwijl de WINOPTIE dit is:',this.winkey);
-    //   return (optie == this.winkey);
-    // }
-
-    });
-  })();
-  </script>
+  });
+})();
+</script>
 </dom-module>
