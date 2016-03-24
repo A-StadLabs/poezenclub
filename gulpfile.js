@@ -50,12 +50,16 @@ var styleTask = function(stylesPath, srcs) {
   return gulp.src(srcs.map(function(src) {
       return path.join('app', stylesPath, src);
     }))
-    .pipe($.changed(stylesPath, {extension: '.css'}))
+    .pipe($.changed(stylesPath, {
+      extension: '.css'
+    }))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp/' + stylesPath))
     .pipe($.minifyCss())
     .pipe(gulp.dest(dist(stylesPath)))
-    .pipe($.size({title: stylesPath}));
+    .pipe($.size({
+      title: stylesPath
+    }));
 };
 
 var imageOptimizeTask = function(src, dest) {
@@ -65,7 +69,9 @@ var imageOptimizeTask = function(src, dest) {
       interlaced: true
     }))
     .pipe(gulp.dest(dest))
-    .pipe($.size({title: 'images'}));
+    .pipe($.size({
+      title: 'images'
+    }));
 };
 
 var optimizeHtmlTask = function(src, dest) {
@@ -120,10 +126,10 @@ gulp.task('ensureFiles', function(cb) {
 // Lint JavaScript
 gulp.task('lint', ['ensureFiles'], function() {
   return gulp.src([
-//      'app/scripts/**/*.js',
-//      'app/elements/**/*.js',
-//      'app/elements/**/*.html',
-//      'gulpfile.js'
+      //      'app/scripts/**/*.js',
+      //      'app/elements/**/*.js',
+      //      'app/elements/**/*.html',
+      //      'gulpfile.js'
     ])
     .pipe(reload({
       stream: true,
@@ -131,12 +137,14 @@ gulp.task('lint', ['ensureFiles'], function() {
     }))
 
   // JSCS has not yet a extract option
-  .pipe($.if('*.html', $.htmlExtract({strip: true})))
-  .pipe($.jshint())
-  .pipe($.jscs())
-  .pipe($.jscsStylish.combineWithHintResults())
-  .pipe($.jshint.reporter('jshint-stylish'))
-  .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
+  .pipe($.if('*.html', $.htmlExtract({
+      strip: true
+    })))
+    .pipe($.jshint())
+    .pipe($.jscs())
+    .pipe($.jscsStylish.combineWithHintResults())
+    .pipe($.jshint.reporter('jshint-stylish'))
+    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
 // Optimize images
@@ -163,10 +171,10 @@ gulp.task('copy', function() {
     'app/bower_components/{webcomponentsjs,platinum-sw,sw-toolbox,promise-polyfill}/**/*'
   ]).pipe(gulp.dest(dist('bower_components')));
 
- gulp.src(['app/scripts/hooked.js','app/scripts/lightwallet.min.js'])
+  gulp.src(['app/scripts/hooked.js', 'app/scripts/lightwallet.min.js'])
     .pipe(gulp.dest(path.join(dist(), 'scripts')));
 
- gulp.src(['app/contracts/*'])
+  gulp.src(['app/contracts/*'])
     .pipe(gulp.dest(path.join(dist(), 'contracts')));
 
 
@@ -201,7 +209,9 @@ gulp.task('vulcanize', function() {
       inlineScripts: true
     }))
     .pipe(gulp.dest(dist('elements')))
-    .pipe($.size({title: 'vulcanize'}));
+    .pipe($.size({
+      title: 'vulcanize'
+    }));
 });
 
 // Generate config data for the <sw-precache-cache> element.
@@ -222,8 +232,10 @@ gulp.task('cache-config', function(callback) {
     'index.html',
     './',
     'bower_components/webcomponentsjs/webcomponents-lite.min.js',
-    '{elements,scripts,styles}/**/*.*'],
-    {cwd: dir}, function(error, files) {
+    '{elements,scripts,styles}/**/*.*'
+  ], {
+    cwd: dir
+  }, function(error, files) {
     if (error) {
       callback(error);
     } else {
@@ -245,7 +257,7 @@ gulp.task('clean', function() {
 });
 
 // Watch files for changes & reload
-gulp.task('serve', ['lint', 'styles', 'elements'], function() {
+gulp.task('serve', ['compile-solidity', 'lint', 'styles', 'elements'], function() {
   browserSync({
     port: 5000,
     notify: false,
@@ -273,6 +285,7 @@ gulp.task('serve', ['lint', 'styles', 'elements'], function() {
   gulp.watch(['app/elements/**/*.css'], ['elements', reload]);
   gulp.watch(['app/{scripts,elements}/**/{*.js,*.html}'], ['lint']);
   gulp.watch(['app/images/**/*'], reload);
+  gulp.watch(['app/contracts/*.sol'], ['compile-solidity']);
 });
 
 // Build and serve the output from the dist build
@@ -302,9 +315,8 @@ gulp.task('serve:dist', ['default'], function() {
 gulp.task('default', ['clean'], function(cb) {
   // Uncomment 'cache-config' if you are going to use service workers.
   runSequence(
-    ['copy', 'styles'],
-    'elements',
-    ['lint', 'images', 'fonts', 'html'],
+    ['compile-solidity', 'copy', 'styles'],
+    'elements', ['lint', 'images', 'fonts', 'html'],
     'vulcanize', // 'cache-config',
     cb);
 });
@@ -319,25 +331,25 @@ gulp.task('build-deploy-gh-pages', function(cb) {
 
 // deploy to bitballoon
 gulp.task('deploy', function() {
-/*
-  var client = bb.createClient({
-    client_id: "zigge",
-    client_secret: "zagge"
-  });
-*/
-//  client.authorizeFromCredentials(function(err, access_token) {
-   // if (err) return console.log(err);
-    bb.deploy({
-      access_token: "9e992858a1f1519a6edc38f32f9f5cca8bc494c2f15f2a3d92532c7d66086352",
-      site_id: "poezenclub.bitballoon.com",
-      dir: "dist"
-    }, function(err, deploy) {
-      if (err) {
-        throw (err)
-      }
+  /*
+    var client = bb.createClient({
+      client_id: "zigge",
+      client_secret: "zagge"
     });
+  */
+  //  client.authorizeFromCredentials(function(err, access_token) {
+  // if (err) return console.log(err);
+  bb.deploy({
+    access_token: "9e992858a1f1519a6edc38f32f9f5cca8bc494c2f15f2a3d92532c7d66086352",
+    site_id: "poezenclub.bitballoon.com",
+    dir: "dist"
+  }, function(err, deploy) {
+    if (err) {
+      throw (err)
+    }
+  });
 
- // });
+  // });
 });
 
 // Deploy to GitHub pages gh-pages branch
