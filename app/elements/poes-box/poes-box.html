@@ -1,0 +1,98 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="poes-box">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <neon-animated-pages selected="{{boxstate}}" attr-for-selected="boxroute">
+      <section boxroute="noaccess">
+        <p>Sorry. je hebt geen toegang tot de doos. FUCK YOU</p>
+      </section>
+
+      <section boxroute="enterpin">
+        <p>Pincode op poezendoos hier invoeren</p>
+        <paper-input-container no-label-float>
+          <label class="centertexting">pincode</label>
+          <input autofocus class="centertexting"
+            is="iron-input"
+            prevent-invalid-input
+            type="number"
+            bind-value="{{boxpin}}"></paper-input-container>
+        <button on-tap="submitboxpin" class="main">OK</button>
+        <button on-tap="toPussybase" class="main"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
+      </section>
+
+      <section boxroute="boxchecks">
+        <p>De poezendoos checkt of jij ze wel mag openen.</p>
+      </section>
+
+      <section boxroute="boxisopen">
+        <p>De poezendoos sluit over 15 seconden.</p>
+      </section>
+
+    </neon-animated-pages>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    var mqtt;
+
+    Polymer({
+      is: 'poes-box',
+
+      properties: {
+        boxstate: {
+          type: String,
+          value: 'enterpin',
+          notify: true
+        },
+        access: {
+          type: Boolean,
+          value: false,
+          observer: '_access'
+        }
+      },
+
+      ready: function(){
+        mqtt = document.getElementById("lomqtt");
+      },
+
+      submitboxpin: function(){
+        console.log(this.boxpin);
+        var pin = this.boxpin;
+        mqtt.send("kingflurkel/debug/"+pin, "hallo", 2);
+        this.boxstate = "boxchecks";
+      },
+
+      cancel: function(){
+        this.boxstate ="enterpin";
+      },
+
+      _access: function(){
+        if(this.access){
+          this.boxstate = "enterpin";
+        } else {
+          this.boxstate = "noaccess";
+        }
+      }
+
+
+    });
+  })();
+  </script>
+</dom-module>

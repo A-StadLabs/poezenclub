@@ -57,7 +57,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function(){
-        this.set('interval', setInterval(this._choice.bind(this), 2500));
+        var self = this;
+        //this.set('interval', setInterval(this._choice.bind(this), 2500));
+        
       },
 
       _choice: function(){
