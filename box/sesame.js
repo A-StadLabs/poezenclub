@@ -18,10 +18,6 @@ var LocalsValidation = require('../app/contracts/LocalsValidation.json');
 
 var PoezenVoting = require('../app/contracts/PoezenVoting.json');
 
-if (!process.env.simulate){
-  process.env.simulate = false;
-}
-
 console.log('Welkom bij de Poezendoos');
 console.log('web3 host = ', host);
 console.log('mqtt host = ', mqtthost);
