@@ -942,22 +942,15 @@
       },
 
       starttimer: function(){
-        //console.log("Einde; ", this.eindtijd);
         this.resttijd = moment.unix(this.eindtijd).locale('nl').fromNow();
 
         var now = Math.floor(Date.now()/1000);
-
-        // console.log("Voting is active.");
-        //   console.log("Starttijd: ",this.starting);
-        //   console.log("Now: ",now);
-        //   console.log("Eindtijd: ",this.eindtijd);
 
         if(this.starting < now && this.eindtijd > now){
           this.voteactive = true;
         } else {
           this.voteactive = false;
         }
-        //console.log(this.resttijd);
       },
 
       _ipfschanged: function(){
@@ -1089,6 +1082,7 @@ self.contractaddress = self.vote.contractaddress;
         this.optie3winner = this.winkey == 3;
 
         self.myvote = myContractInstance.voters(myaddress)[0].toNumber();
+        
         if (self.myvote == 0){
           // je hebt niet gestemd
           self.winner = false;
