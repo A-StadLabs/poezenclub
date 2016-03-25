@@ -1084,7 +1084,13 @@ self.contractaddress = self.vote.contractaddress;
         this.optie3winner = this.winkey == 3;
 
         self.myvote = myContractInstance.voters(myaddress)[0].toNumber();
-        self.winner = self.myvote == this.winkey;
+        if (self.myvote == 0){
+          // je hebt niet gestemd
+          self.winner = false;
+        }else{
+          self.winner = self.myvote == this.winkey;
+        }
+
 
       },
 
