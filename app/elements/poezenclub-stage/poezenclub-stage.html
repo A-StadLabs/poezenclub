@@ -806,7 +806,7 @@ id="lomqtt"></lo-mqtt>
             <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmVvSTWXL2zUxEMrXM7U1vB7EuZG78UtBpW7hqhkpeXHyK" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting>
           </div> -->
           <div class="voting">
-            <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmR6UPZVMyyFxRniT4WW5yXbkzsKZ5Jxa29RCQtA9z58TV" votekey="{{account}}" poezenimage="{{poezenimage}}" id="voting"></poes-voting>
+            <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmR6UPZVMyyFxRniT4WW5yXbkzsKZ5Jxa29RCQtA9z58TV" votekey="{{account}}" poezenimage="{{poezenimage}}" id="voting" contractaddress="{{votingcontract}}"></poes-voting>
 
           </div>
 
@@ -1183,8 +1183,10 @@ id="lomqtt"></lo-mqtt>
         console.log(this.boxpin);
         var pin = this.boxpin;
         //this.$.lomqtt.send("poezendoos/"+pin,"checkContract"+"|"+this.contractaddress+"|"+this.pincode, 2);
+
         //console.log(this.address);
-        this.$.lomqtt.send("poezendoos/"+pin,"checkVotingContract"+"|"+this.votingcontractaddress+"|"+this.contractaddress+"|"+this.pincode, 2);
+        console.log("poezendoos/"+pin,"checkVotingContract"+"|"+this.votingcontract+"|"+this.contractaddress+"|"+this.pincode, 2);
+        this.$.lomqtt.send("poezendoos/"+pin,"checkVotingContract"+"|"+this.votingcontract+"|"+this.contractaddress+"|"+this.pincode, 2);
         this.go("boxchecks");
       },
 
