@@ -162,6 +162,7 @@ function afterSerialPortOpen() {
       // het account van de voter
       var voteraddress = commandarray[2];
       //        var pincode = commandarray[2];
+      var pincode = commandarray[3];
 
       schrijflcd(" de poezendoos " + String.fromCharCode(13) + " telt de stemmen");
 
@@ -169,7 +170,9 @@ function afterSerialPortOpen() {
         if (iamawinner) {
           console.log('gij zijt gewonnen');
           openDoor();
-          //client.publish(pincode, 'doosisopen');
+    
+          console.log('stuur doorisopen naar ',pincode);
+          client.publish(pincode, 'doosisopen');
         } else {
           // normaal komen we hier niet - de frontend houdt dat tegen...
           console.log('u bent niet bij de winnaars...!');
