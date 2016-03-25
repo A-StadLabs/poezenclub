@@ -947,12 +947,15 @@
 
         var now = Math.floor(Date.now()/1000);
 
-        if(this.starttijd < now && this.eindtijd > now){
+        // console.log("Voting is active.");
+        //   console.log("Starttijd: ",this.starting);
+        //   console.log("Now: ",now);
+        //   console.log("Eindtijd: ",this.eindtijd);
+
+        if(this.starting < now && this.eindtijd > now){
           this.voteactive = true;
-          console.log("Voting is active.");
         } else {
           this.voteactive = false;
-          console.log("Voting is NOT active.");
         }
         //console.log(this.resttijd);
       },
@@ -990,6 +993,8 @@ self.contractaddress = self.vote.contractaddress;
             self.eindtijd = self.vote.endunix;
 
             self.set('interval', setInterval(self.starttimer.bind(self), 1000));
+
+            self.starting = self.vote.startunix;
 
             self.starttijd = moment.unix(self.vote.startunix).locale('nl').fromNow();
 
