@@ -4,8 +4,9 @@ var serialPort = new SerialPort("/dev/ttyAMA0", {
   baudrate: 19200
 }, false); // this is the openImmediately flag [default is true]
 var host = process.env.ethnodehost || "http://109.123.70.141:8545";
+var mqtthost = 'ws://opantwerpen.be:15674';
 var mqtt = require('mqtt');
-var client = mqtt.connect('ws://opantwerpen.be:15674');
+var client = mqtt.connect(mqtthost);
 var code;
 var debounce = require('debounce');
 
@@ -17,17 +18,16 @@ var LocalsValidation = require('../app/contracts/LocalsValidation.json');
 
 var PoezenVoting = require('../app/contracts/PoezenVoting.json');
 
+if (!process.env.simulate){
+  process.env.simulate = false;
+}
+
 console.log('Welkom bij de Poezendoos');
-console.log('host     = ', host);
-console.log('simulate = ', process.env.simulate);
+console.log('web3 host = ', host);
+console.log('mqtt host = ', mqtthost);
+console.log('simulate  = ', process.env.simulate);
 
 web3 = new Web3();
-
-/*
-if (process.env.simulate) {
-  console.log('SIMULATE');
-}
-*/
 
 var writingtothelcd = false;
 
@@ -113,12 +113,15 @@ if (process.env.simulate) {
 
 function afterSerialPortOpen() {
 
-  console.log('open');
-  schrijflcd("Welkom bij de poezendoos");
+  console.log('Connected to the serial port.');
+  //schrijflcd("Welkom bij de poezendoos");
 
+  console.log('Setting up web3 provider');
   web3.setProvider(new web3.providers.HttpProvider(host));
 
+  console.log('connecting to MQTT...');
   client.on('connect', function() {
+    console.log('connected to MQTT!');
     client.subscribe('poezendoos');
     client.publish('poezendoos', 'Poezendoos online!');
   });
@@ -155,12 +158,6 @@ function afterSerialPortOpen() {
           schrijflcd('u heeft ' + result + ' validaties. Dat is niet genoeg');
         }
       });
-      // check if the contract is valid.
-      // checkContract(contractaddress, useraccount, function(result){
-      //  if(result){
-      //    openDoor();
-      //  }
-      // });
     };
 
     if (commandarray[0] === 'checkVotingContract') {
@@ -178,7 +175,8 @@ function afterSerialPortOpen() {
           openDoor();
           //client.publish(pincode, 'doosisopen');
         } else {
-          console.log('looooooooooser!');
+          // normaal komen we hier niet - de frontend houdt dat tegen...
+          console.log('u bent niet bij de winnaars...!');
         }
       });
     }
@@ -192,18 +190,18 @@ function afterSerialPortOpen() {
 
   });
 
-  var froms = [];
-  var datas = [];
-  var showfroms = debounce(_showfroms, 2000);
+  // var froms = [];
+  // var datas = [];
+  // var showfroms = debounce(_showfroms, 2000);
 
-  function _showfroms() {
-    console.log('Froms:', froms);
-    console.log('Datas:', datas);
-  }
+  // function _showfroms() {
+  //   console.log('Froms:', froms);
+  //   console.log('Datas:', datas);
+  // }
 
-  var topic = '0x' + web3.sha3('MemberAdded(address,address)');
+//  var topic = '0x' + web3.sha3('MemberAdded(address,address)');
 
-  console.log('Start listening to topic=', topic);
+//  console.log('Start listening to topic=', topic);
 
   // var filter = web3.eth.filter({
   //   fromBlock: LocalsMembership_startBlock,
