@@ -67,6 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       width: 100vw;
       overflow-y: scroll;
       background-color: var(--pink-theme-color);
+/*      background-color: red;*/
         @apply(--layout-vertical);
         @apply(--layout-start);
         @apply(--layout-center);
@@ -483,7 +484,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   .voting {
     width: 100%;
-    height: 600px;
   }
 
   poes-admin {
@@ -806,7 +806,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmVvSTWXL2zUxEMrXM7U1vB7EuZG78UtBpW7hqhkpeXHyK" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting>
           </div> -->
           <div class="voting">
-            <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmQ5cZw8baYWoLgvRzzKz1JmX8SBPa6EESn9uiekKHaj5z" votekey="{{account}}" poezenimage="{{poezenimage}}" id="voting"></poes-voting>
+            <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmTZZWeiHGYYePKaafzCaLvuRNf8HMgC3jsQpPY1UxMYZ8" votekey="{{account}}" poezenimage="{{poezenimage}}" id="voting"></poes-voting>
 
           </div>
 
@@ -817,14 +817,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template> -->
         </template>
 
-      <div class="whitespace"></div>
-
-      <div class="whitespace"></div>
         <template is="dom-if" if="{{!validated}}">
-
         <div class="validatorz vertical layout">
         <h2><i18n-msg msgid="getvalidated"></i18n-msg></h2>
-
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
         </div>

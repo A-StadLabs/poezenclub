@@ -43,7 +43,7 @@
     @apply(--layout-vertical);
     @apply(--layout-center-center);
     box-sizing:border-box;
-    padding: 0px 30px 30px 30px;
+    padding: 0px 30px 80px 30px;
     background-color: var(--pink-theme-color);
   }
 
@@ -117,6 +117,7 @@
   }
 
   .votethingtxt {
+    max-width: 215px;
     box-sizing:border-box;
     padding: 20px;
     @apply(--layout-vertical);
@@ -185,6 +186,7 @@
         @apply(--layout-center-center);
         box-sizing:border-box;
         padding: 20px 0px 50px 0px;
+        margin-bottom: 100px;
       }
 
       .mainbutton {
@@ -279,11 +281,18 @@
       .givevote {
         width: 100%;
         min-height: 100px;
-        @apply(--layout-horizontal);
+        @apply(--layout-vertical);
         @apply(--layout-center-center);
         @apply(--layout-wrap);
         box-sizing:border-box;
         padding: 20px 0px 50px 0px;
+        margin-bottom: 50px;
+      }
+
+      .givevotetxt {
+         @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        @apply(--layout-wrap);
       }
 
       .givevotebtns {
@@ -348,6 +357,7 @@
       @apply(--layout-vertical);
       @apply(--layout-center);
       @apply(--layout-start-justified);
+      margin-bottom: 50px;
     }
 
     poes-statusmsg {
@@ -395,6 +405,13 @@
       @apply(--theme-font-general);
       font-size: 16px;
     }
+
+
+
+.eindavatar {
+  visibility: visible;
+}
+
 
     @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
 
@@ -622,6 +639,11 @@
               </div>
 
             </div>
+
+            <div class="whitespace">              
+            </div>
+
+
           </div> 
         </neon-animatable>
 
@@ -648,11 +670,11 @@
             <button id="votebutt" on-tap="backtoVotecounts" class="smallbutton"><</button>            
             <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor <span>{{currenttxt}}</span></button>
           </div>
-
-        </div>
         <div class="voteheadertxt">
         <p>Let op: enkel degenen die voor de winnende optie stemmen, krijgen toegang tot de Poezendoos.</p>
         </div>
+        </div>
+
 
       </div>
     </neon-animatable>
@@ -672,7 +694,7 @@
               <h1><span>{{currenttxt}}</span>!</h1>
             </div>
             <div class="funnythingdeeltwee">
-              <poes-avatar poesnr="{{poezenimage}}"></poes-avatar>
+              <poes-avatar poesnr="{{poezenimage}}" class="eindavatar"></poes-avatar>
               <img src="../../images/textballonhoekje.svg">
               <p class="smallest">Je stem werd uitgebracht.</p>
             </div>
