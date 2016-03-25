@@ -164,13 +164,14 @@ function afterSerialPortOpen() {
       //        var pincode = commandarray[2];
       var pincode = commandarray[3];
 
-
       schrijflcd(" de poezendoos " + String.fromCharCode(13) + " telt de stemmen");
 
       checkVotingWinner(contractaddress, voteraddress, function(err,iamawinner) {
         if (iamawinner) {
           console.log('gij zijt gewonnen');
           openDoor();
+    
+          console.log('stuur doorisopen naar ',pincode);
           client.publish(pincode, 'doosisopen');
         } else {
           // normaal komen we hier niet - de frontend houdt dat tegen...
