@@ -24,7 +24,6 @@
 
   h1 {
     @apply(--theme-font-title);
-    text-align: center;
   }
 
   h2 {
@@ -55,6 +54,8 @@
     padding: 50px 50px 50px 50px;
     @apply(--layout-vertical);
     @apply(--layout-center);
+    text-align: center;
+
   }
 
   .voteheadertxt {
@@ -70,6 +71,7 @@
     /*        background-color: rgba(0,0,0,0.05);*/
     box-sizing:border-box;
     padding: 10px 20px 10px 20px;
+
   }
 
   .voteheadertxt p {
@@ -434,6 +436,7 @@
     }
     .votethingtxt {
       padding: 15px;
+    max-width: 150px;
     }
 
     .votethingtxt h1 {
@@ -474,6 +477,8 @@
   }
   .votethingtxt {
     padding: 15px;
+    max-width: 150px;
+
   }
   .votethingtxt h1 {
     font-size: 24px;
@@ -512,6 +517,8 @@
 }
 .votethingtxt {
   padding: 15px;
+    max-width: 150px;
+
 }
 
 .votethingtxt h1 {
@@ -561,7 +568,7 @@
 
 
 <div class="voteheader">
-  <div class="timestamp"><img src="../../images/time.svg"><p>Het stemmen eindigt <span>{{resttijd}}</span></p></div>     
+  <div class="timestamp"><img src="../../images/time.svg"><p>Einde van de stemming is <span>{{resttijd}}</span></p></div>     
   <h1>{{vraag}}</h1>
 </div>
 
@@ -931,6 +938,12 @@
         });
       },
 
+      starttimer: function(){
+        //console.log("Einde; ", this.eindtijd);
+        this.resttijd = moment.unix(this.eindtijd).locale('nl').fromNow();
+        //console.log(this.resttijd);
+      },
+
       _ipfschanged: function(){
         var self =this;
 
@@ -961,7 +974,10 @@ self.contractaddress = self.vote.contractaddress;
             self.img2 = self.vote.img2;
             self.img3 = self.vote.img3;
 
-            self.resttijd = moment.unix(self.vote.endunix).locale('nl').fromNow();
+            self.eindtijd = self.vote.endunix;
+
+            self.set('interval', setInterval(self.starttimer.bind(self), 1000));
+
             self.starttijd = moment.unix(self.vote.startunix).locale('nl').fromNow();
 
             var now = Math.floor(Date.now()/1000);
@@ -995,12 +1011,14 @@ self.contractaddress = self.vote.contractaddress;
       this.voteEntry = "slide-from-right-animation";
       this.voteExit = "slide-left-animation";
       this.govote('votecounts');
+
     },
 
     backtoVotecounts: function(){
       this.voteEntry = "slide-from-left-animation";
       this.voteExit = "slide-right-animation";
       this.govote('votecounts');
+      this.readVoteResults();
     },
 
     renderchart: function(){

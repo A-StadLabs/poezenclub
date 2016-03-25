@@ -12,27 +12,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../poes-aai/poes-aai.html">
 
 <dom-module id="poezenclub-stage">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
+<template>
+  <style>
+    :host {
+      display: block;
+    }
 
-      neon-animated-pages {
-        height: 100%;
-      }
+    neon-animated-pages {
+      height: 100%;
+    }
 
-      paper-drawer-panel {
+    paper-drawer-panel {
 /*        width: 100%;
-        overflow-y: scroll;*/
+overflow-y: scroll;*/
 
-      }
+}
 
 /*      #main {
         min-height: 100vh;
         width: 100vw;
       }
-*/
+      */
 
       .drawer {
         background-color: var(--pink-theme-color);
@@ -64,10 +64,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .canvas2pink {
-      width: 100vw;
-      overflow-y: scroll;
-      background-color: var(--pink-theme-color);
-/*      background-color: red;*/
+        width: 100vw;
+        overflow-y: scroll;
+        background-color: var(--pink-theme-color);
+        /*      background-color: red;*/
         @apply(--layout-vertical);
         @apply(--layout-start);
         @apply(--layout-center);
@@ -144,42 +144,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-    /*  POEZENSELECTOR  */
+      /*  POEZENSELECTOR  */
 
-    #poezenselector .iron-selected {
-      background-color: rgba(255,255,255,0.25);
-      border: 2px solid white;
-    
-    }
+      #poezenselector .iron-selected {
+        background-color: rgba(255,255,255,0.25);
+        border: 2px solid white;
 
-    .poesitem {
-      background-color: rgba(0,0,0,0.1);
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      overflow: hidden;
-      margin: 5px;
-      border: 2px solid transparent;
+      }
 
-    }
+      .poesitem {
+        background-color: rgba(0,0,0,0.1);
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        margin: 5px;
+        border: 2px solid transparent;
 
-    .poesitem img {
-      width: 100%;
-      height: 100%;
-    }
+      }
 
-    #poezenselector {
-      width: 100vw;
-      max-width: 800px;
-      @apply(--layout-horizontal);
-      @apply(--layout-wrap);
-      @apply(--layout-center-center);
+      .poesitem img {
+        width: 100%;
+        height: 100%;
+      }
 
-    }
+      #poezenselector {
+        width: 100vw;
+        max-width: 800px;
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+        @apply(--layout-center-center);
+
+      }
 
 
 
-    /*  NAME PUSS */
+      /*  NAME PUSS */
 
       paper-button {
         text-transform: capitalize;
@@ -210,7 +210,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .paper-input-container-0 label, paper-input-char-counter, .paper-input-container-0 input {
         font-family: Indieflower;
-/*      text-transform: capitalize;*/
+        /*      text-transform: capitalize;*/
       }
 
       .validatorz {
@@ -265,102 +265,102 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .valideerbtn {
-      outline: 0; 
-      margin: 5px 5px 5px 0px;
-      box-sizing:border-box;
-      border-radius: 8px;
-      cursor: pointer;
-      @apply(--theme-font-button);
+        outline: 0; 
+        margin: 5px 5px 5px 0px;
+        box-sizing:border-box;
+        border-radius: 8px;
+        cursor: pointer;
+        @apply(--theme-font-button);
         background-color: transparent;
         border: 1px solid black; 
-      padding: 15px 15px 15px 15px;
-      font-size: 22px;
+        padding: 15px 15px 15px 15px;
+        font-size: 22px;
         @apply(--layout-horizontal);
         @apply(--layout-center-center);
-    }
+      }
 
 
 
-    .incomingpic {
-      width: 250px;
-      height: 250px;
-      background-color: rgba(0,0,0,0.1);
-      border-radius: 50%;
-      overflow: hidden;
-    }
+      .incomingpic {
+        width: 250px;
+        height: 250px;
+        background-color: rgba(0,0,0,0.1);
+        border-radius: 50%;
+        overflow: hidden;
+      }
 
-    .incomingpic img {
-      width: 100%;
-      height: 100%;
-    }
+      .incomingpic img {
+        width: 100%;
+        height: 100%;
+      }
 
-    .version {
-      width: 100%;
-    }
+      .version {
+        width: 100%;
+      }
 
 
-    .version h2 {
-      font-size: 22px;
-    }
+      .version h2 {
+        font-size: 22px;
+      }
 
-    .version p  {
-      font-size: 26px;
-    }
+      .version p  {
+        font-size: 26px;
+      }
 
- .languagepicker {
-    width: 100%;
-    background: var(--pink-theme-color);
-    box-sizing:border-box;
-    padding: 20px;
-    border-bottom: 1px solid rgba(0,0,0,0.25);
+      .languagepicker {
+        width: 100%;
+        background: var(--pink-theme-color);
+        box-sizing:border-box;
+        padding: 20px;
+        border-bottom: 1px solid rgba(0,0,0,0.25);
 
 /*    @apply(--layout-horizontal);
-    @apply(--layout-start-justified);*/
-  }
+@apply(--layout-start-justified);*/
+}
 
-  .languagepickersel {
-    height: 100%;
-    @apply(--layout-horizontal);
-    @apply(--layout-center);
-  }
+.languagepickersel {
+  height: 100%;
+  @apply(--layout-horizontal);
+  @apply(--layout-center);
+}
 
-  .languagepickersel .iron-selected {
-    background-color: rgba(0,0,0,1);
-    text-decoration: underline;
-    color: var(--pink-theme-color);
-  }
+.languagepickersel .iron-selected {
+  background-color: rgba(0,0,0,1);
+  text-decoration: underline;
+  color: var(--pink-theme-color);
+}
 
-  .language {
-    @apply(--layout-horizontal);
-    @apply(--layout-center-center);
-    color: black;
-    width: 50px;
-    height: 40px;
-    border-radius: 10px;
-    padding: 0px;
-    cursor: pointer;
-    @apply(--theme-alt-general);
-  }
-
-
-
-  .language h2 {
-    font-size: 16px;
-  }
+.language {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-center);
+  color: black;
+  width: 50px;
+  height: 40px;
+  border-radius: 10px;
+  padding: 0px;
+  cursor: pointer;
+  @apply(--theme-alt-general);
+}
 
 
- .topbar {
-    width: 100%;
-    background: var(--pink-theme-color);
-    height: 15vh;
-    max-height: 150px;
-    box-sizing:border-box;
-    padding: 20px;
-    @apply(--layout-horizontal);  
-    @apply(--layout-center);    
-    @apply(--layout-end-justified);
-    border-bottom: 1px solid rgba(0,0,0,0.25);
-  }
+
+.language h2 {
+  font-size: 16px;
+}
+
+
+.topbar {
+  width: 100%;
+  background: var(--pink-theme-color);
+  height: 15vh;
+  max-height: 150px;
+  box-sizing:border-box;
+  padding: 20px;
+  @apply(--layout-horizontal);  
+  @apply(--layout-center);    
+  @apply(--layout-end-justified);
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+}
 
 /*  .settingsicon {
     height: 40px;
@@ -376,172 +376,172 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   .poesprofile {
     height: 100%;
-/*    background-color: rgba(0,0,0,0.05);*/
+    /*    background-color: rgba(0,0,0,0.05);*/
     @apply(--layout-horizontal);  
     @apply(--layout-center);    
     @apply(--layout-end-justified); 
 /*        box-sizing:border-box;
-    padding: 20px;*/
-    border-radius: 5px;
-  }
+padding: 20px;*/
+border-radius: 5px;
+}
 
-  .smalldetail {
-    width: 40px;
-    height: 40px;
-  }
-
-
-  poes-aai {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: rgba(0,0,0,0.05);
-    overflow: hidden;
-    margin: 0px 0px 0px 10px;
-  }
-
-  .grande {
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    margin: 50px 0px 0px 0px;
-    background-color: rgba(0,0,0,0.05);
-  }
-
-  .alert {
-    width: 35px;
-    height: 35px;
-    margin: 0px 10px 0px 0px;
-  }
-
-  .alerttxt {
-    text-align: center;
-    @apply(--theme-font-subhead);
-    margin: 0px;
-    color:#feec46;
-    font-size: 22px;
-  }
-
-  .accountinfo {
-    width: 100%;
-    background-color: var(--pink-theme-color);
-    box-sizing:border-box;
-    padding: 20px;
-    @apply(--theme-alt-general);
-    border-bottom: 1px solid rgba(0,0,0,0.25);
-  }
-  .accountinfo p {
-    @apply(--theme-alt-general);
-    font-size: 12px;
-  }
-  .drawer h1 {
-    @apply(--theme-font-general);
-    font-size: 28px;
-    line-height: 30px;
-  }
-
-  #drawerpages {
-    width: 100%;
-  }
-
-  .btnimg {
-    width: 25px;
-    height: 25px;
-    margin: 0px 0px 0px 6px;
-  }
-
-  .settingsbtn {
-    outline: 0; 
-    margin: 5px 5px 5px 0px;
-    box-sizing:border-box;
-    border-radius: 8px;
-    cursor: pointer;
-    @apply(--theme-font-button);
-    background-color: var(--pinktwee-theme-color);
-    border:none;
-/*        border: 1px solid rgba(0,0,0,0.5); */
-    padding: 12px;
-    font-size: 18px;
-    @apply(--layout-horizontal);
-    @apply(--layout-center-center);  
-  }
-
-  .poestitel {
-    width: 100%;
-    @apply(--layout-horizontal);
-    @apply(--layout-center-center); 
-    box-sizing:border-box;
-    padding: 20px 0px 0px 0px;
-  }
-  .poestitel h2 {
-    font-size: 28px;
-    margin: 0px;
-  }
-  .poestitel img {
-    width: 28px;
-    margin-left: 5px;
-  }
-
-  .voting {
-    width: 100%;
-  }
-
-  poes-admin {
-    height: 100%;
-    overflow-y:scroll;
-  }
-
-    </style>
+.smalldetail {
+  width: 40px;
+  height: 40px;
+}
 
 
+poes-aai {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.05);
+  overflow: hidden;
+  margin: 0px 0px 0px 10px;
+}
 
-    <iron-localstorage name="poezenimage" value="{{poezenimage}}"
-       on-iron-localstorage-load="poes_loaded"></iron-localstorage>
-    <iron-localstorage name="poezennaam" value="{{poezennaam}}" on-iron-localstorage-load="poes_loaded"></iron-localstorage>
+.grande {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  margin: 50px 0px 0px 0px;
+  background-color: rgba(0,0,0,0.05);
+}
+
+.alert {
+  width: 35px;
+  height: 35px;
+  margin: 0px 10px 0px 0px;
+}
+
+.alerttxt {
+  text-align: center;
+  @apply(--theme-font-subhead);
+  margin: 0px;
+  color:#feec46;
+  font-size: 22px;
+}
+
+.accountinfo {
+  width: 100%;
+  background-color: var(--pink-theme-color);
+  box-sizing:border-box;
+  padding: 20px;
+  @apply(--theme-alt-general);
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+}
+.accountinfo p {
+  @apply(--theme-alt-general);
+  font-size: 12px;
+}
+.drawer h1 {
+  @apply(--theme-font-general);
+  font-size: 28px;
+  line-height: 30px;
+}
+
+#drawerpages {
+  width: 100%;
+}
+
+.btnimg {
+  width: 25px;
+  height: 25px;
+  margin: 0px 0px 0px 6px;
+}
+
+.settingsbtn {
+  outline: 0; 
+  margin: 5px 5px 5px 0px;
+  box-sizing:border-box;
+  border-radius: 8px;
+  cursor: pointer;
+  @apply(--theme-font-button);
+  background-color: var(--pinktwee-theme-color);
+  border:none;
+  /*        border: 1px solid rgba(0,0,0,0.5); */
+  padding: 12px;
+  font-size: 18px;
+  @apply(--layout-horizontal);
+  @apply(--layout-center-center);  
+}
+
+.poestitel {
+  width: 100%;
+  @apply(--layout-horizontal);
+  @apply(--layout-center-center); 
+  box-sizing:border-box;
+  padding: 20px 0px 0px 0px;
+}
+.poestitel h2 {
+  font-size: 28px;
+  margin: 0px;
+}
+.poestitel img {
+  width: 28px;
+  margin-left: 5px;
+}
+
+.voting {
+  width: 100%;
+}
+
+poes-admin {
+  height: 100%;
+  overflow-y:scroll;
+}
+
+</style>
+
+
+
+<iron-localstorage name="poezenimage" value="{{poezenimage}}"
+on-iron-localstorage-load="poes_loaded"></iron-localstorage>
+<iron-localstorage name="poezennaam" value="{{poezennaam}}" on-iron-localstorage-load="poes_loaded"></iron-localstorage>
 <!--    <iron-localstorage name="mypoescontract" value="{{poescontract}}"></iron-localstorage>-->
 
-    <lo-mqtt connected="{{mqttconnected}}" subs
-      on-message-received="msgreceived"
-      on-mqtt-connected="mqttconnectedfire"
-      pincode="{{pincode}}"
-      id="lomqtt"></lo-mqtt>
+<lo-mqtt connected="{{mqttconnected}}" subs
+on-message-received="msgreceived"
+on-mqtt-connected="mqttconnectedfire"
+pincode="{{pincode}}"
+id="lomqtt"></lo-mqtt>
 
-    <poes-validatie id="poesvalidatie" web3="{{web3}}" account="{{account}}" contractaddress="{{contractaddress}}" on-validation-received="validationreceived" validations="{{validations}}" txhash="{{txhash}}"></poes-validatie>
+<poes-validatie id="poesvalidatie" web3="{{web3}}" account="{{account}}" contractaddress="{{contractaddress}}" on-validation-received="validationreceived" validations="{{validations}}" txhash="{{txhash}}"></poes-validatie>
 
-    <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" balance="{{saldo}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" ismember={{ismember}} contractaddress="{{membershipcontract}}" on-contract-ready="_poescontractready"></poes-membership>
+<poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" balance="{{saldo}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" ismember={{ismember}} contractaddress="{{membershipcontract}}" on-contract-ready="_poescontractready"></poes-membership>
 
-    <alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
+<alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
 
 
 <paper-drawer-panel right-drawer force-narrow id="drawer" drawer-width="330px">
-  <div drawer>
-    <neon-animated-pages id="drawerpages" selected="{{selected}}" 
-            entry-animation="fade-in-animation"
-            exit-animation="fade-out-animation">
-      <neon-animatable>
-      <div class="drawer">
-        <poes-aai class="grande" catnumber="{{poezenimage}}"></poes-aai>
-        <div class="poestitel">
-          <h2>{{poezennaam}}</h2>
-          <img class="alert" src="../../images/valid.svg">
-        </div>
-        <div class="whitespace"></div>
-        <template is="dom-if" if="{{!validated}}">
-          <img class="alert" src="../../images/alert.svg">
-          <h3 class="alerttxt">Je bent nog niet gevalideerd</h3>
-        </template>
+<div drawer>
+  <neon-animated-pages id="drawerpages" selected="{{selected}}" 
+  entry-animation="fade-in-animation"
+  exit-animation="fade-out-animation">
+  <neon-animatable>
+  <div class="drawer">
+    <poes-aai class="grande" catnumber="{{poezenimage}}"></poes-aai>
+    <div class="poestitel">
+      <h2>{{poezennaam}}</h2>
+      <img class="alert" src="../../images/valid.svg">
+    </div>
+    <div class="whitespace"></div>
+    <template is="dom-if" if="{{!validated}}">
+      <img class="alert" src="../../images/alert.svg">
+      <h3 class="alerttxt">Je bent nog niet gevalideerd</h3>
+    </template>
 
 
 
-      <template is="dom-if" if="{{validated}}">
+    <template is="dom-if" if="{{validated}}">
 
-        <div class="validatorzsmall vertical layout">
-          <p>Je bent gevalideerd door</p>
-          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
-          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
-        </div>
+      <div class="validatorzsmall vertical layout">
+        <p>Je bent gevalideerd door</p>
+        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
+        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
+      </div>
 
-   </template>
+    </template>
 
 
 <!--         <div class="validatorz vertical layout">
@@ -553,46 +553,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </neon-animatable>
     <neon-animatable>
-      <div class="drawer">
-        <div class="whitespace"></div>
-        <div class="languagepicker">
-          <h1><i18n-msg msgid="lang">Your language</i18n-msg></h1>
-          <iron-selector 
-          attr-for-selected="lang" 
-          selected="{{language}}" 
-          on-iron-select="langpick"  
-          class="languagepickersel">
-            <div lang="en" class="language"><h2>EN</h2></div>
-            <div lang="nl" class="language"><h2>NL</h2></div>
-          </iron-selector>
-        </div>        
-        <div class="accountinfo">
-          <h1><i18n-msg msgid="kitty">KittyClub</i18n-msg><span>{{version}}</span></h1>
-          <p><i18n-msg msgid="ethersaldo">My Ether-saldo</i18n-msg></p>
-          <p class="clipper">{{saldo}}</p>
-          <p><i18n-msg msgid="kittycontract">My KittyClubcontract</i18n-msg></p>
-          <p class="clipper">{{membershipcontract}}</p>
-          <p><i18n-msg msgid="valcontract">My validationcontract</i18n-msg></p>
-          <p class="clipper">{{contractaddress}}</p>
-          <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
-          <p class="clipper">{{txhash}}</p>
-        </div>
-        <div class="whitespace"></div>
-        <button class="settingsbtn" on-tap="gobackdrawer">OK</button>
-      </div>
-    </neon-animatable>
-  </neon-animated-pages>
+    <div class="drawer">
+      <div class="whitespace"></div>
+      <div class="languagepicker">
+        <h1><i18n-msg msgid="lang">Your language</i18n-msg></h1>
+        <iron-selector 
+        attr-for-selected="lang" 
+        selected="{{language}}" 
+        on-iron-select="langpick"  
+        class="languagepickersel">
+        <div lang="en" class="language"><h2>EN</h2></div>
+        <div lang="nl" class="language"><h2>NL</h2></div>
+      </iron-selector>
+    </div>        
+    <div class="accountinfo">
+      <h1><i18n-msg msgid="kitty">KittyClub</i18n-msg><span>{{version}}</span></h1>
+      <p><i18n-msg msgid="ethersaldo">My Ether-saldo</i18n-msg></p>
+      <p class="clipper">{{saldo}}</p>
+      <p><i18n-msg msgid="kittycontract">My KittyClubcontract</i18n-msg></p>
+      <p class="clipper">{{membershipcontract}}</p>
+      <p><i18n-msg msgid="valcontract">My validationcontract</i18n-msg></p>
+      <p class="clipper">{{contractaddress}}</p>
+      <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
+      <p class="clipper">{{txhash}}</p>
+    </div>
+    <div class="whitespace"></div>
+    <button class="settingsbtn" on-tap="gobackdrawer">OK</button>
   </div>
+</neon-animatable>
+</neon-animated-pages>
+</div>
 
-  <div main>
-    <neon-animated-pages selected="{{state}}" 
-            entry-animation="{{entryAnimation}}"
-            exit-animation="{{exitAnimation}}"
-            attr-for-selected="data-route">
+<div main>
+  <neon-animated-pages selected="{{state}}" 
+  entry-animation="{{entryAnimation}}"
+  exit-animation="{{exitAnimation}}"
+  attr-for-selected="data-route">
 
 
-      <neon-animatable data-route="selectpussy">
-        <div class="canvaspink">
+  <neon-animatable data-route="selectpussy">
+  <div class="canvaspink">
 <!--           <div class="errormsg">
             <template is="dom-if" if="{{!web3connected}}">web3 NOT connected</template>
             <h2>Je bent niet correct geconnecteerd. Probeer het later opnieuw.</h2>
@@ -602,55 +602,55 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <h2><i18n-msg msgid="kieskat">Choose a cat!</i18n-msg></h2>
           <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="poezenimage_selected" selected="{{poezenimage}}">
-            <div class="poesitem" poes="1">
-              <img src="../../images/poezen/poes1.png"></div>
+          <div class="poesitem" poes="1">
+            <img src="../../images/poezen/poes1.png"></div>
             <div class="poesitem" poes="2">
               <img src="../../images/poezen/poes2.png"></div>
-            <div class="poesitem" poes="3">
-              <img src="../../images/poezen/poes3.png"></div>
-            <div class="poesitem" poes="4">
-              <img src="../../images/poezen/poes4.png"></div>
-            <div class="poesitem" poes="5">
-              <img src="../../images/poezen/poes5.png"></div>
-            <div class="poesitem" poes="6">
-              <img src="../../images/poezen/poes6.png"></div>
-            <div class="poesitem" poes="7">
-              <img src="../../images/poezen/poes7.png"></div>
-            <div class="poesitem" poes="8">
-              <img src="../../images/poezen/poes8.png"></div>
-            <div class="poesitem" poes="9">
-              <img src="../../images/poezen/poes9.png"></div>
-            <div class="poesitem" poes="10">
-              <img src="../../images/poezen/poes10.png"></div>
-            <div class="poesitem" poes="11">
-              <img src="../../images/poezen/poes11.png"></div>
-            <div class="poesitem" poes="12">
-              <img src="../../images/poezen/poes12.png"></div>
-            <div class="poesitem" poes="13">
-              <img src="../../images/poezen/poes13.png"></div>
-            <div class="poesitem" poes="14">
-              <img src="../../images/poezen/poes14.png"></div>
-            <div class="poesitem" poes="15">
-              <img src="../../images/poezen/poes15.png"></div>
-            <div class="poesitem" poes="16">
-              <img src="../../images/poezen/poes16.png"></div>
-          </iron-selector>
-          <button on-tap="toNamepussy" class="main">OK</button>
-        </div>
-      </neon-animatable>
+              <div class="poesitem" poes="3">
+                <img src="../../images/poezen/poes3.png"></div>
+                <div class="poesitem" poes="4">
+                  <img src="../../images/poezen/poes4.png"></div>
+                  <div class="poesitem" poes="5">
+                    <img src="../../images/poezen/poes5.png"></div>
+                    <div class="poesitem" poes="6">
+                      <img src="../../images/poezen/poes6.png"></div>
+                      <div class="poesitem" poes="7">
+                        <img src="../../images/poezen/poes7.png"></div>
+                        <div class="poesitem" poes="8">
+                          <img src="../../images/poezen/poes8.png"></div>
+                          <div class="poesitem" poes="9">
+                            <img src="../../images/poezen/poes9.png"></div>
+                            <div class="poesitem" poes="10">
+                              <img src="../../images/poezen/poes10.png"></div>
+                              <div class="poesitem" poes="11">
+                                <img src="../../images/poezen/poes11.png"></div>
+                                <div class="poesitem" poes="12">
+                                  <img src="../../images/poezen/poes12.png"></div>
+                                  <div class="poesitem" poes="13">
+                                    <img src="../../images/poezen/poes13.png"></div>
+                                    <div class="poesitem" poes="14">
+                                      <img src="../../images/poezen/poes14.png"></div>
+                                      <div class="poesitem" poes="15">
+                                        <img src="../../images/poezen/poes15.png"></div>
+                                        <div class="poesitem" poes="16">
+                                          <img src="../../images/poezen/poes16.png"></div>
+                                        </iron-selector>
+                                        <button on-tap="toNamepussy" class="main">OK</button>
+                                      </div>
+                                    </neon-animatable>
 
-      <neon-animatable data-route="namepussy">
-        <div class="canvaspink">
-          <h1><i18n-msg msgid="naamkat1">What's the name</i18n-msg><br><i18n-msg msgid="naamkat2"> of your cat?</i18n-msg></h1>
-          <div class="whitespace"></div>
-          <paper-input-container no-label-float>
-            <input autofocus class="centertexting"
-                is="iron-input"
-                prevent-invalid-input
-                bind-value="{{poezennaam}}"></paper-input-container>
-          <button on-tap="poezennaam_selected" class="main">OK</button>
-        </div>
-      </neon-animatable>
+                                    <neon-animatable data-route="namepussy">
+                                    <div class="canvaspink">
+                                      <h1><i18n-msg msgid="naamkat1">What's the name</i18n-msg><br><i18n-msg msgid="naamkat2"> of your cat?</i18n-msg></h1>
+                                      <div class="whitespace"></div>
+                                      <paper-input-container no-label-float>
+                                      <input autofocus class="centertexting"
+                                      is="iron-input"
+                                      prevent-invalid-input
+                                      bind-value="{{poezennaam}}"></paper-input-container>
+                                      <button on-tap="poezennaam_selected" class="main">OK</button>
+                                    </div>
+                                  </neon-animatable>
 <!--
       <neon-animatable data-route="validate">
         <div class="canvaspink">
@@ -666,142 +666,142 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <button on-tap="submitpin" class="main">OK</button>
         </div>
       </neon-animatable>
--->
+    -->
 
-      <neon-animatable data-route="pin">
+    <neon-animatable data-route="pin">
 
-        <template is="dom-if" if="{{validated}}">
+    <template is="dom-if" if="{{validated}}">
 
-          <template is="dom-if" if="{{hasenoughcredits}}">
+      <template is="dom-if" if="{{hasenoughcredits}}">
 
-          <div class="canvaspink layout center center">
-            <p><i18n-msg msgid="jouwpin">Your pincode</i18n-msg></p>
-            <h1>{{pincode}}</h1>
-            <small><i18n-msg msgid="saldo1">You can do</i18n-msg><span>{{cleansaldo}}</span><i18n-msg msgid="saldo2"> more validations</i18n-msg></small>
-            <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
-          </div>
-
-          </template>
-
-           <template is="dom-if" if="{{!hasenoughcredits}}">
-
-          <div class="canvaspink">
-            <h1><i18n-msg msgid="enoughmsg">You have validated enough kitties.</i18n-msg></h1>
-            <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
-          </div>
-
-          </template>
-
-        </template>
-
-        <template is="dom-if" if="{{!validated}}">
-          <div class="canvaspink">
-            <p><i18n-msg msgid="morevalids">You can only validate some else if you are validated yourself.</i18n-msg></p>
-            <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
-          </div>
-        </template>
-      </neon-animatable>
-
-      <neon-animatable data-route="incoming">
-        <div class="canvaspink">
-          <div class="eighty">
-            <h2>{{incomingpussyname}}</h2>
-            <div class="incomingpic"><img src="{{incomingpussypic}}" /></div>
-<!--             <p>{{contractaddresstowrite}}</p> -->
-          </div>
-          <div class="layout horizontal center">
-            <button class="medium" on-tap="topussybase"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
-            <button class="main" on-tap="validateRequest"><i18n-msg msgid="validatebtn">Validate</i18n-msg></button>
-          </div>
+        <div class="canvaspink layout center center">
+          <p><i18n-msg msgid="jouwpin">Your pincode</i18n-msg></p>
+          <h1>{{pincode}}</h1>
+          <small><i18n-msg msgid="saldo1">You can do</i18n-msg><span>{{cleansaldo}}</span><i18n-msg msgid="saldo2"> more validations</i18n-msg></small>
+          <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
         </div>
-      </neon-animatable>
 
-      <neon-animatable data-route="openbox">
+      </template>
+
+      <template is="dom-if" if="{{!hasenoughcredits}}">
+
         <div class="canvaspink">
-          <div class="eighty">
-            <h2><i18n-msg msgid="checkpoezendoos">Check the code on the Kittybox</i18n-msg></h2>
-          </div>
-          <paper-input-container no-label-float>
-            <label class="centertexting">pincode</label>
-            <input autofocus class="centertexting"
-            is="iron-input"
-            prevent-invalid-input
-            type="number"
-            bind-value="{{boxpin}}"></paper-input-container>
-        <button on-tap="submitboxpin" class="main">OK</button>
-        <button on-tap="toPussybase" class="main"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
+          <h1><i18n-msg msgid="enoughmsg">You have validated enough kitties.</i18n-msg></h1>
+          <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
+        </div>
+
+      </template>
+
+    </template>
+
+    <template is="dom-if" if="{{!validated}}">
+      <div class="canvaspink">
+        <p><i18n-msg msgid="morevalids">You can only validate some else if you are validated yourself.</i18n-msg></p>
+        <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
       </div>
-    </neon-animatable>
-    <neon-animatable data-route="boxchecks">
-      <div class="canvaspink">
-        <div class="eighty">
-          <h2><i18n-msg msgid="evengeduld">Even geduld...</i18n-msg></h2>
-          <p><i18n-msg msgid="controleert">De poezendoos controleert momenteel of je poes gevalideerd is.</i18n-msg></p>
-        </div>
-    </div>
+    </template>
   </neon-animatable>
 
-  <neon-animatable data-route="boxisopen">
-      <div class="canvaspink">
-        <div class="eighty">
-        <h2><i18n-msg msgid="dedoosis">De doos sluit binnen</i18n-msg> <span>{{countdown}}</span> <i18n-msg msgid="seconden">seconden</i18n-msg>.</h2>
-        </div>
-      
-      
+  <neon-animatable data-route="incoming">
+  <div class="canvaspink">
+    <div class="eighty">
+      <h2>{{incomingpussyname}}</h2>
+      <div class="incomingpic"><img src="{{incomingpussypic}}" /></div>
+      <!--             <p>{{contractaddresstowrite}}</p> -->
     </div>
-  </neon-animatable>
-
-
-
-    <neon-animatable data-route="clearconfirm">
-      <div class="canvaspink">
-        <div class="eighty">
-          <h2><i18n-msg msgid="resetmsg">Do you want to start over?</i18n-msg></h2>
-        </div>
-          <div class="layout horizontal center">
-            <button class="medium" on-tap="topussybase"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
-            <button class="medium" on-tap="opnieuw"><i18n-msg msgid="resetbtn">Start over</i18n-msg></button>
-          </div>
+    <div class="layout horizontal center">
+      <button class="medium" on-tap="topussybase"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
+      <button class="main" on-tap="validateRequest"><i18n-msg msgid="validatebtn">Validate</i18n-msg></button>
     </div>
-  </neon-animatable>
+  </div>
+</neon-animatable>
+
+<neon-animatable data-route="openbox">
+<div class="canvaspink">
+  <div class="eighty">
+    <h2><i18n-msg msgid="checkpoezendoos">Check the code on the Kittybox</i18n-msg></h2>
+  </div>
+  <paper-input-container no-label-float>
+  <label class="centertexting">pincode</label>
+  <input autofocus class="centertexting"
+  is="iron-input"
+  prevent-invalid-input
+  type="number"
+  bind-value="{{boxpin}}"></paper-input-container>
+  <button on-tap="submitboxpin" class="main">OK</button>
+  <button on-tap="toPussybase" class="main"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
+</div>
+</neon-animatable>
+<neon-animatable data-route="boxchecks">
+<div class="canvaspink">
+  <div class="eighty">
+    <h2><i18n-msg msgid="evengeduld">Even geduld...</i18n-msg></h2>
+    <p><i18n-msg msgid="controleert">De poezendoos controleert momenteel of je poes gevalideerd is.</i18n-msg></p>
+  </div>
+</div>
+</neon-animatable>
+
+<neon-animatable data-route="boxisopen">
+<div class="canvaspink">
+  <div class="eighty">
+    <h2><i18n-msg msgid="dedoosis">De doos sluit binnen</i18n-msg> <span>{{countdown}}</span> <i18n-msg msgid="seconden">seconden</i18n-msg>.</h2>
+  </div>
+
+
+</div>
+</neon-animatable>
+
+
+
+<neon-animatable data-route="clearconfirm">
+<div class="canvaspink">
+  <div class="eighty">
+    <h2><i18n-msg msgid="resetmsg">Do you want to start over?</i18n-msg></h2>
+  </div>
+  <div class="layout horizontal center">
+    <button class="medium" on-tap="topussybase"><i18n-msg msgid="cancelbtn">Cancel</i18n-msg></button>
+    <button class="medium" on-tap="opnieuw"><i18n-msg msgid="resetbtn">Start over</i18n-msg></button>
+  </div>
+</div>
+</neon-animatable>
 
 
 
 
-  <neon-animatable data-route="pussybase">
+<neon-animatable data-route="pussybase">
 
 <!--           <template is="dom-if" if="{{validated}}">
           <div class="toppertje">
           </div>
         </template> -->
 
-<div class="topbar">
-  <div class="poesprofile" on-tap="openDrawer">
-      <template is="dom-if" if="{{!validated}}">
-        <img class="alert" src="../../images/alert.svg">
-      </template>
-      <template is="dom-if" if="{{validated}}">
-        <img class="alert" src="../../images/valid.svg">
-      </template>
+        <div class="topbar">
+          <div class="poesprofile" on-tap="openDrawer">
+            <template is="dom-if" if="{{!validated}}">
+              <img class="alert" src="../../images/alert.svg">
+            </template>
+            <template is="dom-if" if="{{validated}}">
+              <img class="alert" src="../../images/valid.svg">
+            </template>
 
-      <h1>{{poezennaam}}</h1>
-      <poes-aai catnumber="{{poezenimage}}"></poes-aai>
-  </div>
-</div>
-    <div class="canvas2pink">
-<!--     <div class="whitespace" on-tap="tohomescreen" >X</div> -->
+            <h1>{{poezennaam}}</h1>
+            <poes-aai catnumber="{{poezenimage}}"></poes-aai>
+          </div>
+        </div>
+        <div class="canvas2pink">
+          <!--     <div class="whitespace" on-tap="tohomescreen" >X</div> -->
 
-      <template is="dom-if" if="{{!ismember}}">
-        <poezenclub-loader small id="memberloader" loadmsg="{{memberloadermsg}}"></poezenclub-loader>
-      </template>
+          <template is="dom-if" if="{{!ismember}}">
+            <poezenclub-loader small id="memberloader" loadmsg="{{memberloadermsg}}"></poezenclub-loader>
+          </template>
 
-      <template is="dom-if" if="{{!contractaddress}}">
-        <poezenclub-loader small id="contractloader" loadmsg="{{contractloadermsg}}"></poezenclub-loader>
-      </template>
+          <template is="dom-if" if="{{!contractaddress}}">
+            <poezenclub-loader small id="contractloader" loadmsg="{{contractloadermsg}}"></poezenclub-loader>
+          </template>
 
-      <template is="dom-if" if="{{contractaddress}}">
-        <template is="dom-if" if="{{validated}}">
-<!--           <button on-tap="openbox" class="main"><i18n-a msgid="openbtn">Open the Kittybox</i18n-msg></button> -->
+          <template is="dom-if" if="{{contractaddress}}">
+            <template is="dom-if" if="{{validated}}">
+              <!--           <button on-tap="openbox" class="main"><i18n-a msgid="openbtn">Open the Kittybox</i18n-msg></button> -->
 <!--           <div class="voting">
             <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmVvSTWXL2zUxEMrXM7U1vB7EuZG78UtBpW7hqhkpeXHyK" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting>
           </div> -->
@@ -818,14 +818,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template>
 
         <template is="dom-if" if="{{!validated}}">
-        <div class="validatorz vertical layout">
-        <h2><i18n-msg msgid="getvalidated"></i18n-msg></h2>
-          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
-          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
-        </div>
+          <div class="validatorz vertical layout">
+            <h2><i18n-msg msgid="getvalidated"></i18n-msg></h2>
+            <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+            <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+          </div>
         </template>
 
-   </template>
+      </template>
 
 
     </div>
@@ -833,30 +833,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <neon-animatable data-route="homescreen">
 
-<!--     <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmYetjPDKdtj6dbxg5jB4Cq5qoJ28JWVg2M9Qkp5braocF" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting> -->
+  <!--     <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmYetjPDKdtj6dbxg5jB4Cq5qoJ28JWVg2M9Qkp5braocF" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting> -->
 
-  </neon-animatable>
+</neon-animatable>
 
-  <neon-animatable data-route="version">
-<!--     <div class="accountinfo">
-    <h1>{{version}}</h1>
-    <div class="whitespace"></div>
-    <p><i18n-msg msgid="ethersaldo">My Ether-saldo</i18n-msg></p>
-    <p class="clipper">{{saldo}}</p>
-    <div class="whitespace"></div>
-    <p><i18n-msg msgid="kittycontract">My KittyClubcontract</i18n-msg></p>
-    <p class="clipper">{{membershipcontract}}</p>
-    <p><i18n-msg msgid="valcontract">My validationcontract</i18n-msg></p>
-    <p class="clipper">{{contractaddress}}</p>
-    <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
-    <p class="clipper">{{txhash}}</p>
-    <button class="medium" on-tap="topussybase"><i18n-msg msgid="backbtn">back</i18n-msg></button>
-    </div> -->
-  </neon-animatable>
+<neon-animatable data-route="version">
 
-  <neon-animatable data-route="admin">
-    <poes-admin account="{{account}}" web3="{{web3}}"></poes-admin>
-  </neon-animatable>
+</neon-animatable>
+
+<neon-animatable data-route="admin">
+<poes-admin account="{{account}}" web3="{{web3}}"></poes-admin>
+</neon-animatable>
 
 </neon-animated-pages>
 
@@ -939,25 +926,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.state = "admin";
         };
 
-        //this.addEventListener('add-toast', function(e){
-          //var toastmanager = document.getElementById("toastManager");
-          //console.log(e);
-          //toastmanager.add(e.detail.msg);
-        //});
-
         this.$.drawerpages.selected = 0;
-
       },
 
-
-
       makepincode: function(){
-            this.pincode = (Math.floor(Math.random()*90000) + 10000).toString();
+        this.pincode = (Math.floor(Math.random()*90000) + 10000).toString();
       },
 
       saldochanged: function(){
         console.log('saldo is nu ',this.saldo);
-
         if (this.saldo > 1){
           this.hasenoughcredits = true;
         }else{
@@ -1005,17 +982,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       attached: function(){
         //this.go('selectpussy');
-      this.language = 'nl';
-      I18nMsg.lang = 'nl';
+        this.language = 'nl';
+        I18nMsg.lang = 'nl';
       I18nMsg.url = 'locales'; // optionally use custom folder for locales.
       Platform.performMicrotaskCheckpoint();
       this.memberloadermsg = "Je lidmaatschap wordt aangemaakt";
       this.contractloadermsg = "Je contract wordt aangemaakt";
       this.valloadmsg = "Je validatie is in aanvraag";
       console.log('attached');
-      },
+    },
 
-      checkvalidationstate: function(){
+    checkvalidationstate: function(){
         // hier checken of 2 validaties OK zijn.
         // zoja -> toon knop openmaken die doos
 
@@ -1027,7 +1004,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _fixaddress: function(address) {
 
         function strStartsWith(str, prefix) {
-            return str.indexOf(prefix) === 0;
+          return str.indexOf(prefix) === 0;
         }
 
         console.log("Fix address", address);
@@ -1038,38 +1015,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       validationreceived: function(res){
-          console.log("Validation received");
-          var validatoraddress = this._fixaddress(res.detail.args.validator);
-          console.log("...from",validatoraddress);
-  
-          if (this._fixaddress(this.poesobject1.address) == validatoraddress){
-            console.log("is from validator1",this.poesobject1);
-            return document.getElementById("validator1").setValidated();
+        console.log("Validation received");
+        var validatoraddress = this._fixaddress(res.detail.args.validator);
+        console.log("...from",validatoraddress);
 
-          }
-          if (this._fixaddress(this.poesobject2.address) == validatoraddress){
-            console.log("is from validator2",this.poesobject2);
-            return document.getElementById("validator2").setValidated();
-          }
-          console.log('unknown validator... ignoring this.');
+        if (this._fixaddress(this.poesobject1.address) == validatoraddress){
+          console.log("is from validator1",this.poesobject1);
+          return document.getElementById("validator1").setValidated();
+
+        }
+        if (this._fixaddress(this.poesobject2.address) == validatoraddress){
+          console.log("is from validator2",this.poesobject2);
+          return document.getElementById("validator2").setValidated();
+        }
+        console.log('unknown validator... ignoring this.');
       },
 
       _validationschanged: function(){
-/*
-        if (this.validations > 0){
-          this.go('home');          
-        }
-        if (this.validations > 1){
-          console.log('ik zen gevalideerd');
-          this.go('home');
-          this.validated = true;
-        }
-        */
+
       },
 
       openDrawer: function(){
         this.$.drawer.togglePanel();
-    this.$.drawerpages.selected = 0;
+        this.$.drawerpages.selected = 0;
       },
 
       toNamepussy: function() {
@@ -1085,8 +1053,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       opnieuw: function(){
-      window.localStorage.clear();
-      location.reload();
+        window.localStorage.clear();
+        location.reload();
       },
 
 
@@ -1112,32 +1080,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 //              this.state = tostate;
             //}
             break;
-          case "pussybase":
+            case "pussybase":
             break;
-        }
-      },
+          }
+        },
 
-      landed: function(){
-        console.log('landed in state',this.rout);
-      },
-/*
-      submitpin: function(){
-        var pin = this.enteredpin;
-        this.$.lomqtt.send(pin,"validate|"+this.poezennaam+"|"+this.poesinit+"|"+this.contractaddress+"|"+this.pincode, 2);
-        this.$.loader.loadmsg = "Validatie wordt gemined";
-
-        //this.go("start");
-      },
-  */    
+        landed: function(){
+          console.log('landed in state',this.rout);
+        },
+ 
       initpoes: function(){
         //this.go("selectpussy");
       },
-
-
-      // namepoes: function(){
-      //   this.go("namepussy");
-      // },
-
 
       localpoes: function(){
         //this.go("home");
@@ -1161,36 +1115,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       msgreceived: function(e){
         console.log("MSG received: ",e.detail);
-
-
-
         // Split the motherfucking string!
         var commandarray = e.detail.msg.split("|");
         console.log(commandarray);
         switch (commandarray[0]) {
           case "validate":
-            console.log("Meneerke wil zijn poes laten valideren");
-            this.incomingpussyname = commandarray[1];
-            this.incomingpussypic = "../../images/poezen/poes" + commandarray[2] + ".png";
-            this.contractaddresstowrite = commandarray[3];
-            this.incomingpin = commandarray[4];
-            this.incomingref = commandarray[5];
-            this.go('incoming');
-            break;
+          console.log("Meneerke wil zijn poes laten valideren");
+          this.incomingpussyname = commandarray[1];
+          this.incomingpussypic = "../../images/poezen/poes" + commandarray[2] + ".png";
+          this.contractaddresstowrite = commandarray[3];
+          this.incomingpin = commandarray[4];
+          this.incomingref = commandarray[5];
+          this.go('incoming');
+          break;
           case "validationstarted":
-            var ref = commandarray[4];
-            var validator_poezenimage = commandarray[1];
-            var validator_poezennaam = commandarray[2];
-            var validator_account = commandarray[3];
-            this.fire("validationstarted for ref",ref);
-            document.getElementById(ref).validationStarted(validator_poezennaam,validator_poezenimage,validator_account);
-            break;
+          var ref = commandarray[4];
+          var validator_poezenimage = commandarray[1];
+          var validator_poezennaam = commandarray[2];
+          var validator_account = commandarray[3];
+          this.fire("validationstarted for ref",ref);
+          document.getElementById(ref).validationStarted(validator_poezennaam,validator_poezenimage,validator_account);
+          break;
           case "validatedone":
-            console.log("Validatie is done!");
+          console.log("Validatie is done!");
 //            this.$.poezenpages.selected = 6;
             //this.go("home");
             break;
-          case "doosisopen":
+            case "doosisopen":
             console.log("De doos is open");
             //this.$.poezenpages.selected = 12;
             this.go("boxisopen");
@@ -1199,12 +1150,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.boxpin = null;
             break;
 
-        };
+          };
 
-      },
+        },
 
-      startcountdown: function(){
-        this.countdown = 14;
+        startcountdown: function(){
+          this.countdown = 14;
         //window.setInterval(this.substr(), 250);
         this.set('interval', setInterval(this.substr.bind(this), 1000));
       },
@@ -1247,52 +1198,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.go("pin");
       },
 
+      langpick: function(){
 
-
-
-  langpick: function(){
-
-    I18nMsg.lang = this.language;
+        I18nMsg.lang = this.language;
 
         if(this.language == 'en'){
-        this.memberloadermsg = "Your membership is being created";
-        this.contractloadermsg = "Your contract is being created";
-        this.valloadmsg = "Your validation is being processed";
+          this.memberloadermsg = "Your membership is being created";
+          this.contractloadermsg = "Your contract is being created";
+          this.valloadmsg = "Your validation is being processed";
         };
 
         if(this.language == 'nl'){
-        this.memberloadermsg = "Je lidmaatschap wordt aangemaakt";
-        this.contractloadermsg = "Je contract wordt aangemaakt";
-        this.valloadmsg = "Je validatie is in aanvraag";
+          this.memberloadermsg = "Je lidmaatschap wordt aangemaakt";
+          this.contractloadermsg = "Je contract wordt aangemaakt";
+          this.valloadmsg = "Je validatie is in aanvraag";
         };  
 
-
-    Platform.performMicrotaskCheckpoint();
-
-  },
+        Platform.performMicrotaskCheckpoint();
+      },
 
 
-  gotosettings: function(){
-    this.$.drawerpages.selected = 1;
-  },
+      gotosettings: function(){
+        this.$.drawerpages.selected = 1;
+      },
 
-  gobackdrawer: function(){
-    this.$.drawerpages.selected = 0;
-  }
+      gobackdrawer: function(){
+        this.$.drawerpages.selected = 0;
+      }
 
-  // document.addEventListener('HTMLImportsLoaded', function() {
-  //   I18nMsg.lang = 'en';
-  //   app.language = 'en';
-  //   I18nMsg.url = 'locales'; // optionally use custom folder for locales.
-  //   Platform.performMicrotaskCheckpoint();
-  // });
-
-
-
-
-
-
-    });
-  })();
-  </script>
+});
+})();
+</script>
 </dom-module>
