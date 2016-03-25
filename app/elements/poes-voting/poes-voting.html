@@ -948,10 +948,10 @@
         var now = Math.floor(Date.now()/1000);
 
         if(this.starttijd < now && this.eindtijd > now){
-          this.voteactive;
+          this.voteactive = true;
           console.log("Voting is active.");
         } else {
-          !this.voteactive;
+          this.voteactive = false;
           console.log("Voting is NOT active.");
         }
         //console.log(this.resttijd);
