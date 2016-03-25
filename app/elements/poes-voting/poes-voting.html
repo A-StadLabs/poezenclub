@@ -631,7 +631,8 @@
 
             </div> 
 
-            <div class="ownvote">              
+            <div class="ownvote">
+            <template is="dom-if" if="{{voteactive}}">              
               <template is="dom-if" if="{{!voted}}">
                 <button class="mainbutton" on-tap="toCast">Breng je stem uit!</button>
               </template>
@@ -642,6 +643,7 @@
                 </div>
                 <button class="minibtn" on-tap="toCast">Mijn stem veranderen</button>
               </template>
+            </template>
               <div class="voteheadertxt"><p>Het stemmen is <span>{{starttijd}}</span> begonnen en eindigt <span>{{resttijd}}</span>. De volgende dag wordt de Poezendoos gevuld met de meest gestemde optie. Enkel degenen die voor deze optie stemden, krijgen toegang tot de Poezendoos. Elke week is er een nieuwe stemronde.</p>
               </div>
 
@@ -942,6 +944,16 @@
       starttimer: function(){
         //console.log("Einde; ", this.eindtijd);
         this.resttijd = moment.unix(this.eindtijd).locale('nl').fromNow();
+
+        var now = Math.floor(Date.now()/1000);
+
+        if(this.starttijd < now && this.eindtijd > now){
+          this.voteactive;
+          console.log("Voting is active.");
+        } else {
+          !this.voteactive;
+          console.log("Voting is NOT active.");
+        }
         //console.log(this.resttijd);
       },
 
