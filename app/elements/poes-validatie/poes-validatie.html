@@ -143,7 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: 1 * 1e18,
             gas: 3141590,
             gasPrice: gasPrice,
-            nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
+            nonce: new Date().getTime(),
           };
 
           console.log('contract to validate ', contractAddress);
@@ -166,21 +166,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           console.log("balance after invocation of contract:",self.web3.fromWei(self.web3.eth.getBalance(self.account).toNumber(), 'ether'));
 
-/*
-          myContractInstance.ValidationAdded(function(err, res) {
-
-            console.log('ValidationAdded triggered SUSKE');
-            console.log('err', err);
-            console.log('res', res);
-
-            cb(err,res);
-
-            self.fire('validation-received',res);
-
-            self._getValidations();
-
-          });
-          */
         });
       },
 
@@ -189,20 +174,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('ik heb al een adres!');
           return;
         }
-        console.log('Creating validation contract!');
+        console.log('createContract >> Creating validation contract!');
         var self = this;
         this.web3.eth.getGasPrice(function(err, result) {
+
           var gasPrice = result.toNumber(10);
 
+          console.log('createContract >> gasprice is',gasPrice);
+
           var MyContract = self.web3.eth.contract(self.contractjson.abi);
-          var contractInstance = MyContract.new({
+
+          var contract_options = {
             from: self.account,
             gasPrice: gasPrice,
             gasLimit: 3000000,
             gas: 2000000,
-            nonce: 4,
+            nonce: new Date().getTime(),
             data: self.contractjson.bytecode
-          }, function(err, myContract) {
+          };
+
+          console.log('createContract >> contractoptions ',contract_options);
+
+          var contractInstance = MyContract.new(contract_options, function(err, myContract) {
             if (!err) {
               // NOTE: The callback will fire twice!
               // Once the contract has the transactionHash property set and once its deployed on an address.
@@ -222,6 +215,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               console.log('error:', err);
             }
           });
+
+          console.log('createContract >> contract new finished... Now let\'s wait',contractInstance);
+
         });
       },
 

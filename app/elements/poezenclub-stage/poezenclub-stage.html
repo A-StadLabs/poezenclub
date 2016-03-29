@@ -548,6 +548,7 @@ id="lomqtt"></lo-mqtt>
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
         </div> -->
+
         <div class="whitespace"></div>
         <button class="settingsbtn" on-tap="gotosettings">instellingen<img class="btnimg" src="../../images/cogwheel.svg"></button>
       </div>
@@ -579,6 +580,7 @@ id="lomqtt"></lo-mqtt>
     </div>
     <div class="whitespace"></div>
     <button class="settingsbtn" on-tap="gobackdrawer">OK</button>
+    <button class="settingsbtn" on-tap="goClear">Begin opnieuw<img class="btnimg" src="../../images/alert.svg"></button>
   </div>
 </neon-animatable>
 </neon-animated-pages>
@@ -807,7 +809,7 @@ id="lomqtt"></lo-mqtt>
           </div> -->
           <div class="voting">
 
-            <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmUiAzyoUFvaJ5KCurwaJ7zcDLNviscKESaz6uGkCqFzeE" votekey="{{account}}" poezenimage="{{poezenimage}}" id="voting" contractaddress="{{votingcontract}}"></poes-voting>
+            <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmTgDvDKKQXH1Ah4sDzrWVJoQu83V9yZ8DgZybVmGdn4F2" votekey="{{account}}" poezenimage="{{poezenimage}}" id="voting" contractaddress="{{votingcontract}}"></poes-voting>
 
           </div>
 

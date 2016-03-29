@@ -1069,7 +1069,7 @@ self.contractaddress = self.vote.contractaddress;
         
 
         // indien nog niet gestemd OF ex-eaquo
-        if (this.votearray[2].data == 0 || (this.votearray[0].data == this.votearray[1].data && this.votearray[1].data == this.votearray[2].data)){
+        if (this.votearray[2].data == 0 || (this.votearray[0].data == this.votearray[1].data && this.votearray[1].data == this.votearray[2].data && this.votearray[2].data == this.votearray[0].data )){
           this.winkey = 0;
         }
 
