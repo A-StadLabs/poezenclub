@@ -541,6 +541,10 @@ id="lomqtt"></lo-mqtt>
         <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
       </div>
 
+                <template is="dom-if" if="{{hasenoughcredits}}">
+            <button on-tap="tooncode" class="valideerbtn"><i18n-msg msgid="validatesomeone">Validate someone</i18n-msg></button>
+          </template>
+
     </template>
 
 
@@ -815,9 +819,7 @@ id="lomqtt"></lo-mqtt>
 
 
 
-<!--           <template is="dom-if" if="{{hasenoughcredits}}">
-            <button on-tap="tooncode" class="valideerbtn"><i18n-msg msgid="validatesomeone">Validate someone</i18n-msg></button>
-          </template> -->
+
         </template>
 
         <template is="dom-if" if="{{!validated}}">
