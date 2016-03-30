@@ -2,12 +2,12 @@
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../poes-aai/poes-aai.html">
 <link rel="import" href="../../bower_components/chart-elements/chart-elements.html">
+<script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
+<script src="../../bower_components/underscore/underscore-min.js"></script>
 
 <dom-module id="poes-voting">
 <template>
 
-  <script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
-  <script src="../../bower_components/underscore/underscore-min.js"></script>
 
   <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
 </ipfs-upload>
@@ -566,7 +566,6 @@
 
 </style>
 
-
 <div class="voteheader">
   <div class="timestamp"><img src="../../images/time.svg"><p>Einde van de stemming is <span>{{resttijd}}</span></p></div>     
   <h1>{{vraag}}</h1>
@@ -676,7 +675,7 @@
         <div class="givevote">
           <div class="givevotebtns">
 
-            <button id="votebutt" on-tap="backtoVotecounts" class="smallbutton"><</button>            
+            <button id="votebutt" on-tap="backtoVotecounts" class="smallbutton"></button>            
             <button id="votebutt" on-tap="castVote" class="mainbutton">Mijn stem uitbrengen voor <span>{{currenttxt}}</span></button>
           </div>
         <div class="voteheadertxt">
@@ -862,6 +861,7 @@
       },
 
       ready: function(){
+        console.log('Welcome to the Poezenvoting !');
         this.$.votebutt.disabled = true;
         this.voteEntry = "slide-from-right-animation";
         this.voteExit = "slide-left-animation";
@@ -884,7 +884,6 @@
       },
 
       _votestatuschanged: function() {
-        console.log('>>>>>>>>>>>>>>>>>');
         console.log('HIER OPPIKKEN BAN');
         console.log('NIEUWE VOTESTATUS=',this.votestatus);
         switch (this.votestatus) {
@@ -905,8 +904,6 @@
           this.voteaccepted = true;
           break;
         }
-        console.log('<<<<<<<<<<<<<<<<<');
-
       },
 
       _currentchoice: function() {
@@ -926,19 +923,6 @@
 
       _votedchanged: function(){
         console.log('I have voted?',this.voted);
-      },
-
-      getIPFS: function(hash, fn){
-        this.ipfs.cat(hash, function(err, res) {
-          var buf = '';
-          res.on('data', (data) => {
-            buf += data
-          })
-          .on('end', () => {
-            //console.log(buf);
-            fn(buf);
-          });
-        });
       },
 
       starttimer: function(){
@@ -962,13 +946,13 @@
 
             var buf = '';
             res
-            .on('error', (err) => {
+            .on('error', function(err) {
               throw err
             })
-            .on('data', (data) => {
+            .on('data', function(data) {
               buf += data
             })
-            .on('end', () => {
+            .on('end', function() {
 //            console.log('buffer',buf);
 self.vote = JSON.parse(buf);
 self.contractaddress = self.vote.contractaddress;

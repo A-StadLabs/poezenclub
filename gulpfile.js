@@ -166,7 +166,7 @@ gulp.task('copy', function() {
   }).pipe(gulp.dest(dist()));
 
   // copy locales 
-  return gulp.src('app/locales/*.*')
+  gulp.src('app/locales/*.*')
     .pipe(gulp.dest(dist('locales')));
 
 

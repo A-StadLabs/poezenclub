@@ -23,10 +23,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     paper-drawer-panel {
-/*        width: 100%;
-overflow-y: scroll;*/
+      overflow: initial;
+    }
 
-}
+    .poezenclub-stage-0 .drawer.poezenclub-stage{
+      /*min-height: 650px;*/
+    }
 
 /*      #main {
         min-height: 100vh;
@@ -392,8 +394,10 @@ border-radius: 5px;
 
 
 poes-aai {
-  width: 80px;
-  height: 80px;
+  min-width: 80px;
+  max-width: 80px;
+  min-height: 80px;
+  max-height: 80px;
   border-radius: 50%;
   background-color: rgba(0,0,0,0.05);
   overflow: hidden;
@@ -404,7 +408,7 @@ poes-aai {
   width: 200px;
   height: 200px;
   overflow: hidden;
-  margin: 50px 0px 0px 0px;
+  margin: 10px 0px 0px 0px;
   background-color: rgba(0,0,0,0.05);
 }
 
@@ -510,7 +514,7 @@ id="lomqtt"></lo-mqtt>
 
 <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" balance="{{saldo}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" ismember={{ismember}} contractaddress="{{membershipcontract}}" on-contract-ready="_poescontractready"></poes-membership>
 
-<alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
+<alabs-web3js id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
 
 
 <paper-drawer-panel right-drawer force-narrow id="drawer" drawer-width="330px">
@@ -581,6 +585,8 @@ id="lomqtt"></lo-mqtt>
       <p class="clipper">{{contractaddress}}</p>
       <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
       <p class="clipper">{{txhash}}</p>
+      <p>Validated</p>
+      <p class="clipper">{{validated}}</p>
     </div>
     <div class="whitespace"></div>
     <button class="settingsbtn" on-tap="gobackdrawer">OK</button>
@@ -1000,10 +1006,12 @@ id="lomqtt"></lo-mqtt>
     checkvalidationstate: function(){
         // hier checken of 2 validaties OK zijn.
         // zoja -> toon knop openmaken die doos
-
+        console.log('checkvalidationstate started');
         if (this.poesobject1 && this.poesobject1.valid === true && this.poesobject2 && this.poesobject2.valid === true){
           console.log("JE POES IS VALIDE");
           this.validated=true;
+        }else{
+          console.log('JE POES IS INVALIDE');
         }
       },
       _fixaddress: function(address) {
