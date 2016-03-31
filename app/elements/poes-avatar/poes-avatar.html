@@ -14,8 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
-        display: block;
-        visibility: var(--vishidden);
+        display: var(--vishidden);
       }
 
       .avatar {
@@ -68,10 +67,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(this.choice==this.key){
            //this.hidden = false;
           console.log("niet gelijk");
-          this.customStyle['--vishidden'] = "visible";
+          this.customStyle['--vishidden'] = "block";
           this.updateStyles();
         } else {
-          this.customStyle['--vishidden'] = "hidden";
+          this.customStyle['--vishidden'] = "none";
           this.updateStyles();
         }
       

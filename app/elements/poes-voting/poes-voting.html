@@ -8,7 +8,6 @@
 <dom-module id="poes-voting">
 <template>
 
-
   <ipfs-upload hidefileinput host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}">
 </ipfs-upload>
 <style>
@@ -589,7 +588,7 @@
                   <h1>{{optie1}}</h1>
                   <p><span>{{votes1}}</span> stemmen</p>
                 </div>  
-                <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="1"></poes-avatar>
+                <!-- <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="1"></poes-avatar> -->
                 <template is="dom-if" if="{{optie1winner}}">
                   <div class="winnerlabel">
                     <p class="themefont">Dit is momenteel de winnende optie!</p>
