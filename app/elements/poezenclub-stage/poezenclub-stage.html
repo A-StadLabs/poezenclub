@@ -796,7 +796,7 @@ id="lomqtt"></lo-mqtt>
               <img class="alert" src="../../images/valid.svg">
             </template>
 
-            <h1>{{poezennaam}}</h1>
+            <h2>{{poezennaam}}</h2>
             <poes-aai catnumber="{{poezenimage}}"></poes-aai>
           </div>
         </div>
@@ -1212,6 +1212,7 @@ id="lomqtt"></lo-mqtt>
       tooncode: function(){
         this.$.poescontract._updateBalance();
         this.go("pin");
+        this.$.drawer.closeDrawer();
       },
 
       langpick: function(){
