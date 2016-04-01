@@ -1,4 +1,16 @@
 {
+   "Mijn stem veranderen": {
+    "message": "Change my vote"
+  },
+   "breng je stem uit": {
+    "message": "Cast your vote!"
+  },
+ "Dit is momenteel de winnende optie": {
+    "message": "Winning option up till now!"
+  },
+    "stemmen": {
+    "message": "votes"
+  },
   "kieskat": {
     "description": "...",
     "message": "Choose a cat!"
