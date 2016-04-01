@@ -586,12 +586,12 @@
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie1}}</h1>
-                  <p><span>{{votes1}}</span> stemmen</p>
+                  <p><span>{{votes1}}</span> <i18n-msg msgid="stemmen">stemmen</i18n-msg></p>
                 </div>  
                 <!-- <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="1"></poes-avatar> -->
                 <template is="dom-if" if="{{optie1winner}}">
                   <div class="winnerlabel">
-                    <p class="themefont">Dit is momenteel de winnende optie!</p>
+                    <p class="themefont"><i18n-msg msgid="Dit is momenteel de winnende optie">Dit is momenteel de winnende optie!</i18n-msg></p>
                   </div>
                 </template>
               </div>
@@ -602,12 +602,12 @@
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie2}}</h1>
-                  <p><span>{{votes2}}</span> stemmen</p>
+                  <p><span>{{votes2}}</span> <i18n-msg msgid="stemmen">stemmen</i18n-msg></p>
                 </div>  
                 <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="2"></poes-avatar>
                 <template is="dom-if" if="{{optie2winner}}">
                   <div class="winnerlabel">
-                    <p class="themefont">Dit is momenteel de winnende optie!</p>
+                    <p class="themefont"><i18n-msg msgid="Dit is momenteel de winnende optie">Dit is momenteel de winnende optie!</i18n-msg></p>
                   </div>
                 </template> 
               </div>
@@ -617,12 +617,12 @@
                 </div>
                 <div class="votethingtxt">       
                   <h1>{{optie3}}</h1>
-                  <p><span>{{votes3}}</span> stemmen</p>
+                  <p><span>{{votes3}}</span> <i18n-msg msgid="stemmen">stemmen</i18n-msg></p>
                 </div> 
                 <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="3"></poes-avatar> 
                 <template is="dom-if" if="{{optie3winner}}">
                   <div class="winnerlabel">
-                    <p class="themefont">Dit is momenteel de winnende optie!</p>
+                    <p class="themefont"><i18n-msg msgid="Dit is momenteel de winnende optie">Dit is momenteel de winnende optie!</i18n-msg></p>
                   </div>
                 </template> 
               </div>
@@ -632,14 +632,14 @@
             <div class="ownvote">
             <template is="dom-if" if="{{voteactive}}">              
               <template is="dom-if" if="{{!voted}}">
-                <button class="mainbutton" on-tap="toCast">Breng je stem uit!</button>
+                <button class="mainbutton" on-tap="toCast"><i18n-msg msgid="breng je stem uit!">Breng je stem uit!</i18n-msg></button>
               </template>
               <template is="dom-if" if="{{voted}}">
                 <div class="ownvotetxt">
                   <poes-aai catnumber="{{poezenimage}}"></poes-aai>
                   <p>Jij stemde op jouw keuze.</p>
                 </div>
-                <button class="minibtn" on-tap="toCast">Mijn stem veranderen</button>
+                <button class="minibtn" on-tap="toCast"><i18n-msg msgid="Mijn stem veranderen">Mijn stem veranderen</i18n-msg></button>
               </template>
             </template>
               <div class="voteheadertxt"><p>Het stemmen is <span>{{starttijd}}</span> begonnen en eindigt <span>{{resttijd}}</span>. De volgende dag wordt de Poezendoos gevuld met de meest gestemde optie. Enkel degenen die voor deze optie stemden, krijgen toegang tot de Poezendoos. Elke week is er een nieuwe stemronde.</p>
