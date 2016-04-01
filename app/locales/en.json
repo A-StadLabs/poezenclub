@@ -1,5 +1,8 @@
 {
-   
+  
+  "Mijn stem uitbrengen voor": {
+    "message": "cast my vote for"
+  },
     "de volgende dag...": {
     "message": "The next day, the Kittybox will be filled with the option that had the most votes. Only the ones who voted for this option, will have access to the box. Every week there's a new votng round."
   },
