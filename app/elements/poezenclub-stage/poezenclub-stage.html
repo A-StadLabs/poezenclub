@@ -853,7 +853,11 @@ id="lomqtt"></lo-mqtt>
 </neon-animatable>
 
 <neon-animatable data-route="admin">
-<poes-admin account="{{account}}" web3="{{web3}}"></poes-admin>
+  <poes-admin account="{{account}}" web3="{{web3}}"></poes-admin>
+</neon-animatable>
+
+<neon-animatable data-route="admin-edit">
+  <poes-admin-edit account="{{account}}" web3="{{web3}}"></poes-admin-edit>
 </neon-animatable>
 
 </neon-animated-pages>
@@ -935,6 +939,10 @@ id="lomqtt"></lo-mqtt>
         var hash = window.location.hash;
         if(hash=="#!/admin"){
           this.state = "admin";
+        };
+        if(hash=="#!/admin-edit"){
+          this.state = "admin-edit";
+          console.log('admin-edit')
         };
 
         this.$.drawerpages.selected = 0;

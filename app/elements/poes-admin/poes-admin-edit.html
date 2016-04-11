@@ -1,0 +1,389 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../../bower_components/paper-color-picker/paper-color-input.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
+<dom-module id="poes-admin-edit">
+  <template>
+    <ipfs-upload hidefileinput id="ipfsupload" host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}"></ipfs-upload>
+    <style>
+      :host {
+        display: block;
+        background-color: white;
+        box-sizing:border-box;
+        padding: 50px;
+
+      }
+
+      .fab {
+        background-color: #D18E7D;
+      }
+
+      .antwoord {
+/*        background-color: #eee;*/
+        background-color: #F5E7E4;
+
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        @apply(--theme-font-title);
+        color: var(--pinktwee-theme-color);
+
+      }
+
+      h2 {
+        @apply(--theme-font-subhead);
+        color: var(--pinktwee-theme-color);
+      }
+
+      h3 {
+        @apply(--theme-font-general);
+        font-size: 22px;
+        @apply(--no-edges);
+      }
+
+      p {
+        @apply(--theme-font-body1);
+      }
+
+      .wrapit {
+        @apply(--layout-horizontal);
+        @apply(--layout-start);
+        @apply(--layout-center);
+        @apply(--layout-wrap);
+      }
+
+      .half {
+        width: 100%;
+        max-width: 550px;
+        margin: 10px 20px 10px 0px;
+      }
+
+      .whitespace {
+        height: 50px;
+      }
+
+      paper-input-container {
+        background-color: #F5E7E4;
+        box-sizing:border-box;
+        padding: 30px;
+      }
+
+      .paper-input-container-0 label, paper-input-char-counter, .paper-input-container-0 input {
+        font-family: Indieflower;
+/*      text-transform: capitalize;*/
+      }
+
+      paper-color-input {
+        width: 30%;
+        min-width: 200px;
+      }
+
+      .uploader {
+        box-sizing:border-box;
+        padding: 30px;
+      }
+
+    </style>
+    <div>
+      <h1 on-tap="newtoast">Stemronde aanpassen</h1>
+
+      <div class="whitespace"></div>
+
+      <h3>ContractID</h3>
+      <paper-input-container>
+        <label>IPFS van contract</label>
+        <input is="iron-input" bind-value="{{voteipfs}}">
+      </paper-input-container>
+
+        <paper-icon-button icon="save" on-tap="load">Laden</paper-icon-button>
+
+      
+      <div class="whitespace"></div>
+
+      <div class="wrapit">
+      <div class="half">
+      <h3>Start</h3>
+      <paper-input-container>
+        <input type="date" name="t1" is="iron-input" bind-value="{{startdate}}">
+      </paper-input-container>
+      <paper-input-container>
+        <input type="time" name="t2" is="iron-input" bind-value="{{starttime}}">
+      </paper-input-container>
+      </div>
+      <div class="half">
+      <h3>Eind</h3>
+      <paper-input-container>
+        <input type="date" name="t3" is="iron-input" bind-value="{{enddate}}">
+      </paper-input-container>
+      <paper-input-container>
+        <input type="time" name="t4" is="iron-input" bind-value="{{endtime}}">
+      </paper-input-container>
+      </div>
+      </div>
+
+      <div class="whitespace"></div>
+
+      <h3>De antwoorden</h3>
+
+      <div class="antwoord" id="0">
+        <paper-input-container>
+          <label>Antwoord</label>
+          <input is="iron-input" bind-value="{{optie1}}">
+        </paper-input-container>
+<!--         <paper-color-input value-as-hex="{{kleur1}}" no-full-names></paper-color-input> -->
+        <ipfs-upload class="uploader" id="ipfsupload1" host="/ip4/109.123.70.141/tcp/5001" hash="{{ipfs1}}"></ipfs-upload>
+
+      </div>
+
+      <div class="antwoord" id="1">
+        <paper-input-container>
+          <label>Antwoord</label>
+          <input is="iron-input" bind-value="{{optie2}}">
+        </paper-input-container>
+<!--         <paper-color-input value-as-hex="{{kleur2}}" no-full-names></paper-color-input> -->
+        <ipfs-upload class="uploader" id="ipfsupload2" host="/ip4/109.123.70.141/tcp/5001" hash="{{ipfs2}}"></ipfs-upload>
+      </div>
+
+      <div class="antwoord" id="2">
+        <paper-input-container>
+          <label>Antwoord</label>
+          <input is="iron-input" bind-value="{{optie3}}">
+        </paper-input-container>
+
+<!--         <paper-color-input value-as-hex="{{kleur3}}" no-full-names></paper-color-input>
+ -->
+        <ipfs-upload class="uploader" id="ipfsupload3" host="/ip4/109.123.70.141/tcp/5001" hash="{{ipfs3}}"></ipfs-upload>
+
+      </div>
+
+      <paper-icon-button icon="save" on-tap="save">Opslaan</paper-icon-button>
+
+      
+      <paper-toast on-tap="closetoast" id="toast0" duration="0"></paper-toast>
+
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    //var ipfs;
+
+    Polymer({
+      is: 'poes-admin-edit',
+
+      properties: {
+
+        web3: {
+          type: Object,
+          observer: "_web3"
+        },
+        webready: {
+          observer: "_web3"
+        }
+      },
+
+    
+      newtoast: function(){
+        console.log('testing..');
+        this.fire('add-toast', { msg: 'testing!'});
+      },
+
+      showtoast: function(msg){
+        this.$.toast0.text = this.$.toast0.text+'\n\n'+msg;
+        this.$.toast0.open();
+      },
+
+      load: function() {
+        if (this.ipfs) {
+          this.ipfs.cat(this.voteipfs, function(err, res) {
+
+            var buf = '';
+            res
+              .on('error', function(err) {
+                throw err
+              })
+              .on('data', function(data) {
+                buf += data
+              })
+              .on('end', function() {
+                //            console.log('buffer',buf);
+                var jsonobject = JSON.parse(buf);
+                self.contractaddress = jsonobject.contractaddress;
+
+                 self.starttime= jsonobject.starttime;
+                self.startdate=jsonobject.startdate;
+                self.endtime=jsonobject.endtime;
+                self.enddate=jsonobject.enddate;
+
+                self.vraag=jsonobject.vraag;
+
+                self.optie1=jsonobject.optie1;
+                self.kleur1=jsonobject.kleur1;
+               
+
+                self.optie2=jsonobject.optie2;
+                self.kleur2=jsonobject.kleur2;
+               
+
+                self.optie3=jsonobject.optie3;
+                self.kleur3=jsonobject.kleur3;
+                
+
+
+              });
+          });
+        }
+      },
+
+      save: function(){
+        console.log(this.ipfs1);
+        var jsonobject = {};
+        jsonobject.starttime = this.starttime;
+        jsonobject.startdate = this.startdate;
+        jsonobject.endtime = this.endtime;
+        jsonobject.enddate = this.enddate;
+
+        jsonobject.vraag = this.vraag;
+
+        jsonobject.optie1 = this.optie1;
+        jsonobject.kleur1 = this.kleur1;
+        jsonobject.img1 = this.ipfs1.hash;
+
+        jsonobject.optie2 = this.optie2;
+        jsonobject.kleur2 = this.kleur2;
+        jsonobject.img2 = this.ipfs2.hash;
+
+        jsonobject.optie3 = this.optie3;
+        jsonobject.kleur3 = this.kleur3;
+        jsonobject.img3 = this.ipfs3.hash;
+
+        var startunix = this.startdate+"T"+this.starttime+":00+01:00";
+        startunix = Date.parse(startunix)/1000;
+
+        var endunix = this.enddate+"T"+this.endtime+":00+01:00";
+        endunix = Date.parse(endunix)/1000;
+
+        jsonobject.startunix = startunix;
+        jsonobject.endunix = endunix;
+
+        var self = this;
+
+        console.log(jsonobject);
+
+        this._createNewVotingContract(startunix, endunix, function(e){
+          jsonobject.contractaddress = e;
+          self.savetoipfs(jsonobject, function(e){
+            console.log("IPFS saved ", e);
+            self.fire('add-toast', { msg: 'IPFS saved: ' + e });
+            //self.showtoast("IPFS saved: " + e);
+            self.fire('add-toast', { msg: 'All done!' });
+          });
+        });
+        
+        //console.log(jsonobject);
+        
+      },
+
+      attached: function(){
+        // this.ipfs.add([new this.ipfs.Buffer("wjepfwehjwuefhwpiuefh")], function(err, res) {
+        //   if (err || !res) return console.error(err)
+        //   console.log('added to IPFS');
+        //   console.log(res);
+        // });
+      },
+
+      savetoipfs: function(ipfsbuffer, fn){
+        this.fire('add-toast', { msg: 'Saving to IPFS' });
+        var ipfsbuffer = JSON.stringify(ipfsbuffer);
+        console.log(ipfsbuffer);
+        this.ipfs.add([new this.ipfs.Buffer(ipfsbuffer)], function(err, res) {
+          if (err || !res) return console.error(err)
+          console.log('added to IPFS');
+          console.log(res[0].Hash);
+          fn(res[0].Hash);
+        });
+      },
+
+      _web3: function(){
+        console.log('admin has web3');
+        //this._createNewVotingContract();
+      },
+
+      _createNewVotingContract: function(startdate, enddate, fn) {
+        this.fire('add-toast', { msg: 'Creating votingcontract...' });
+        var self = this;
+        this.contracturl = this.resolveUrl('../../contracts/PoezenVoting.json');
+        this.importHref(this.contracturl, function(e) {
+          self.contractjson = JSON.parse(e.target.import.body.innerText);
+
+          console.log('Creating new contract!');
+
+          this.web3.eth.getGasPrice(function(err, result) {
+            var gasPrice = result.toNumber(10);
+
+            var MyContract = self.web3.eth.contract(self.contractjson.abi);
+            var contractInstance = MyContract.new(startdate,enddate,{
+              from: self.account,
+              gasPrice: gasPrice,
+              gasLimit: 3000000,
+              gas: 2000000,
+              nonce: 4,
+              data: self.contractjson.bytecode
+            }, function(err, myContract) {
+              if (!err) {
+                // NOTE: The callback will fire twice!
+                // Once the contract has the transactionHash property set and once its deployed on an address.
+
+                // e.g. check tx hash on the first call (transaction send)
+                if (!myContract.address) {
+                  console.log("Your validation contract has been deployed to the Ethereum network. Transaction hash is", myContract.transactionHash);
+                  self.txhash = myContract.transactionHash;
+                  console.log("Wait a new moments while we mine it. You will receive your address when it is mined.");
+                  //self.showtoast("Here's the TX hash: " + self.txhash);
+                  self.fire('add-toast', { msg: "Here's the TX hash: " + self.txhash });
+
+                  // check address on the second call (contract deployed)
+                } else {
+                  console.log("Your validation contract has been deployed. Your contract address is", myContract.address);
+                  self.contractaddress = myContract.address;
+                  //self.showtoast("Contract deployed: " + self.contractaddress);
+                  self.fire('add-toast', { msg: "Contract deployed: " + self.contractaddress });
+                  fn(self.contractaddress);
+                }
+              } else {
+                console.log('error:', err);
+                //self.showtoast("Error: " + err);
+                self.fire('add-toast', { msg: "Error." });
+              }
+            });
+          });
+
+        }, function(e) {
+          console.log('ERROR!');
+        });
+
+      },
+
+      closetoast: function(){
+        this.$.toast0.close();
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

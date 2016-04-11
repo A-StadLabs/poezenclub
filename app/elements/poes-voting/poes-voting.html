@@ -953,8 +953,11 @@
             })
             .on('end', function() {
 //            console.log('buffer',buf);
-self.vote = JSON.parse(buf);
-self.contractaddress = self.vote.contractaddress;
+            self.vote = JSON.parse(buf);
+            self.contractaddress = self.vote.contractaddress;
+
+            console.log('voting contractaddress=',self.contractaddress);
+
             // de rest gaat via de observer van contractaddress
             console.log(self.vote);
             self.vraag = self.vote.vraag;
@@ -1154,7 +1157,7 @@ self.contractaddress = self.vote.contractaddress;
           var options = {
             from: self.account,
             //value: 1 * 1e18,
-            gas: 3141590,
+            gas: 100000,
             gasPrice: gasPrice,
             nonce: Math.floor(Math.random(999999)) + new Date().getTime(),
           };
