@@ -517,13 +517,12 @@ id="lomqtt"></lo-mqtt>
 <alabs-web3js id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
 
 
-<paper-drawer-panel right-drawer force-narrow id="drawer" drawer-width="330px">
 <div drawer>
   <neon-animated-pages id="drawerpages" selected="{{selected}}" 
   entry-animation="fade-in-animation"
   exit-animation="fade-out-animation">
   <neon-animatable>
-  <div class="drawer">
+  <!-- <div class="drawer">
     <poes-aai class="grande" catnumber="{{poezenimage}}"></poes-aai>
     <div class="poestitel">
       <h2>{{poezennaam}}</h2>
@@ -552,10 +551,10 @@ id="lomqtt"></lo-mqtt>
     </template>
 
 
-<!--         <div class="validatorz vertical layout">
+        <div class="validatorz vertical layout">
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
-        </div> -->
+        </div>
 
         <div class="whitespace"></div>
         <button class="settingsbtn" on-tap="gotosettings">instellingen<img class="btnimg" src="../../images/cogwheel.svg"></button>
@@ -594,10 +593,10 @@ id="lomqtt"></lo-mqtt>
   </div>
 </neon-animatable>
 </neon-animated-pages>
-</div>
+</div> -->
 
-<div main>
-  <neon-animated-pages selected="{{state}}" 
+<!-- <div main>
+ -->  <neon-animated-pages selected="{{state}}" 
   entry-animation="{{entryAnimation}}"
   exit-animation="{{exitAnimation}}"
   attr-for-selected="data-route">
@@ -863,8 +862,8 @@ id="lomqtt"></lo-mqtt>
 </neon-animated-pages>
 
 </div>
-</paper-drawer-panel>
-
+<!-- </paper-drawer-panel>
+ -->
 </template>
 <script>
   (function() {
