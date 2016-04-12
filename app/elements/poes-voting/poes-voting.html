@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../poes-aai/poes-aai.html">
+<link rel="import" href="../poes-avatar/poes-avatar.html">
 <link rel="import" href="../../bower_components/chart-elements/chart-elements.html">
 <script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
 <script src="../../bower_components/underscore/underscore-min.js"></script>
@@ -186,8 +187,7 @@
         @apply(--layout-vertical);
         @apply(--layout-center-center);
         box-sizing:border-box;
-        padding: 20px 0px 50px 0px;
-        margin-bottom: 100px;
+        padding: 0px;
       }
 
       .mainbutton {
@@ -286,8 +286,7 @@
         @apply(--layout-center-center);
         @apply(--layout-wrap);
         box-sizing:border-box;
-        padding: 20px 0px 50px 0px;
-        margin-bottom: 50px;
+        padding: 20px 0px 20px 0px;
       }
 
       .givevotetxt {
@@ -354,7 +353,6 @@
 
     .msgs {
       width: 100%;
-      max-width: 700px;
       @apply(--layout-vertical);
       @apply(--layout-center);
       @apply(--layout-start-justified);
@@ -397,9 +395,9 @@
     }
 
     poes-avatar {
-      height: 50px;
-      width: 50px;
-      margin: 20px 10px 20px 25px;
+      height: 40px;
+      width: 40px;
+      margin: 20px 10px 20px 10px;
     }
 
     .smallest {
@@ -435,7 +433,7 @@
     }
     .votethingtxt {
       padding: 15px;
-    max-width: 150px;
+    max-width: 170px;
     }
 
     .votethingtxt h1 {
@@ -454,7 +452,7 @@
     }
 
     .msgs {
-      min-height: 700px;
+
     }
   }
   /* mobile-large */
@@ -476,7 +474,7 @@
   }
   .votethingtxt {
     padding: 15px;
-    max-width: 150px;
+    max-width: 170px;
 
   }
   .votethingtxt h1 {
@@ -493,7 +491,7 @@
     text-align: center;
   }
   .msgs {
-    min-height: 700px;
+
   }
 }
 /* mobile-small-landscape */
@@ -516,8 +514,7 @@
 }
 .votethingtxt {
   padding: 15px;
-    max-width: 150px;
-
+    max-width: 170px;
 }
 
 .votethingtxt h1 {
@@ -536,7 +533,7 @@
 }
 
 .msgs {
-  min-height: 700px;
+
 }
 
 
@@ -579,6 +576,10 @@
 
   <neon-animatable vote-route="votecounts">
   <div class="canvas">
+
+
+
+
     <div class="votethings">
               <div class="votething">
                 <div class="votethingimg">
@@ -588,7 +589,7 @@
                   <h1>{{optie1}}</h1>
                   <p><span>{{votes1}}</span> <i18n-msg msgid="stemmen">stemmen</i18n-msg></p>
                 </div>  
-                <!-- <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="1"></poes-avatar> -->
+                <poes-avatar poesnr="{{poezenimage}}" choice="{{myvote}}" key="1"></poes-avatar>
                 <template is="dom-if" if="{{optie1winner}}">
                   <div class="winnerlabel">
                     <p class="themefont"><i18n-msg msgid="Dit is momenteel de winnende optie">Dit is momenteel de winnende optie!</i18n-msg></p>
@@ -675,7 +676,7 @@
           <div class="givevotebtns">
 
             <button id="votebutt" on-tap="backtoVotecounts" class="smallbutton"></button>            
-            <button id="votebutt" on-tap="castVote" class="mainbutton"><i18n-msg msgid="Mijn stem uitbrengen voor">Mijn stem uitbrengen voor</i18n-msg>Mijn stem uitbrengen voor <span>{{currenttxt}}</span></button>
+            <button id="votebutt" on-tap="castVote" class="mainbutton"><i18n-msg msgid="Mijn stem uitbrengen voor">Mijn stem uitbrengen voor </i18n-msg><span>{{currenttxt}}</span></button>
           </div>
         <div class="voteheadertxt">
         <p>Let op: enkel degenen die voor de winnende optie stemmen, krijgen toegang tot de Poezendoos.</p>
@@ -701,7 +702,7 @@
               <h1><span>{{currenttxt}}</span>!</h1>
             </div>
             <div class="funnythingdeeltwee">
-              <poes-avatar poesnr="{{poezenimage}}" class="eindavatar"></poes-avatar>
+              <poes-avatar poesnr="{{poezenimage}}" class="eindavatar">??</poes-avatar>
               <img src="../../images/textballonhoekje.svg">
               <p class="smallest">Je stem werd uitgebracht.</p>
             </div>
