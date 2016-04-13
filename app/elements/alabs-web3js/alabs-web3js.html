@@ -123,6 +123,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // console.log('A-labs web3js. base account for your transactions',this.account);
         // console.log('A-labs web3js. balance of account',this.balance);
 
+        this.web3.eth.getGasPrice(function(err, result) {
+          console.log('Gasprice is',result.toNumber());
+        });
+
+
         this.fire('web3-ready');
       },
 

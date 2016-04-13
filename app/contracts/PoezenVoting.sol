@@ -25,10 +25,10 @@ contract PoezenVoting {
     mapping(address => Voter) public voters;
 
     function setinterval(uint start,uint end){
-        if (msg.sender == owner){
+        //if (msg.sender == owner){
             votingStart = start;
             votingEnd = end;        
-        }
+        //}
     }
 
     function vote(uint vote) returns (uint returnCode){

@@ -22,28 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       height: 100%;
     }
 
-    paper-drawer-panel {
-/*        width: 100%;
-overflow-y: scroll;*/
 
-}
-
-/*      #main {
-        min-height: 100vh;
-        width: 100vw;
-      }
-      */
-
-      .drawer {
-        background-color: var(--pink-theme-color);
-        @apply(--layout-vertical);
-        @apply(--layout-center);
-        overflow-y: scroll;
-        overflow-x: hidden;
-        height: 100%;
-        box-sizing:border-box;
-        padding: 0px;
-      }
 
 
       .eighty {
@@ -58,9 +37,16 @@ overflow-y: scroll;*/
 
       .canvaspink {
         @apply(--canvas-pink);
+        min-height: 100vh;
+        width: 100%;
+        padding: 25px 0px 25px 0px;
+      }
+
+      .centervlak {
+        width: 100%;
+        height: 100%;
         @apply(--layout-vertical);
         @apply(--layout-center-center);
-        min-height: 100vh;
       }
 
       .canvas2pink {
@@ -69,9 +55,8 @@ overflow-y: scroll;*/
         background-color: var(--pink-theme-color);
         /*      background-color: red;*/
         @apply(--layout-vertical);
-        @apply(--layout-start);
-        @apply(--layout-center);
-        min-height: 85vh;
+        @apply(--layout-center-center);
+        height: 85vh;
       }
 
 
@@ -99,6 +84,14 @@ overflow-y: scroll;*/
       h2 {
         @apply(--theme-font-subhead);
         text-align: center;
+      }
+
+      h4 {
+        font-size: 16px;
+        font-weight: 300;
+        padding: 0px;
+        margin: 0px 0px 20px 0px;
+        @apply(--theme-alt-general);
       }
 
       p {
@@ -220,6 +213,7 @@ overflow-y: scroll;*/
 
       .validatorzsmall {
         width: 80%;
+        max-width: 600px;
         text-align: center;
       }
 
@@ -312,6 +306,7 @@ overflow-y: scroll;*/
         background: var(--pink-theme-color);
         box-sizing:border-box;
         padding: 20px;
+        border-top: 1px solid rgba(0,0,0,0.25);
         border-bottom: 1px solid rgba(0,0,0,0.25);
 
 /*    @apply(--layout-horizontal);
@@ -352,10 +347,10 @@ overflow-y: scroll;*/
 .topbar {
   width: 100%;
   background: var(--pink-theme-color);
-  height: 15vh;
-  max-height: 150px;
+/*  height: 15vh;
+  max-height: 150px;*/
   box-sizing:border-box;
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
   @apply(--layout-horizontal);  
   @apply(--layout-center);    
   @apply(--layout-end-justified);
@@ -391,20 +386,22 @@ border-radius: 5px;
 }
 
 
-poes-aai {
+.smallaai {
   width: 80px;
-  height: 80px;
+  width: 80px;
   border-radius: 50%;
   background-color: rgba(0,0,0,0.05);
   overflow: hidden;
   margin: 0px 0px 0px 10px;
 }
 
-.grande {
+.grandaai {
   width: 200px;
   height: 200px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.05);
   overflow: hidden;
-  margin: 50px 0px 0px 0px;
+  margin: 10px 0px 0px 0px;
   background-color: rgba(0,0,0,0.05);
 }
 
@@ -440,9 +437,6 @@ poes-aai {
   line-height: 30px;
 }
 
-#drawerpages {
-  width: 100%;
-}
 
 .btnimg {
   width: 25px;
@@ -510,16 +504,15 @@ id="lomqtt"></lo-mqtt>
 
 <poes-membership id="poescontract" web3="{{web3}}" account="{{account}}" balance="{{saldo}}" contract="LocalsMembership.json" memberstatus="{{memberstatus}}" ismember={{ismember}} contractaddress="{{membershipcontract}}" on-contract-ready="_poescontractready"></poes-membership>
 
-<alabs-web3js on-web3-ready="_web3_ready" id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
+<alabs-web3js id="alabsweb3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" connected="{{web3connected}}" provider="http://109.123.70.141:8545"></alabs-web3js>
 
 
-<paper-drawer-panel right-drawer force-narrow id="drawer" drawer-width="330px">
-<div drawer>
-  <neon-animated-pages id="drawerpages" selected="{{selected}}" 
+<!-- <div drawer> -->
+<!--   <neon-animated-pages id="drawerpages" selected="{{selected}}" 
   entry-animation="fade-in-animation"
   exit-animation="fade-out-animation">
-  <neon-animatable>
-  <div class="drawer">
+  <neon-animatable> -->
+  <!-- <div class="drawer">
     <poes-aai class="grande" catnumber="{{poezenimage}}"></poes-aai>
     <div class="poestitel">
       <h2>{{poezennaam}}</h2>
@@ -541,13 +534,18 @@ id="lomqtt"></lo-mqtt>
         <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
       </div>
 
+                <template is="dom-if" if="{{hasenoughcredits}}">
+            <button on-tap="tooncode" class="valideerbtn"><i18n-msg msgid="validatesomeone">Validate someone</i18n-msg></button>
+          </template>
+
     </template>
 
 
-<!--         <div class="validatorz vertical layout">
+        <div class="validatorz vertical layout">
           <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
           <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
-        </div> -->
+        </div>
+
         <div class="whitespace"></div>
         <button class="settingsbtn" on-tap="gotosettings">instellingen<img class="btnimg" src="../../images/cogwheel.svg"></button>
       </div>
@@ -576,16 +574,18 @@ id="lomqtt"></lo-mqtt>
       <p class="clipper">{{contractaddress}}</p>
       <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
       <p class="clipper">{{txhash}}</p>
+      <p>Validated</p>
+      <p class="clipper">{{validated}}</p>
     </div>
     <div class="whitespace"></div>
     <button class="settingsbtn" on-tap="gobackdrawer">OK</button>
+    <button class="settingsbtn" on-tap="goClear">Begin opnieuw<img class="btnimg" src="../../images/alert.svg"></button>
   </div>
 </neon-animatable>
 </neon-animated-pages>
-</div>
+</div> -->
 
-<div main>
-  <neon-animated-pages selected="{{state}}" 
+ <neon-animated-pages selected="{{state}}" 
   entry-animation="{{entryAnimation}}"
   exit-animation="{{exitAnimation}}"
   attr-for-selected="data-route">
@@ -593,13 +593,6 @@ id="lomqtt"></lo-mqtt>
 
   <neon-animatable data-route="selectpussy">
   <div class="canvaspink">
-<!--           <div class="errormsg">
-            <template is="dom-if" if="{{!web3connected}}">web3 NOT connected</template>
-            <h2>Je bent niet correct geconnecteerd. Probeer het later opnieuw.</h2>
-            <template is="dom-if" if="{{mqttconnected}}">mqtt connected</template>
-          </div> -->
-
-
           <h2><i18n-msg msgid="kieskat">Choose a cat!</i18n-msg></h2>
           <iron-selector id="poezenselector" attr-for-selected="poes" on-iron-select="poezenimage_selected" selected="{{poezenimage}}">
           <div class="poesitem" poes="1">
@@ -775,8 +768,10 @@ id="lomqtt"></lo-mqtt>
           </div>
         </template> -->
 
+        <div class="canvaspink">
+
         <div class="topbar">
-          <div class="poesprofile" on-tap="openDrawer">
+          <div class="poesprofile" on-tap="toAccount">
             <template is="dom-if" if="{{!validated}}">
               <img class="alert" src="../../images/alert.svg">
             </template>
@@ -784,12 +779,16 @@ id="lomqtt"></lo-mqtt>
               <img class="alert" src="../../images/valid.svg">
             </template>
 
-            <h1>{{poezennaam}}</h1>
-            <poes-aai catnumber="{{poezenimage}}"></poes-aai>
+            <h2>{{poezennaam}}</h2>
+            <poes-aai class="smallaai" catnumber="{{poezenimage}}"></poes-aai>
           </div>
         </div>
-        <div class="canvas2pink">
-          <!--     <div class="whitespace" on-tap="tohomescreen" >X</div> -->
+
+
+
+
+
+
 
           <template is="dom-if" if="{{!ismember}}">
             <poezenclub-loader small id="memberloader" loadmsg="{{memberloadermsg}}"></poezenclub-loader>
@@ -806,15 +805,14 @@ id="lomqtt"></lo-mqtt>
             <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmVvSTWXL2zUxEMrXM7U1vB7EuZG78UtBpW7hqhkpeXHyK" votekey="{{account}}" poezenimage="{{poezenimage}}"></poes-voting>
           </div> -->
           <div class="voting">
-            <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmVRyQHRuca2uerijy4C22qc6mtCpByGHpSsr4FWSxwhHc" votekey="{{account}}" poezenimage="{{poezenimage}}" id="voting"></poes-voting>
+
+            <poes-voting account="{{account}}" web3="{{web3}}" voteipfs="QmaUmsnUxcet9C2a5ReBi6PZV3h3Pv7a6vkcBxN1MGpcnH" votekey="{{account}}" poezenimage="{{poezenimage}}" id="voting" contractaddress="{{votingcontract}}"></poes-voting>
 
           </div>
 
 
 
-<!--           <template is="dom-if" if="{{hasenoughcredits}}">
-            <button on-tap="tooncode" class="valideerbtn"><i18n-msg msgid="validatesomeone">Validate someone</i18n-msg></button>
-          </template> -->
+
         </template>
 
         <template is="dom-if" if="{{!validated}}">
@@ -842,13 +840,107 @@ id="lomqtt"></lo-mqtt>
 </neon-animatable>
 
 <neon-animatable data-route="admin">
-<poes-admin account="{{account}}" web3="{{web3}}"></poes-admin>
+  <poes-admin account="{{account}}" web3="{{web3}}"></poes-admin>
 </neon-animatable>
 
-</neon-animated-pages>
+<neon-animatable data-route="admin-edit">
+  <poes-admin-edit account="{{account}}" web3="{{web3}}"></poes-admin-edit>
+</neon-animatable>
 
+
+<neon-animatable data-route="account">
+
+<div class="canvaspink">
+<div class="topbar">
+    <button class="settingsbtn" on-tap="toPussybase">< terug</button>
 </div>
-</paper-drawer-panel>
+
+<div class="centervlak">
+<div class="whitespace"></div>
+<div class="whitespace"></div>
+
+    <poes-aai class="grandaai" catnumber="{{poezenimage}}"></poes-aai>
+    <div class="poestitel">
+      <h2>{{poezennaam}}</h2>
+      <img class="alert" src="../../images/valid.svg">
+    </div>
+    <div class="whitespace"></div>
+    <template is="dom-if" if="{{!validated}}">
+      <img class="alert" src="../../images/alert.svg">
+      <h3 class="alerttxt">Je bent nog niet gevalideerd</h3>
+    </template>
+
+
+
+    <template is="dom-if" if="{{validated}}">
+          <template is="dom-if" if="{{hasenoughcredits}}">
+            <button on-tap="tooncode" class="valideerbtn"><i18n-msg msgid="validatesomeone">Validate someone</i18n-msg></button>
+          </template>
+
+    <div class="whitespace"></div>
+
+      <div class="validatorzsmall vertical layout">
+        <p>Je bent gevalideerd door</p>
+        <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
+        <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" small class="validatordetailsmall"></poes-validatordetail>
+      </div>
+   <div class="whitespace"></div>
+   <div class="whitespace"></div>
+
+
+    </template>
+
+
+<!--         <div class="validatorz vertical layout">
+          <poes-validatordetail pincode="{{pincode}}" id="validator1" ref="validator1" poesobject="{{poesobject1}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+          <poes-validatordetail pincode="{{pincode}}" id="validator2" ref="validator2" poesobject="{{poesobject2}}" on-poesvalidator-loaded="checkvalidationstate" on-validated="checkvalidationstate" valloadmsg="{{valloadmsg}}" normal></poes-validatordetail>
+        </div> -->
+
+
+
+
+
+      <div class="languagepicker">
+        <h4><i18n-msg msgid="lang">Your language</i18n-msg></h4>
+        <iron-selector 
+        attr-for-selected="lang" 
+        selected="{{language}}" 
+        on-iron-select="langpick"  
+        class="languagepickersel">
+        <div lang="en" class="language"><h2>EN</h2></div>
+        <div lang="nl" class="language"><h2>NL</h2></div>
+      </iron-selector>
+    </div>        
+    <div class="accountinfo">
+      <h4><i18n-msg msgid="kitty">KittyClub</i18n-msg><span>{{version}}</span></h4>
+      <p><i18n-msg msgid="ethersaldo">My Ether-saldo</i18n-msg></p>
+      <p class="clipper">{{saldo}}</p>
+      <p><i18n-msg msgid="kittycontract">My KittyClubcontract</i18n-msg></p>
+      <p class="clipper">{{membershipcontract}}</p>
+      <p><i18n-msg msgid="valcontract">My validationcontract</i18n-msg></p>
+      <p class="clipper">{{contractaddress}}</p>
+      <p><i18n-msg msgid="valhash">My validation tx hash</i18n-msg></p>
+      <p class="clipper">{{txhash}}</p>
+      <p>Validated</p>
+      <p class="clipper">{{validated}}</p>
+    </div>
+   <div class="whitespace"></div>
+    <button class="settingsbtn" on-tap="goClear">Begin opnieuw<img class="btnimg" src="../../images/alert.svg"></button>
+   <div class="whitespace"></div>
+      </div>
+
+      </div>
+
+</neon-animatable>
+
+
+
+
+
+
+
+
+</neon-animated-pages>
 
 </template>
 <script>
@@ -917,16 +1009,20 @@ id="lomqtt"></lo-mqtt>
 
       ready: function(){
         this.makepincode();
-        this.exitAnimation = 'slide-down-animation';
-        this.entryAnimation = 'slide-down-animation';
+        this.exitAnimation = 'slide-left-animation';
+        this.entryAnimation = 'slide-from-right-animation';
         this.state = "selectpussy";
 
         var hash = window.location.hash;
         if(hash=="#!/admin"){
           this.state = "admin";
         };
+        if(hash=="#!/admin-edit"){
+          this.state = "admin-edit";
+          console.log('admin-edit')
+        };
 
-        this.$.drawerpages.selected = 0;
+
       },
 
       makepincode: function(){
@@ -963,6 +1059,10 @@ id="lomqtt"></lo-mqtt>
         this.go('homescreen');
       },
 
+      toAccount: function(){
+        this.go('account');
+      },
+
       poes_loaded: function(){
         if (this.poezenimage && this.poezennaam){
           if (this.state == 'selectpussy'){
@@ -995,10 +1095,12 @@ id="lomqtt"></lo-mqtt>
     checkvalidationstate: function(){
         // hier checken of 2 validaties OK zijn.
         // zoja -> toon knop openmaken die doos
-
+        console.log('checkvalidationstate started');
         if (this.poesobject1 && this.poesobject1.valid === true && this.poesobject2 && this.poesobject2.valid === true){
           console.log("JE POES IS VALIDE");
           this.validated=true;
+        }else{
+          console.log('JE POES IS INVALIDE');
         }
       },
       _fixaddress: function(address) {
@@ -1035,10 +1137,6 @@ id="lomqtt"></lo-mqtt>
 
       },
 
-      openDrawer: function(){
-        this.$.drawer.togglePanel();
-        this.$.drawerpages.selected = 0;
-      },
 
       toNamepussy: function() {
         this.go('namepussy');
@@ -1183,8 +1281,10 @@ id="lomqtt"></lo-mqtt>
         console.log(this.boxpin);
         var pin = this.boxpin;
         //this.$.lomqtt.send("poezendoos/"+pin,"checkContract"+"|"+this.contractaddress+"|"+this.pincode, 2);
+
         //console.log(this.address);
-        this.$.lomqtt.send("poezendoos/"+pin,"checkVotingContract"+"|"+this.votingcontractaddress+"|"+this.contractaddress+"|"+this.pincode, 2);
+        console.log("poezendoos/"+pin,"checkVotingContract"+"|"+this.votingcontract+"|"+this.contractaddress+"|"+this.pincode, 2);
+        this.$.lomqtt.send("poezendoos/"+pin,"checkVotingContract"+"|"+this.votingcontract+"|"+this.contractaddress+"|"+this.pincode, 2);
         this.go("boxchecks");
       },
 
@@ -1197,6 +1297,7 @@ id="lomqtt"></lo-mqtt>
       tooncode: function(){
         this.$.poescontract._updateBalance();
         this.go("pin");
+        this.$.drawer.closeDrawer();
       },
 
       langpick: function(){
@@ -1219,13 +1320,11 @@ id="lomqtt"></lo-mqtt>
       },
 
 
-      gotosettings: function(){
-        this.$.drawerpages.selected = 1;
-      },
+      // gotosettings: function(){
+      //   this.$.drawerpages.selected = 1;
+      // },
 
-      gobackdrawer: function(){
-        this.$.drawerpages.selected = 0;
-      }
+
 
 });
 })();

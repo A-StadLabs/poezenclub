@@ -165,6 +165,11 @@ gulp.task('copy', function() {
     dot: true
   }).pipe(gulp.dest(dist()));
 
+  // copy locales 
+  gulp.src('app/locales/*.*')
+    .pipe(gulp.dest(dist('locales')));
+
+
   // Copy over only the bower_components we need
   // These are things which cannot be vulcanized
   var bower = gulp.src([
@@ -174,7 +179,7 @@ gulp.task('copy', function() {
   gulp.src(['app/scripts/hooked.js', 'app/scripts/lightwallet.min.js'])
     .pipe(gulp.dest(path.join(dist(), 'scripts')));
 
-  gulp.src(['app/contracts/*'])
+  gulp.src(['app/contracts/*.json'])
     .pipe(gulp.dest(path.join(dist(), 'contracts')));
 
 
@@ -315,7 +320,8 @@ gulp.task('serve:dist', ['default'], function() {
 gulp.task('default', ['clean'], function(cb) {
   // Uncomment 'cache-config' if you are going to use service workers.
   runSequence(
-    ['compile-solidity', 'copy', 'styles'],
+    'compile-solidity',
+    ['copy', 'styles'],
     'elements', ['lint', 'images', 'fonts', 'html'],
     'vulcanize', // 'cache-config',
     cb);
